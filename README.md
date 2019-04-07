@@ -48,7 +48,7 @@ probabilities <- out$fit.prob
 
 
 ```
-
+![Annotations](Clustering_vs_matchSCore_annotations.png)
 
 
 ## Clustering Annotation
