@@ -49,7 +49,7 @@ probabilities <- out$fit.prob
 
 ```
 
-![Annotations](TSNE_MARS-Seq_clusters.png)
+![Annotations](Clustering_vs_matchSCore_annotations.png)
 
 
 ## Clustering Annotation
