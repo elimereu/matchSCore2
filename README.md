@@ -30,10 +30,9 @@ MatchSCore2 has tree main functions:
 
 To predict cell identities matchSCore2 requires:
 
-1. ``` scale.data ```: A matrix of log-normalized and scaled gene expression values from the reference dataset (similar to the matrix scale.data in Seurat object).
-2. ``` clus ```: A named factor with reference identities (similar to @ident slot in Seurat object).
-3. ``` gene_cl.ref ```: A named list with markers. Each element of the list contains cell type specific gene markers (Usually top100 ranked markers of each cell type). An example of gene_cl.ref can be 
-
+1. ``` scale.data ```: A matrix of log-normalized and scaled gene expression values from the reference dataset (like the matrix scale.data in Seurat object).
+2. ``` clus ```: A named factor with reference identities (like in the @ident slot in Seurat object).
+3. ``` gene_cl.ref ```: A named list of markers. Each element of the list contains cell type specific gene markers (Usually top100 ranked markers of each cell type). An example of gene_cl.ref can be found at the data folder of this repository. 
 
 
 ![Scheme](matchSCore2_Overview.png)
@@ -60,7 +59,7 @@ probabilities <- out$fit.prob
 
 
 ```
-
+MatchSCore2 can be used to improve the clustering annotation, detecting subtle differences between cell types. 
 ![Annotations](Clustering_vs_matchSCore_annotations.png)
 
 
