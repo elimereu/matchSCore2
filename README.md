@@ -5,8 +5,7 @@ MatchSCore2 is a R package for the comparison of single cell RNA-seq data across
 
 ## Installation
 
-matchSCore2 is a new version of the older matchSCore package.  
-This is a development version running on R (>= 3.5.1). The package makes use of nnet, Matrix, splatter, MixSim and ggplot2 libraries. Other libraries are also used for clustering and identification of markers (e.g. Seurat).
+matchSCore2 is a new version of the older matchSCore package. This is a development version running on R (>= 3.5.1). The package makes use of nnet, Matrix, splatter, MixSim and ggplot2 libraries. Other libraries are also used for clustering and identification of markers (e.g. Seurat).
 
 matchSCore2 can be installed by devtools:
 
