@@ -23,7 +23,7 @@ install_github('elimereu/matchSCore2')
 MatchSCore2 has tree main functions:
 
 1. Annotation of cells throught a supervised classification model based on a reference dataset. (**Cell annotations**) 
-2. Measure and visualize the matching between your clusters and clusters from a reference dataset. (**Cluster annotations**) 
+2. Measure and visualize the matching between two clustering. (**Cluster matching**) 
 3. Track the accuracy trend of a tool in clustering and marker identification compared with the optimal solution provided by a simulated data set. In this case, matchSCore2 works in combination with the Splatter package - https://github.com/Oshlack/splatter/blob/master/vignettes/splatter.Rmd - (**Benchmarking**).
 
 ## Usage
