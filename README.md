@@ -32,7 +32,7 @@ To predict cell identities matchSCore2 requires:
 
 1. ``` scale.data ```: A matrix of log-normalized and scaled gene expression values from the reference dataset (like the matrix scale.data in Seurat object).
 2. ``` clus ```: A named factor with reference identities (like in the @ident slot in Seurat object).
-3. ``` gene_cl.ref ```: A named list of markers. Each element of the list contains cell type specific gene markers (Usually top100 ranked markers of each cell type). An example of gene_cl.ref can be found at the data folder of this repository. 
+3. ``` gene_cl.ref ```: A named list of markers. Each element of the list contains cell type specific gene markers (Usually top100 ranked markers of each cell type). An example of gene_cl.ref can be found at the data folder of this repository. If you have the output of FindAllMarkers from Seurat, you could use the cut_markers function to get gene_cl.ref by the command cut_markers(levels(output.seu$cluster),output.seu,ntop=100).
 
 
 ![Scheme](matchSCore2_Overview.png)
