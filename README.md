@@ -1,7 +1,7 @@
 
 ## Quick introduction
 
-MatchSCore2 is a R package for the comparison of single cell RNA-seq data across tools and experiments. The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells.  
+MatchSCore2 is a R package for the comparison of single cell RNA-seq data across tools and experiments. The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells.  A more detailed version of the method is at the bioRxiv paper:  http://dx.doi.org/10.1101/630087.
 
 ## Installation
 
