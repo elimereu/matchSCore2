@@ -1,6 +1,6 @@
-#' Compute the GO enrichment of cluster-specific markers
+#' Compute the weighted GO enrichment of cluster-specific markers.
 #'
-#' This function computes the GO enrichment across computational gene markers.
+#' This function computes the weighted GO enrichment across computational gene markers by using their p-values.
 #' @param markers A data.frame of cluster specific gene markers like in the Seurat output of the function FindAllMarkers. The used columns are c("p_val","cluster","gene")
 #' @param go.db Human (org.Hs.eg.db) or mouse (org.Mm.eg.db) GO database. Corresponding R packages have to be installed.
 #' @param ontology.type Ontology family to be examined ("BP"= 'Biological Process', "MF"='Molecular Function',"CC"='Cellular Component') 

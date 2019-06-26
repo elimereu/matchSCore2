@@ -2,7 +2,7 @@
 % Please edit documentation in R/GO_annotation.R
 \name{GOannotation}
 \alias{GOannotation}
-\title{Compute the GO enrichment of cluster-specific markers}
+\title{Compute the weighted GO enrichment of cluster-specific markers.}
 \usage{
 GOannotation(markers, go.db, ontology.type = "BP",
   reformat.gene.names = FALSE, go.score.class = "weight01Score",
@@ -20,7 +20,7 @@ A list with two elements: "GOenrich" contains data.frames with GO enrichments fo
 "genes_byGO" provides the set of genes from each resulting GO pathway that are in overlap between your data and the pathway.
 }
 \description{
-This function computes the GO enrichment across computational gene markers.
+This function computes the weighted GO enrichment across computational gene markers by using their p-values.
 }
 \examples{
 
