@@ -54,7 +54,7 @@ ids <- unlist(lapply(mget(markers$gene,db, ifnotfound = NA), function(x) x[1]))
 rids <- names(ids);
 names(rids) <- ids
 # list all the ids per GO category
-go.env <- eapply(org.Mm.egGO2ALLEGS, function(x) as.character(na.omit(rids[x])))
+go.env <- eapply(db, function(x) as.character(na.omit(rids[x])))
 # library(GO.db)
 # desc <- unlist(lapply(mget(names(go.env), GOTERM, ifnotfound = NA), function(x) if(is.logical(x)) { return("") } else { slot(x, "Term")}))
 # names(go.env) <- paste(names(go.env), desc) 
