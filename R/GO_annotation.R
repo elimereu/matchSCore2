@@ -47,8 +47,8 @@ allGO2genes <- annFUN.org(whichOnto= ontology.type, feasibleGenes=NULL, mapping=
 
 cluster <- factor(markers$cluster)
 
-if(species=="mouse"){db <- org.Mm.egALIAS2EG}else{db<- org.Mm.egALIAS2EG}
-           
+if(species=="mouse"){db <- org.Mm.egALIAS2EG}else{db <- org.Hs.egALIAS2EG}
+db <- as.env(db)          
 
 ids <- unlist(lapply(mget(markers$gene,db, ifnotfound = NA), function(x) x[1]))
 rids <- names(ids);
