@@ -3,6 +3,7 @@
 #' This function computes the weighted GO enrichment across computational gene markers by using their p-values.
 #' @param markers A data.frame of cluster specific gene markers like in the Seurat output of the function FindAllMarkers. The used columns are c("p_val","cluster","gene")
 #' @param go.db Human (org.Hs.eg.db) or mouse (org.Mm.eg.db) GO database. Corresponding R packages have to be installed.
+#' @param species character indicating the species. Only 'human' or 'mouse'. 
 #' @param ontology.type Ontology family to be examined ("BP"= 'Biological Process', "MF"='Molecular Function',"CC"='Cellular Component') 
 #' @return A list with two elements: "GOenrich" contains data.frames with GO enrichments for each cluster. 
 #' "genes_byGO" provides the set of genes from each resulting GO pathway that are in overlap between your data and the pathway. 
@@ -12,7 +13,7 @@
 
 
 
-GOannotation <- function (markers, go.db, ontology.type = "BP", reformat.gene.names = FALSE, go.score.class = "weight01Score",
+GOannotation <- function (markers, go.db,species="mouse",ontology.type = "BP", reformat.gene.names = FALSE, go.score.class = "weight01Score",
           p.val.threshold = 0.05,dag.file.prefix = FALSE,ngenes=20) {
 
 require(igraph)
@@ -46,7 +47,10 @@ allGO2genes <- annFUN.org(whichOnto= ontology.type, feasibleGenes=NULL, mapping=
 
 cluster <- factor(markers$cluster)
 
-ids <- unlist(lapply(mget(markers$gene,org.Mm.egALIAS2EG, ifnotfound = NA), function(x) x[1]))
+if(species=="mouse"){db <- org.Mm.egALIAS2EG}else{db<- org.Mm.egALIAS2EG}
+           
+
+ids <- unlist(lapply(mget(markers$gene,db, ifnotfound = NA), function(x) x[1]))
 rids <- names(ids);
 names(rids) <- ids
 # list all the ids per GO category

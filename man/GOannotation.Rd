@@ -4,7 +4,7 @@
 \alias{GOannotation}
 \title{Compute the weighted GO enrichment of cluster-specific markers.}
 \usage{
-GOannotation(markers, go.db, ontology.type = "BP",
+GOannotation(markers, go.db, species = "mouse", ontology.type = "BP",
   reformat.gene.names = FALSE, go.score.class = "weight01Score",
   p.val.threshold = 0.05, dag.file.prefix = FALSE, ngenes = 20)
 }
@@ -12,6 +12,8 @@ GOannotation(markers, go.db, ontology.type = "BP",
 \item{markers}{A data.frame of cluster specific gene markers like in the Seurat output of the function FindAllMarkers. The used columns are c("p_val","cluster","gene")}
 
 \item{go.db}{Human (org.Hs.eg.db) or mouse (org.Mm.eg.db) GO database. Corresponding R packages have to be installed.}
+
+\item{species}{character indicating the species. Only 'human' or 'mouse'.}
 
 \item{ontology.type}{Ontology family to be examined ("BP"= 'Biological Process', "MF"='Molecular Function',"CC"='Cellular Component')}
 }
