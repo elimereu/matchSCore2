@@ -47,14 +47,20 @@ allGO2genes <- annFUN.org(whichOnto= ontology.type, feasibleGenes=NULL, mapping=
 
 cluster <- factor(markers$cluster)
 
-if(species=="mouse"){db <- org.Mm.egALIAS2EG}else{db <- org.Hs.egALIAS2EG}
+if(species=="mouse"){
+  db <- org.Mm.egALIAS2EG
+  godb <- org.Mm.egGO2ALLEGS}else
+    {
+    db <- org.Hs.egALIAS2EG
+    godb <- org.Hs.egGO2ALLEGS}
 db <- list2env(as.list(db))          
+godb <- list2env(as.list(godb))  
 
 ids <- unlist(lapply(mget(markers$gene,db, ifnotfound = NA), function(x) x[1]))
 rids <- names(ids);
 names(rids) <- ids
 # list all the ids per GO category
-go.env <- eapply(db, function(x) as.character(na.omit(rids[x])))
+go.env <- eapply(godb, function(x) as.character(na.omit(rids[x])))
 # library(GO.db)
 # desc <- unlist(lapply(mget(names(go.env), GOTERM, ifnotfound = NA), function(x) if(is.logical(x)) { return("") } else { slot(x, "Term")}))
 # names(go.env) <- paste(names(go.env), desc) 
