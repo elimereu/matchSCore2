@@ -9,7 +9,8 @@ library(grid)
   
   gg <- ggplot(my_df.melt, aes(x=factor(x),y=variable,fill=value)) + labs(x=xlab,y=ylab)+
     geom_tile(aes(fill = value)) + scale_x_discrete(lab=rownames(my_df))+ 
-    theme(axis.text.x=element_text(angle=30,hjust = 1,size=16),axis.text.y = element_text(size=16),axis.title = element_text(size=16))+
+    theme(axis.text.x=element_text(colour = "black",angle=30,hjust = 1,size=16),axis.text.y = element_text(colour = "black",size=16),
+    axis.title = element_text(colour = "black",size=16),legend.title = element_text(size=14,colour="black"),legend.text = element_text(size=14,colour="black"))+
     geom_text(aes(label = round(value, 2))) + 
     scale_fill_gradient(low = "white", high = "red",name="Jaccard Index \n") 
   
