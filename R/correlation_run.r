@@ -35,7 +35,7 @@ correlation_run <- function(raw,nnet,cell_types,batch,n=NULL,genes=NULL){
   
   sub.tech <- sapply(levels(batch),function(x) cells[which(batch==x)])
   sub.id <- sapply(levels(id),function(x) sapply(sub.tech,function(y) sample(x=y[which(id[y]==x)],size = sizes[which(names(sizes)==x)])))
-
+  
   merge <- lapply(sub.id,function(x) apply(x,2,function(y) rowSums(raw[,y])))
   corr <- lapply(merge,function(x) cor(x,use="pairwise.complete.obs",method="pearson"))
   
