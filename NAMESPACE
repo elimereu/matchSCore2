@@ -2,6 +2,7 @@
 
 export(GOannotation)
 export(compute_labels)
+export(cor_batch)
 export(cut_markers)
 export(defac_matrix)
 export(identity_map)
