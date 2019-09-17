@@ -39,10 +39,10 @@ correlation_run <- function(raw,nnet,cell_types,batch,n=NULL,genes=NULL){
   merge <- lapply(sub.id,function(x) apply(x,2,function(y) rowSums(raw[,y])))
   corr <- lapply(merge,function(x) cor(x,use="pairwise.complete.obs",method="pearson"))
 
-  #library(corrplot)
-  #col <- colorRampPalette(c(rep("white",3),"#FFECB3","#E85285","#6A1B9A"))
+  library(corrplot)
+  col <- colorRampPalette(c(rep("white",3),"#FFECB3","#E85285","#6A1B9A"))
 
-  #lapply(corr,function(x) corrplot(x, method = "square",order = "hclust",hclust.method = "ward.D2",type="upper",tl.col="black",tl.cex=2,number.cex = 20))
+  lapply(corr,function(x) corrplot(x, method = "square",order = "hclust",hclust.method = "ward.D2",type="upper",tl.col="black",tl.cex=2,number.cex = 20))
 
 
   return(corr)
