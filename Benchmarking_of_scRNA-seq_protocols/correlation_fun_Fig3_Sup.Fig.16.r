@@ -1,6 +1,6 @@
 #' This function compute the correlation between cells of the same cellular type that are from different batches (e.g. protocols).  
 #'
-#' This function infers cell identities by using the model learned by the reference dataset. 
+#' 
 #' @param raw A combined matrix of counts with gene expressions from all batches. Rows are genes and columns are cells.
 #' @param nnet A named factor with the annotation per cell.
 #' @param batch A named factor with the batch label per cell.
