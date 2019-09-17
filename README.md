@@ -1,7 +1,7 @@
 
 ## Quick introduction
 
-MatchSCore2 is a R package for the comparison of single cell RNA-seq data across tools and experiments. The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells.  A more detailed version of the method is at the bioRxiv paper:  http://dx.doi.org/10.1101/630087.
+MatchSCore2 is a R package for the comparison of single cell RNA-seq data across tools and experiments. The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells.  A more detailed version of the method is at the bioRxiv paper:  http://dx.doi.org/10.1101/630087. The code to reproduce the downstream analyses of the paper can be found at the folder Benchmarking_of_scRNA-seq_protocols in this repository. The snakemake workflow and additional code used for the manuscript is also at the following github: https://github.com/ati-lz/HCA_Benchmarking.  
 
 ## Installation
 
