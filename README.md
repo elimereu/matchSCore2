@@ -13,11 +13,7 @@ After you load it into R, if you check the colData(object) there are three metad
 
 To subset each technology you can use this command: 
 
-sce_technology <- sce[,which(sce@colData$batch==“technology.name”)]
-
-or with the function “subset”.. (depends on the version you have installed).
-
-where sce is the name of the SingleCellExperiment object. 
+sce_technology <- sce[,which(sce@colData$batch==“technology.name”)] or with the function “subset”.. (depends on the version you have installed), where sce is the name of the SingleCellExperiment object. 
 
 ## Installation
 
