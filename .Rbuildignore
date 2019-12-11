@@ -1,3 +1,4 @@
 ^matchSCore2\.Rproj$
 ^\.Rproj\.user$
 TO_REMOVE/*
+^LICENSE\.md$
