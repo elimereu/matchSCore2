@@ -6,7 +6,7 @@
 - roxygen with md? 
 - description fields to be proper filled
 - biocviews
-- license
+- ~~license~~
 - namespace imports and so
 - readme Rmd?
 
@@ -16,7 +16,7 @@
 
 - data -> enough with the small ones, or need EHub object?
 
-- harmonize filenames .R/.r
+- ~~harmonize filenames .R/.r~~
 
 - Working off R CMD check + BiocCheck
 
