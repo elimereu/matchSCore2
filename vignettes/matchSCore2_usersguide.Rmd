@@ -1,0 +1,52 @@
+---
+title: >
+  The `matchSCore2` User's Guide
+author:
+- name: Elisabetta Mereu
+  affiliation: cnag-TODO...
+  email: TODO  
+- name: Federico Marini
+  affiliation: 
+  - &id2 Institute of Medical Biostatistics, Epidemiology and Informatics (IMBEI), Mainz
+  - Center for Thrombosis and Hemostasis (CTH), Mainz
+  email: marinif@uni-mainz.de
+date: "`r BiocStyle::doc_date()`"
+package: "`r BiocStyle::pkg_ver('matchSCore2')`"
+output: 
+  BiocStyle::html_document:
+    toc_float: true
+vignette: >
+  %\VignetteIndexEntry{The matchSCore2 User's Guide}
+  %\VignetteEncoding{UTF-8}  
+  %\VignettePackage{matchSCore2}
+  %\VignetteKeywords{TODO}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: matchSCore2.bib
+---
+
+**Compiled date**: `r Sys.Date()`
+
+**Last edited**: 2019-12-11
+
+**License**: `r packageDescription("matchSCore2")[["License"]]`
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment  = "#>",
+    error    = FALSE,
+    warning  = FALSE,
+    eval     = TRUE,
+    message  = FALSE,
+    fig.width = 10
+)
+options(width = 100)
+```
+  
+```{r eval=FALSE}
+library(matchSCore2)
+```
+
+...
