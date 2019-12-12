@@ -12,9 +12,9 @@
 
 seurat3_run <- function(out_align,dims=c(1:10),res=0.2,col_anno=NULL,col_data=NULL){
 
-  require(Seurat)
-  require(cowplot)
-  require(ggplot2)
+  # require(Seurat)
+  # require(cowplot)
+  # require(ggplot2)
 
   counts <- out_align$counts
   integrated <- out_align$integrated
