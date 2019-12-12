@@ -33,11 +33,11 @@ summary_barplot <- function(class.fac,
   names(y)[2] <- "Cell.type.percent"
 
   gg <- ggplot(y,
-               aes(x = obs.fac,
-                   y = Cell.type.percent)) +
-    geom_bar(aes(y = Cell.type.percent,
-                 x = obs.fac,
-                 fill = class.fac),
+               aes_string(x = "obs.fac",
+                          y = "Cell.type.percent")) +
+    geom_bar(aes_string(y = "Cell.type.percent",
+                        x = "obs.fac",
+                        fill = "class.fac"),
              stat = "identity") +
     theme_bw() +
     theme(axis.title = element_blank(),
