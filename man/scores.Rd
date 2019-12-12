@@ -13,7 +13,7 @@ scores(sim, tool_out, ntop, tool_run = seurat_run, labels)
 as the output of the seurat_run function).}
 
 \item{ntop}{A vector with different proportions of top-ranked markers for each
-cluster. Usually \code{seq(250,2000,250)}.}
+cluster. Usually \code{seq(250, 2000, 250)}.}
 
 \item{tool_run}{The name of the function used to run the clusters without
 quote (Defaults to \code{seurat_run}).}
