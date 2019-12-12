@@ -16,19 +16,20 @@
 #'
 #' @examples
 #' # TODO
-matchSCore <- function(gene_markers,gene_cl,labels){
+matchSCore <- function(gene_markers,
+                       gene_cl,
+                       labels) {
 
-  score=0
+  score <- 0
 
-  for(i in 1:length(labels)){
-    ind=labels[i]
-    len1=length(gene_markers[[i]])
-    len2=length(gene_cl[[ind]])
-    I=length(intersect(gene_markers[[i]],gene_cl[[ind]]))
-    J=I/(len1+len2-I)
-    score=sum(score,J)
+  for (i in 1:length(labels)) {
+    ind <- labels[i]
+    len1 <- length(gene_markers[[i]])
+    len2 <- length(gene_cl[[ind]])
+    I <- length(intersect(gene_markers[[i]], gene_cl[[ind]]))
+    J <- I / (len1 + len2 - I)
+    score <- sum(score, J)
   }
-  score=score/length(gene_markers)
+  score <- score / length(gene_markers)
   return(score)
 }
-
