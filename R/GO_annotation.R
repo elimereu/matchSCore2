@@ -109,6 +109,8 @@ GOannotation <- function(markers,
     cor.p.val.threshold <- p.val.threshold
     ks.results <- topGO::getSigGroups(go.data, ks.test)
     if (is.character(dag.file.prefix)) {
+      # TODO: will be edited?
+      topic <- "" # or made dependent on other params?
       topGO::printGraph(go.data,
                         ks.results,
                         firstSigNodes = sum(score(ks.results) < cor.p.val.threshold),
