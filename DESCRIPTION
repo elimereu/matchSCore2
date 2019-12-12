@@ -42,7 +42,8 @@ Imports:
     SingleCellExperiment
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    BiocStyle
 VignetteBuilder: knitr
 biocViews:
     GeneExpression, Software, Transcription, Transcriptomics, Annotation,
