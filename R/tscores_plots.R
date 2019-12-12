@@ -2,7 +2,7 @@
 #'
 #' This function identifies true label groups between reference groups and clusters
 #'
-#' @param scores A character vector of reference group labels.
+#' @param scores_df A character vector of reference group labels. TODO: df or vector?
 #'
 #' @export
 #' @examples

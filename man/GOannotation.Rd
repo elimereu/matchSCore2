@@ -28,6 +28,16 @@ Corresponding R packages have to be installed.}
 
 \item{ontology.type}{Ontology family to be examined ("BP"= 'Biological Process',
 "MF"='Molecular Function',"CC"='Cellular Component')}
+
+\item{reformat.gene.names}{TODO}
+
+\item{go.score.class}{TODO}
+
+\item{p.val.threshold}{TODO}
+
+\item{dag.file.prefix}{TODO}
+
+\item{ngenes}{TODO}
 }
 \value{
 A list with two elements:

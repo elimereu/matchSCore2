@@ -31,6 +31,10 @@ the \code{dataset_label} output of the \code{align_run} function.}
 \item{dims}{Seurat parameter. It is the dimension of the PCA space.}
 
 \item{res}{Seurat resolution parameter.}
+
+\item{col_anno}{TODO}
+
+\item{col_data}{TODO}
 }
 \value{
 The integrated Seurat object. Two UMAP plots with cells coloured by

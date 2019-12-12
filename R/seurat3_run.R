@@ -10,6 +10,8 @@
 #' the `dataset_label` output of the `align_run` function.
 #' @param dims Seurat parameter. It is the dimension of the PCA space.
 #' @param res Seurat resolution parameter.
+#' @param col_anno TODO
+#' @param col_data TODO
 #'
 #' @return The integrated Seurat object. Two UMAP plots with cells coloured by
 #' annotation and dataset will be generated.

@@ -11,6 +11,11 @@
 #' @param species character indicating the species. Only 'human' or 'mouse'.
 #' @param ontology.type Ontology family to be examined ("BP"= 'Biological Process',
 #' "MF"='Molecular Function',"CC"='Cellular Component')
+#' @param reformat.gene.names TODO
+#' @param go.score.class TODO
+#' @param p.val.threshold TODO
+#' @param dag.file.prefix TODO
+#' @param ngenes TODO
 #'
 #' @return A list with two elements:
 #' - `GOenrich` contains data.frames with GO enrichments for each cluster.

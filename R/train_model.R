@@ -1,6 +1,7 @@
 #' Model training
 #'
 #' This function train a model from the reference dataset
+#'
 #' @param scale.data A scaled matrix of gene expressions like in the `scale.data`
 #' of the Seurat object. Rows are genes and columns are cells from the reference
 #' dataset.
@@ -11,6 +12,7 @@
 #' Default=0.5.
 #' @param p.threshold Probability threshold to consider a cell classified.
 #' Default=0.65.
+#' @param ... TODO - but is this really used somewhere in the function, TODO
 #'
 #' @return A multinomial fitted model as in the `nnet` package.
 #'

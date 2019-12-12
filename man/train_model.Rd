@@ -28,6 +28,8 @@ Default=0.5.}
 
 \item{p.threshold}{Probability threshold to consider a cell classified.
 Default=0.65.}
+
+\item{...}{TODO - but is this really used somewhere in the function, TODO}
 }
 \value{
 A multinomial fitted model as in the \code{nnet} package.
