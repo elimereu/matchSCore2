@@ -21,7 +21,13 @@ RoxygenNote: 7.0.2
 Depends:
     R (>= 3.6.0)
 Imports:
-    stats
+    graphics, 
+    grDevices, 
+    Matrix, 
+    methods, 
+    stats, 
+    topGO, 
+    utils
 Suggests: 
     knitr,
     rmarkdown
