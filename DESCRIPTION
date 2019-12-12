@@ -27,7 +27,17 @@ Imports:
     methods, 
     stats, 
     topGO, 
-    utils
+    utils,
+    ggplot2,
+    org.Hs.eg.db,
+    org.Mm.eg.db,
+    reshape2,
+    grid,
+    corrplot,
+    nnet,
+    igraph,
+    cowplot,
+    Seurat
 Suggests: 
     knitr,
     rmarkdown
