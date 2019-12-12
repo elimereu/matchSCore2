@@ -22,7 +22,23 @@ Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 3.6.0)
 Imports:
-    stats
+    graphics, 
+    grDevices, 
+    Matrix, 
+    methods, 
+    stats, 
+    topGO, 
+    utils,
+    ggplot2,
+    org.Hs.eg.db,
+    org.Mm.eg.db,
+    reshape2,
+    grid,
+    corrplot,
+    nnet,
+    igraph,
+    cowplot,
+    Seurat
 Suggests: 
     knitr,
     rmarkdown
