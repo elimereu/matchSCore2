@@ -16,8 +16,8 @@
 #' @examples
 #' # TODO
 align_run <- function(dataset_list,marker_list){
-  require(Seurat)
-  require(Matrix)
+  # require(Seurat)
+  # require(Matrix)
   print("Defining the set of common genes")
 
   total <- 10

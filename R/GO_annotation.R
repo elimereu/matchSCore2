@@ -29,10 +29,10 @@
 GOannotation <- function (markers, go.db,species="mouse",ontology.type = "BP", reformat.gene.names = FALSE, go.score.class = "weight01Score",
           p.val.threshold = 0.05,dag.file.prefix = FALSE,ngenes=20) {
 
-require(igraph)
-require(topGO)
-library(org.Mm.eg.db)
-library(org.Hs.eg.db)
+# require(igraph)
+# require(topGO)
+# library(org.Mm.eg.db)
+# library(org.Hs.eg.db)
 
   if (!ontology.type %in% c("BP", "MF", "CC"))
     stop("Only 'BP', 'CC' and 'MF' are supported as ontology types")

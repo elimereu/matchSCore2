@@ -14,9 +14,9 @@
 #' # TODO
 summary_barplot <- function(class.fac,obs.fac){
 
-  library(ggplot2)
-  library(reshape2)
-  library(grid)
+  # library(ggplot2)
+  # library(reshape2) # TODO: really needed?
+  # library(grid) # TODO: really needed?
 
   t <- table(class.fac,obs.fac)
   df <- data.frame(t)

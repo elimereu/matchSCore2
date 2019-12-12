@@ -22,9 +22,9 @@
 #' # TODO
 seurat3_run <- function(counts,integrated,annotation,dataset,dims=c(1:10),res=0.2,col_anno=NULL,col_data=NULL){
 
-  require(Seurat)
-  require(cowplot)
-  require(ggplot2)
+  # require(Seurat)
+  # require(cowplot)
+  # require(ggplot2)
 
   print("Running Seurat by using as scale.data the integrated matrix..")
 

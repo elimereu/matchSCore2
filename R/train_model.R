@@ -89,8 +89,8 @@ train_model <- function(scale.data,clus,gene_cl.ref,prop=NULL,p.threshold=NULL,.
   setTxtProgressBar(pb,progress)
 
 
-  require(Matrix)
-  library(nnet)
+  # require(Matrix)
+  # library(nnet)
 
   cat("\n Learning the model from the training dataset...\n")
 

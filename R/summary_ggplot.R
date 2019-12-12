@@ -1,9 +1,9 @@
 # TODO: to be exported - or anyway documented?
 summary_ggplot <- function(data,ylab,xlab){
 
-library(ggplot2)
-library(reshape2)
-library(grid)
+  # library(ggplot2)
+  # library(reshape2) # TODO: really needed?
+  # library(grid) # TODO: really needed?
 
   my_df <- data.frame(t(data),check.names = FALSE,check.rows = FALSE)
   my_df.melt <-  melt(cbind(x=1:nrow(my_df),my_df),id ="x")
