@@ -1,3 +1,4 @@
+# TODO: to be exported - or anyway documented?
 summary_ggplot <- function(data,ylab,xlab){
 
 library(ggplot2)

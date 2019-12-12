@@ -1,17 +1,23 @@
-#' This function run Seurat3 by using the output of the align_run function.
+#' This function runs Seurat3 by using the output of the `align_run` function.
 #'
-#' @param counts The output of the function align_run. The combined count matrix used to create the new integrated Seurat object.
-#' @param integrated The output of the function align_run. It will be used as the scale.data of the new integrated Seurat object.
-#' @param annotation A vector with the cell annotation like the annotation_label output of the align_run function.
-#' @param dataset a vector indicating the dataset of origin for each cell like the dataset_label output of the align_run function.
+#' @param counts The output of the function `align_run`. The combined count
+#' matrix used to create the new integrated Seurat object.
+#' @param integrated The output of the function `align_run`. It will be used as
+#' the `scale.data` of the new integrated Seurat object.
+#' @param annotation A vector with the cell annotation like the `annotation_label`
+#' output of the align_run function.
+#' @param dataset a vector indicating the dataset of origin for each cell like
+#' the `dataset_label` output of the `align_run` function.
 #' @param dims Seurat parameter. It is the dimension of the PCA space.
 #' @param res Seurat resolution parameter.
-#' @return The integrated Seurat object. Two UMAP plots with cells coloured by annotation and dataset will be generated.
-#' @export
-#' @examples
 #'
-
-
+#' @return The integrated Seurat object. Two UMAP plots with cells coloured by
+#' annotation and dataset will be generated.
+#'
+#' @export
+#'
+#' @examples
+#' # TODO
 seurat3_run <- function(counts,integrated,annotation,dataset,dims=c(1:10),res=0.2,col_anno=NULL,col_data=NULL){
 
   require(Seurat)

@@ -1,17 +1,20 @@
 #' Integration of different datasets
 #'
-#' @param dataset_list A named list of annotated Seurat objects. The cell annotations are in the @active.ident slots.
+#' @param dataset_list A named list of annotated Seurat objects. The cell
+#' annotations are in the `active.ident` slots.
 #' @param marker_list A list of cell-type specific markers from the input dataset.
-#' @return A list containing:
-#' \item integrated: the integrated scaled matrix.
-#' \item counts: the combined count matrix.
-#' \item annotation_label: the cell annotations.
-#' \item dataset_label: a vector indicating the dataset of origin for each cell.
-#' \item genes: the set of common genes used.
-#' @export
-#' @examples
 #'
-
+#' @return A list containing:
+#' - `integrated`: the integrated scaled matrix.
+#' - `counts`: the combined count matrix.
+#' - `annotation_label`: the cell annotations.
+#' - `dataset_label`: a vector indicating the dataset of origin for each cell.
+#' - `genes`: the set of common genes used.
+#'
+#' @export
+#'
+#' @examples
+#' # TODO
 align_run <- function(dataset_list,marker_list){
   require(Seurat)
   require(Matrix)
