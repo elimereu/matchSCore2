@@ -20,7 +20,14 @@
 #'
 #' @examples
 #' # TODO
-seurat3_run <- function(counts,integrated,annotation,dataset,dims=c(1:10),res=0.2,col_anno=NULL,col_data=NULL){
+seurat3_run <- function(counts,
+                        integrated,
+                        annotation,
+                        dataset,
+                        dims = c(1:10),
+                        res = 0.2,
+                        col_anno = NULL,
+                        col_data = NULL) {
 
   # require(Seurat)
   # require(cowplot)
@@ -28,8 +35,8 @@ seurat3_run <- function(counts,integrated,annotation,dataset,dims=c(1:10),res=0.
 
   message("Running Seurat by using as scale.data the integrated matrix..")
 
-  counts <- counts[,colnames(integrated)]
-  data <- CreateSeuratObject(counts = counts, min.features = 0, min.cells = 0,project = "integrated")
+  counts <- counts[, colnames(integrated)]
+  data <- CreateSeuratObject(counts = counts, min.features = 0, min.cells = 0, project = "integrated")
   data@meta.data$cluster <- annotation
   data@meta.data$dataset <- dataset
   data <- NormalizeData(object = data)
@@ -44,17 +51,31 @@ seurat3_run <- function(counts,integrated,annotation,dataset,dims=c(1:10),res=0.
   data <- FindClusters(data, resolution = res)
   data <- RunUMAP(data, dims = dims)
 
-
-
-  DimPlot(object = data, reduction.use = 'umap',group.by = "cluster",no.axes = TRUE,cols = col_anno)+theme_void()+
-         theme(legend.text = element_text(size = 14))+ theme(plot.margin = unit(c(0.3,1,1,0), "lines"))
+  DimPlot(object = data,
+          reduction.use = "umap",
+          group.by = "cluster",
+          no.axes = TRUE,
+          cols = col_anno) +
+    theme_void() +
+    theme(
+      legend.text = element_text(size = 14)) +
+    theme(plot.margin = unit(c(0.3, 1, 1, 0), "lines"))
 
   ggsave("plot1.png")
+  # TODO: do we need it like this?
 
-  DimPlot(object = data, reduction.use = 'umap',group.by = "dataset",no.axes = TRUE,cols = col_data)+theme_void()+
-    theme(legend.text = element_text(size = 14))+ theme(plot.margin = unit(c(0.3,1,1,0), "lines"))
+  DimPlot(object = data,
+          reduction.use = "umap",
+          group.by = "dataset",
+          no.axes = TRUE,
+          cols = col_data) +
+    theme_void() +
+    theme(
+      legend.text = element_text(size = 14)) +
+    theme(plot.margin = unit(c(0.3, 1, 1, 0), "lines"))
 
   ggsave("plot2.png")
+  ## TODO: same as above
+
   return(data)
 }
-
