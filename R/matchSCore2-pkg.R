@@ -20,6 +20,7 @@
 #' @import igraph
 #' @import cowplot
 #' @import Seurat
+#' @importFrom SingleCellExperiment colData rowData
 #'
 #' @name matchSCore2-pkg
 #' @docType package
