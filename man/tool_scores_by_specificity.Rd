@@ -9,7 +9,7 @@ tool_scores_by_specificity(
   specificity,
   tool_out,
   ntop,
-  tool_run = seurat_run,
+  tool_run = seurat3_run,
   labels
 )
 }
@@ -19,12 +19,12 @@ tool_scores_by_specificity(
 \item{specificity}{The proportion of top-ranked markers for each simulated group.}
 
 \item{tool_out}{The output of the used tool to cluster your data. It should be
-as the output of the \code{seurat_run} function.}
+as the output of the \code{seurat3_run} function.}
 
 \item{ntop}{The proportion of top-ranked markers for each cluster.}
 
 \item{tool_run}{The name of the function used to run the clusters without quote.
-Default=\code{seurat_run}).}
+Default=\code{seurat3_run}).}
 
 \item{labels}{Cluster labels as in the output of the \code{\link[=compute_labels]{compute_labels()}} function.}
 }

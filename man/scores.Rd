@@ -4,19 +4,19 @@
 \alias{scores}
 \title{Compute matchSCore for different thresholds of specificity and ntop ranked genes}
 \usage{
-scores(sim, tool_out, ntop, tool_run = seurat_run, labels)
+scores(sim, tool_out, ntop, tool_run = seurat3_run, labels)
 }
 \arguments{
 \item{sim}{A Splatter simulation object.}
 
 \item{tool_out}{The output of the used tool to cluster your data (It should be
-as the output of the seurat_run function).}
+as the output of the \code{seurat3_run} function).}
 
 \item{ntop}{A vector with different proportions of top-ranked markers for each
 cluster. Usually \code{seq(250, 2000, 250)}.}
 
 \item{tool_run}{The name of the function used to run the clusters without
-quote (Defaults to \code{seurat_run}).}
+quote (Defaults to \code{seurat3_run}).}
 
 \item{labels}{Cluster labels as in the output of the \code{\link[=compute_labels]{compute_labels()}} function.}
 }
