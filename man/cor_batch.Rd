@@ -2,20 +2,25 @@
 % Please edit documentation in R/cor_batch.R
 \name{cor_batch}
 \alias{cor_batch}
-\title{This function compute the correlation between cells of the same cellular type that are from different batches (e.g. protocols).}
+\title{This function computes the correlation between cells of the same cellular type
+that are from different batches (e.g. protocols).}
 \usage{
 cor_batch(raw, nnet, cell_types, batch, n = NULL, genes = NULL)
 }
 \arguments{
-\item{raw}{A combined matrix of counts with gene expressions from all batches. Rows are genes and columns are cells.}
+\item{raw}{A combined matrix of counts with gene expressions from all batches.
+Rows are genes and columns are cells.}
 
 \item{nnet}{A named factor with the annotation per cell.}
 
-\item{cell_types}{A character with names (keywords for nnet levels) for cell types you want to compute the correlation (e.g. "B|HEK|Monocytes").}
+\item{cell_types}{A character with names (keywords for nnet levels) for cell
+types you want to compute the correlation (e.g. "B|HEK|Monocytes").}
 
 \item{batch}{A named factor with the batch label per cell.}
 
-\item{n}{Number of cells sampled for the computation of the expression average for cells that are from the same type. Default=minimum number of cells across all batches.}
+\item{n}{Number of cells sampled for the computation of the expression average
+for cells that are from the same type. Default=minimum number of cells across
+all batches.}
 
 \item{genes}{A set of genes you want to use to compute the correlation.}
 }
@@ -23,8 +28,9 @@ cor_batch(raw, nnet, cell_types, batch, n = NULL, genes = NULL)
 A matrix with correlations between batches.
 }
 \description{
-This function compute the correlation between cells of the same cellular type that are from different batches (e.g. protocols).
+This function computes the correlation between cells of the same cellular type
+that are from different batches (e.g. protocols).
 }
 \examples{
-
+# TODO
 }

@@ -7,21 +7,24 @@
 align_run(dataset_list, marker_list)
 }
 \arguments{
-\item{dataset_list}{A named list of annotated Seurat objects. The cell annotations are in the @active.ident slots.}
+\item{dataset_list}{A named list of annotated Seurat objects. The cell
+annotations are in the \code{active.ident} slots.}
 
 \item{marker_list}{A list of cell-type specific markers from the input dataset.}
 }
 \value{
-A list containing: 
-\item integrated: the integrated scaled matrix.
-\item counts: the combined count matrix.
-\item annotation_label: the cell annotations.
-\item dataset_label: a vector indicating the dataset of origin for each cell.
-\item genes: the set of common genes used.
+A list containing:
+\itemize{
+\item \code{integrated}: the integrated scaled matrix.
+\item \code{counts}: the combined count matrix.
+\item \code{annotation_label}: the cell annotations.
+\item \code{dataset_label}: a vector indicating the dataset of origin for each cell.
+\item \code{genes}: the set of common genes used.
+}
 }
 \description{
 Integration of different datasets
 }
 \examples{
-
+# TODO
 }

@@ -15,8 +15,9 @@ compute_labels(idc, idc1)
 Vector of corresponding reference labels for clusters.
 }
 \description{
-This function identifies true label groups between reference groups and clusters
+This function identifies true label groups between reference groups and
+clusters.
 }
 \examples{
-
+# TODO
 }

@@ -17,21 +17,30 @@ GOannotation(
 )
 }
 \arguments{
-\item{markers}{A data.frame of cluster specific gene markers like in the Seurat output of the function FindAllMarkers. The used columns are c("p_val","cluster","gene")}
+\item{markers}{A data.frame of cluster specific gene markers like in the
+Seurat output of the function FindAllMarkers. The used columns are
+\code{c("p_val","cluster","gene")}}
 
-\item{go.db}{Human (org.Hs.eg.db) or mouse (org.Mm.eg.db) GO database. Corresponding R packages have to be installed.}
+\item{go.db}{Human (\code{org.Hs.eg.db}) or mouse (\code{org.Mm.eg.db}) GO database.
+Corresponding R packages have to be installed.}
 
 \item{species}{character indicating the species. Only 'human' or 'mouse'.}
 
-\item{ontology.type}{Ontology family to be examined ("BP"= 'Biological Process', "MF"='Molecular Function',"CC"='Cellular Component')}
+\item{ontology.type}{Ontology family to be examined ("BP"= 'Biological Process',
+"MF"='Molecular Function',"CC"='Cellular Component')}
 }
 \value{
-A list with two elements: "GOenrich" contains data.frames with GO enrichments for each cluster. 
-"genes_byGO" provides the set of genes from each resulting GO pathway that are in overlap between your data and the pathway.
+A list with two elements:
+\itemize{
+\item \code{GOenrich} contains data.frames with GO enrichments for each cluster.
+\item \code{genes_byGO} provides the set of genes from each resulting GO pathway that
+are in overlap between your data and the pathway.
+}
 }
 \description{
-This function computes the weighted GO enrichment across computational gene markers by using their p-values.
+This function computes the weighted GO enrichment across computational gene
+markers by using their p-values.
 }
 \examples{
-
+# TODO
 }

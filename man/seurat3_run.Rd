@@ -2,7 +2,7 @@
 % Please edit documentation in R/seurat3_run.R
 \name{seurat3_run}
 \alias{seurat3_run}
-\title{This function run Seurat3 by using the output of the align_run function.}
+\title{This function runs Seurat3 by using the output of the \code{align_run} function.}
 \usage{
 seurat3_run(
   counts,
@@ -16,24 +16,29 @@ seurat3_run(
 )
 }
 \arguments{
-\item{counts}{The output of the function align_run. The combined count matrix used to create the new integrated Seurat object.}
+\item{counts}{The output of the function \code{align_run}. The combined count
+matrix used to create the new integrated Seurat object.}
 
-\item{integrated}{The output of the function align_run. It will be used as the scale.data of the new integrated Seurat object.}
+\item{integrated}{The output of the function \code{align_run}. It will be used as
+the \code{scale.data} of the new integrated Seurat object.}
 
-\item{annotation}{A vector with the cell annotation like the annotation_label output of the align_run function.}
+\item{annotation}{A vector with the cell annotation like the \code{annotation_label}
+output of the align_run function.}
 
-\item{dataset}{a vector indicating the dataset of origin for each cell like the dataset_label output of the align_run function.}
+\item{dataset}{a vector indicating the dataset of origin for each cell like
+the \code{dataset_label} output of the \code{align_run} function.}
 
 \item{dims}{Seurat parameter. It is the dimension of the PCA space.}
 
 \item{res}{Seurat resolution parameter.}
 }
 \value{
-The integrated Seurat object. Two UMAP plots with cells coloured by annotation and dataset will be generated.
+The integrated Seurat object. Two UMAP plots with cells coloured by
+annotation and dataset will be generated.
 }
 \description{
-This function run Seurat3 by using the output of the align_run function.
+This function runs Seurat3 by using the output of the \code{align_run} function.
 }
 \examples{
-
+# TODO
 }
