@@ -9,6 +9,9 @@ tscores_plots(scores_df)
 \arguments{
 \item{scores_df}{A character vector of reference group labels. TODO: df or vector?}
 }
+\value{
+A plot object, TODO
+}
 \description{
 This function identifies true label groups between reference groups and clusters
 }

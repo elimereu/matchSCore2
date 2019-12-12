@@ -4,7 +4,10 @@
 #'
 #' @param scores_df A character vector of reference group labels. TODO: df or vector?
 #'
+#' @return A plot object, TODO
+#'
 #' @export
+#'
 #' @examples
 #' # TODO
 tscores_plots = function(scores_df){
