@@ -69,7 +69,7 @@ GOannotation <- function(markers,
 
   cluster <- factor(markers$cluster)
 
-  if (species=="mouse") {
+  if (species == "mouse") {
     db <- org.Mm.egALIAS2EG
     godb <- org.Mm.egGO2ALLEGS
   } else {
