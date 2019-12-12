@@ -1,11 +1,15 @@
 #' Cumulative barplot of cell mapped compositions
 #'
 #' This function identifies true label groups between reference groups and clusters.
-#' @param class.fac A named vector of classified cells (e.g. the output$ids from the identity_map function).
+#' @param class.fac A named vector of classified cells (e.g. the `output$ids`
+#' from the [identity_map()] function).
 #' @param obs.fac A named vector of clusters.
-#' @return A cumulative barplot describing the cell identity compositions of the observed clusters onto the reference
+#'
+#' @return A cumulative barplot describing the cell identity compositions of the
+#' observed clusters onto the reference
 #'
 #' @export
+#'
 #' @examples
 #'
 

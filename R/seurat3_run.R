@@ -1,13 +1,17 @@
-#' This function run Seurat3 by using the output of the align_run function.
+#' This function runs Seurat3 by using the output of the `align_run` function.
 #'
 #' @param out_align The output of the function align_run. The combined count matrix is used
 #' to create the Seurat object and the integrated is provided to the slot @data.
 #' @param dims Seurat parameter. It is the dimension of the PCA space.
 #' @param res Seurat resolution parameter.
-#' @return The integrated Seurat object. Two UMAP plots with cells coloured by annotation and dataset will be generated.
-#' @export
-#' @examples
 #'
+#' @return The integrated Seurat object. Two UMAP plots with cells coloured by
+#' annotation and dataset will be generated.
+#'
+#' @export
+#'
+#' @examples
+#' # TODO
 
 
 seurat3_run <- function(out_align,dims=c(1:10),res=0.2,col_anno=NULL,col_data=NULL){

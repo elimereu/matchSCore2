@@ -1,16 +1,23 @@
-#' This function compute the correlation between cells of the same cellular type that are from different batches (e.g. protocols).
+#' This function computes the correlation between cells of the same cellular type
+#' that are from different batches (e.g. protocols).
 #'
-#' @param raw A combined matrix of counts with gene expressions from all batches. Rows are genes and columns are cells.
+#' @param raw A combined matrix of counts with gene expressions from all batches.
+#' Rows are genes and columns are cells.
 #' @param nnet A named factor with the annotation per cell.
 #' @param batch A named factor with the batch label per cell.
-#' @param cell_types A character with names (keywords for nnet levels) for cell types you want to compute the correlation (e.g. "B|HEK|Monocytes").
-#' @param n Number of cells sampled for the computation of the expression average for cells that are from the same type. Default=minimum number of cells across all batches.
+#' @param cell_types A character with names (keywords for nnet levels) for cell
+#' types you want to compute the correlation (e.g. "B|HEK|Monocytes").
+#' @param n Number of cells sampled for the computation of the expression average
+#' for cells that are from the same type. Default=minimum number of cells across
+#' all batches.
 #' @param genes A set of genes you want to use to compute the correlation.
-#' @return A matrix with correlations between batches.
-#' @export
-#' @examples
 #'
-
+#' @return A matrix with correlations between batches.
+#'
+#' @export
+#'
+#' @examples
+#' # TODO
 cor_batch <- function(raw,nnet,cell_types,batch,n=NULL,genes=NULL){
 
 

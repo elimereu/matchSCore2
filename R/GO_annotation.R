@@ -1,13 +1,24 @@
 #' Compute the weighted GO enrichment of cluster-specific markers.
 #'
-#' This function computes the weighted GO enrichment across computational gene markers by using their p-values.
-#' @param markers A data.frame of cluster specific gene markers like in the Seurat output of the function FindAllMarkers. The used columns are c("p_val","cluster","gene")
-#' @param go.db Human (org.Hs.eg.db) or mouse (org.Mm.eg.db) GO database. Corresponding R packages have to be installed.
+#' This function computes the weighted GO enrichment across computational gene
+#' markers by using their p-values.
+#'
+#' @param markers A data.frame of cluster specific gene markers like in the
+#' Seurat output of the function FindAllMarkers. The used columns are
+#' `c("p_val","cluster","gene")`
+#' @param go.db Human (`org.Hs.eg.db`) or mouse (`org.Mm.eg.db`) GO database.
+#' Corresponding R packages have to be installed.
 #' @param species character indicating the species. Only 'human' or 'mouse'.
-#' @param ontology.type Ontology family to be examined ("BP"= 'Biological Process', "MF"='Molecular Function',"CC"='Cellular Component')
-#' @return A list with two elements: "GOenrich" contains data.frames with GO enrichments for each cluster.
-#' "genes_byGO" provides the set of genes from each resulting GO pathway that are in overlap between your data and the pathway.
+#' @param ontology.type Ontology family to be examined ("BP"= 'Biological Process',
+#' "MF"='Molecular Function',"CC"='Cellular Component')
+#'
+#' @return A list with two elements:
+#' - `GOenrich` contains data.frames with GO enrichments for each cluster.
+#' - `genes_byGO` provides the set of genes from each resulting GO pathway that
+#' are in overlap between your data and the pathway.
+#'
 #' @export
+#'
 #' @examples
 #'
 
@@ -16,10 +27,10 @@
 GOannotation <- function (markers, go.db,species="mouse",ontology.type = "BP", reformat.gene.names = FALSE, go.score.class = "weight01Score",
           p.val.threshold = 0.05,dag.file.prefix = FALSE,ngenes=20) {
 
-# require(igraph)
-# require(topGO)
-# library(org.Mm.eg.db)
-# library(org.Hs.eg.db)
+  # require(igraph)
+  # require(topGO)
+  # library(org.Mm.eg.db)
+  # library(org.Hs.eg.db)
 
   if (!ontology.type %in% c("BP", "MF", "CC"))
     stop("Only 'BP', 'CC' and 'MF' are supported as ontology types")

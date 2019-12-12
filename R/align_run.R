@@ -29,6 +29,7 @@ align_run <- function(dataset_list,marker_list,ref){
   }else{ prop <- 0.9}
 
   original <- dataset_list
+
   print("Defining the set of common genes")
 
   total <- 10
