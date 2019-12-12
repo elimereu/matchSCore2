@@ -11,14 +11,20 @@ summary_ggplot <- function(data,
   my_df.melt <-  melt(cbind(x = 1:nrow(my_df), my_df),
                       id = "x")
 
+  # to avoid using this later in aes_string
+  my_df.melt$x <- factor(my_df.melt$x)
+
   gg <- ggplot(my_df.melt,
-               aes(x = factor(x),
-                   y = variable,
-                   fill = value)) +
+               # aes(x = factor(x),
+               #     y = variable,
+               #     fill = value)) +
+               aes_string(x = "x",
+                          y = "variable",
+                          fill = "value")) +
     labs(x = xlab,
          y = ylab) +
     geom_tile(
-      aes(fill = value)) +
+      aes_string(fill = "value")) +
     scale_x_discrete(lab = rownames(my_df)) +
     theme(
       axis.text.x = element_text(angle = 30, hjust = 1, size = 16),

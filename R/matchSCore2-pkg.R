@@ -27,3 +27,6 @@
 NULL
 
 # cowplot although here we use ggarrange, TODO? (is it from ggpubr)
+
+# to prevent note in ggplot wrapping function
+globalVariables("value")
