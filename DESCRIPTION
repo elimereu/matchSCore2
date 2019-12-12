@@ -29,3 +29,4 @@ VignetteBuilder: knitr
 biocViews:
     GeneExpression, Software, Transcription, Transcriptomics, Annotation,
     SingleCell
+Roxygen: list(markdown = TRUE)
