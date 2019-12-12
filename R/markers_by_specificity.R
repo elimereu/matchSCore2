@@ -17,18 +17,24 @@
 #'
 #' @examples
 #' # TODO
-markers_by_specificity = function(rank_df,spec,n_clust){
+markers_by_specificity <- function(rank_df,
+                                   spec,
+                                   n_clust) {
 
-  k=5+n_clust
-  info=rank_df[,c(k:(k+n_clust-1))] ## order
-  p=grep("^Rank",names(rank_df))
-  R=rank_df[,p] ## rank
+  k <- 5 + n_clust
+  info <- rank_df[, c(k:(k + n_clust - 1))] ## order
+  p <- grep("^Rank", names(rank_df))
+  R <- rank_df[, p] ## rank
 
-  sorted=sapply(1:n_clust,function(x) order(R[,x]))
-  k=10*n_clust
-  length=sapply(1:n_clust,function(x) length(which(info[,x]<k)))
+  sorted <- sapply(1:n_clust,
+                   function(x) order(R[, x]))
+  k <- 10 * n_clust
+  length <- sapply(1:n_clust,
+                   function(x) length(which(info[, x] < k)))
 
-  l=sapply(1:n_clust,function(x) round(spec*length[x]))
-  markers=lapply(1:n_clust,function(x) sorted[1:l[x],x])
+  l <- sapply(1:n_clust,
+              function(x) round(spec * length[x]))
+  markers <- lapply(1:n_clust,
+                    function(x) sorted[1:l[x], x])
   return(markers)
 }
