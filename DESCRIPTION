@@ -38,7 +38,8 @@ Imports:
     nnet,
     igraph,
     cowplot,
-    Seurat
+    Seurat,
+    SingleCellExperiment
 Suggests: 
     knitr,
     rmarkdown
