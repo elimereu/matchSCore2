@@ -22,7 +22,7 @@
 #' # TODO
 train_model <- function(scale.data,clus,gene_cl.ref,prop=NULL,p.threshold=NULL,...){
 
-  print("Splitting the refence into train and test datasets...")
+  message("Splitting the refence into train and test datasets...")
 
   total <- 10
   # create progress bar
@@ -92,7 +92,7 @@ train_model <- function(scale.data,clus,gene_cl.ref,prop=NULL,p.threshold=NULL,.
   # require(Matrix)
   # library(nnet)
 
-  cat("\n Learning the model from the training dataset...\n")
+  message("\n Learning the model from the training dataset...\n")
 
   mod <- multinom(out.train ~ ., data = model.train,decay=0.0001,maxit = 500)
   print(summary(mod))
@@ -104,7 +104,7 @@ train_model <- function(scale.data,clus,gene_cl.ref,prop=NULL,p.threshold=NULL,.
 
   fitted.results <- predict(mod, newdata = model.test, "probs")
 
-  cat("\n Fitting identities in the set data.. \n")
+  message("\n Fitting identities in the set data.. \n")
 
   fit <- apply(fitted.results,1,function(x) colnames(fitted.results)[which(x==max(x))])
   if(is.null(p.threshold)){p.threshold <- 0.65}
@@ -116,11 +116,11 @@ train_model <- function(scale.data,clus,gene_cl.ref,prop=NULL,p.threshold=NULL,.
   setTxtProgressBar(pb,progress)
 
 
-  cat("\n Measuring the accuracy of the fitting..\n")
+  message("\n Measuring the accuracy of the fitting..\n")
 
   acc <- length(which(as.character(fit_res$out.test)==as.character(fit_res$fit)))/length(fit_res$out.test)
 
-  cat("\n",paste("The accuracy of the model is:",round(acc,digits = 2),sep=" "),"\n")
+  message("\n",paste("The accuracy of the model is:",round(acc,digits = 2),sep=" "),"\n")
 
   print(table(id_test=fit_res$out.test,class=fit_res$fit))
 
@@ -130,7 +130,7 @@ train_model <- function(scale.data,clus,gene_cl.ref,prop=NULL,p.threshold=NULL,.
   close(pb)
   end.time <- Sys.time()
   time <- difftime(end.time,start.time,units="mins")
-  print(paste("The runtime is:",time,"min",sep=" "))
+  message(paste("The runtime is:",time,"min",sep=" "))
 
 return(mod)
 

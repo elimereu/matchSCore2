@@ -18,7 +18,7 @@
 align_run <- function(dataset_list,marker_list){
   # require(Seurat)
   # require(Matrix)
-  print("Defining the set of common genes")
+  message("Defining the set of common genes")
 
   total <- 10
   # create progress bar
@@ -138,7 +138,7 @@ align_run <- function(dataset_list,marker_list){
   close(pb)
   end.time <- Sys.time()
   time <- difftime(end.time,start.time,units="mins")
-  print(paste("The runtime is:",time,"min",sep=" "))
+  message(paste("The runtime is:",time,"min",sep=" "))
 
   return(list(counts=counts,integrated=integrated,annotation_label=annotation,dataset_label=dataset,genes=genes))
 

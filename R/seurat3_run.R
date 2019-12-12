@@ -26,7 +26,7 @@ seurat3_run <- function(counts,integrated,annotation,dataset,dims=c(1:10),res=0.
   # require(cowplot)
   # require(ggplot2)
 
-  print("Running Seurat by using as scale.data the integrated matrix..")
+  message("Running Seurat by using as scale.data the integrated matrix..")
 
   counts <- counts[,colnames(integrated)]
   data <- CreateSeuratObject(counts = counts, min.features = 0, min.cells = 0,project = "integrated")
