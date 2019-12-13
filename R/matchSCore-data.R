@@ -10,8 +10,14 @@ NULL
 #' @docType data
 NULL
 
-#' gene_cl.ref
+#' gene_cl.ref.bladder
 #'
-#' @name gene_cl.ref
+#' @name gene_cl.ref.bladder
+#' @docType data
+NULL
+
+#' gene_cl.ref.chromium
+#'
+#' @name gene_cl.ref.chromium
 #' @docType data
 NULL
