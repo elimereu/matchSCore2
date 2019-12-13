@@ -1,0 +1,10 @@
+load("/Users/emereu/Dropbox (Personal)/matchSCore.v2_pkg/matchSCore2/data/gene_cl.ref_Chromium.RData")
+gene_cl.ref
+gene_cl.ref.chromium <- gene_cl.ref
+save(gene_cl.ref.chromium,file="gene_cl.ref_Chromium.RData")
+load("/Users/emereu/Dropbox (Personal)/matchSCore.v2_pkg/matchSCore2/data/gene_cl.ref_bladder_SmartSeq2_TM.RData")
+rm(gene_cl.ref)
+load("/Users/emereu/Dropbox (Personal)/matchSCore.v2_pkg/matchSCore2/data/gene_cl.ref_bladder_SmartSeq2_TM.RData")
+gene_cl.ref
+gene_cl.ref.bladder <-gene_cl.ref
+save(gene_cl.ref.bladder,file="gene_cl.ref_bladder_SmartSeq2_TM.RData")
