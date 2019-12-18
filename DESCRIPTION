@@ -46,5 +46,5 @@ Suggests:
 VignetteBuilder: knitr
 biocViews:
     GeneExpression, Software, Transcription, Transcriptomics, Annotation,
-    SingleCell
+    SingleCell, Classification, GeneExpression, Clustering
 Roxygen: list(markdown = TRUE)
