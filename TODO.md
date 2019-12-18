@@ -7,7 +7,7 @@
 - description fields to be proper filled
 - biocviews
 - ~~license~~
-- namespace imports and so
+- ~~namespace imports and so~~
 - readme Rmd?
 
 - cleanup
@@ -22,17 +22,16 @@
 
 - dedicated examples
 
-- travis?
 - pkgdown?
 - code of conduct?
-- NEWS.md
+- ~~NEWS.md~~
 
 - ~~<- vs =~~
 - ~~message vs print~~
 
 - overhaul to SCE-world as well? or at least, alt path
 
-- clarify where the data is called, and see whether it should be named differently. need to avoid warning!
+- ~~clarify where the data is called, and see whether it should be named differently. need to avoid warning!~~
 
 - nicely worked out examples!
 - nicely worked out vignette
