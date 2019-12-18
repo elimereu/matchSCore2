@@ -3,8 +3,10 @@ title: >
   The `matchSCore2` User's Guide
 author:
 - name: Elisabetta Mereu
-  affiliation: cnag-TODO...
-  email: TODO  
+  affiliation: 
+  - &id1 CNAG-CRG, Centre for Genomic Regulation (CRG), Barcelona, Spain
+  - Barcelona Institute of Science and Technology (BIST), Barcelona, Spain
+  email: TODO
 - name: Federico Marini
   affiliation: 
   - &id2 Institute of Medical Biostatistics, Epidemiology and Informatics (IMBEI), Mainz
@@ -48,5 +50,16 @@ options(width = 100)
 ```{r eval=FALSE}
 library(matchSCore2)
 ```
+
+
+# Session Info {-}
+
+```{r}
+sessionInfo()
+```
+
+
+# References {-}
+
 
 ...
