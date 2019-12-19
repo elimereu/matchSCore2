@@ -12,7 +12,7 @@ It’s a unique `SingleCellExperiment` object from which you can extract the cou
 ```{r}
 library(scater)
 
-load(file="sce.all_technologies.RData") ## load the data
+load(file="sce.all_classified.technologies.RData") ## load the data
 
 ```
 
