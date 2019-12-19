@@ -3,9 +3,9 @@
 - move out the suppl stuff for reviewers to a separate repo (`matchSCore2-manuscript`?)
 
 - vignette, fully fledged to show off the nice method :)
-- ~~roxygen with md? ~~
+- ~~roxygen with md?~~
 - description fields to be proper filled
-- biocviews
+- ~~biocviews~~
 - ~~license~~
 - ~~namespace imports and so~~
 - readme Rmd?
@@ -36,3 +36,7 @@
 - nicely worked out examples!
 - nicely worked out vignette
 - some refs for the manuscript and to manuscripts
+
+- sce dataset:
+  * row and col annotation, extend?
+  * reduced dim return error

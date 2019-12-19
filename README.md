@@ -140,3 +140,12 @@ ms$ggplot
 
 ```
 ![Heatmap](inst/extdata/Heatmap.png)
+
+## Code of Conduct
+
+Please note that the `matchSCore2` project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.
+
+## License
+
+MIT &copy; Elisabetta Mereu

@@ -3,3 +3,4 @@
 TO_REMOVE/*
 ^LICENSE\.md$
 TODO.md
+^CODE_OF_CONDUCT\.md$
