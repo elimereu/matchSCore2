@@ -3,13 +3,13 @@
 
 MatchSCore2 is a R package for the comparison of single cell RNA-seq data across tools and experiments. The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells.  A more detailed version of the method is at the bioRxiv paper:  http://dx.doi.org/10.1101/630087. The code to reproduce the downstream analyses of the paper can be found at the folder Benchmarking_of_scRNA-seq_protocols in this repository. The snakemake workflow and additional code used for the manuscript is also at the following github: https://github.com/ati-lz/HCA_Benchmarking.
 
-If you want to use our PBMC+HEK293T QCed data (UMI counts + matchSCore2 annotations) from all 13 protocols, you can download the data object at the following dropbox link: https://www.dropbox.com/s/indoehhesx6f457/sce.all_technologies.RData?dl=0. 
+If you want to use our PBMC+HEK293T QCed data (UMI counts + matchSCore2 annotations) from all 13 protocols, you can download the data object at the following dropbox link: https://www.dropbox.com/s/i8mwmyymchx8mn8/sce.all_classified.technologies.RData?dl=0. 
 It’s a unique SingleCellExperiment object from which you can extract the counts from each protocol, by the following commands.
 
 ```{r}
 library(scater)
 
-load(file="sce.all_technologies.RData") ## load the data
+load(file="sce.all_classified.technologies.RData") ## load the data
 
 ```
 
