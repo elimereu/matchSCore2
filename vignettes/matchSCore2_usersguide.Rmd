@@ -4,9 +4,9 @@ title: >
 author:
 - name: Elisabetta Mereu
   affiliation: 
-  - &id1 CNAG-CRG, Centre for Genomic Regulation (CRG), Barcelona, Spain
+  - &id1 National Center for Genomic Analysis, Center for Genomic Regulation (CRG), Barcelona, Spain
   - Barcelona Institute of Science and Technology (BIST), Barcelona, Spain
-  email: TODO
+  email: elisabetta.mereu@cnag.crg.eu
 - name: Federico Marini
   affiliation: 
   - &id2 Institute of Medical Biostatistics, Epidemiology and Informatics (IMBEI), Mainz
