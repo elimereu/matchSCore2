@@ -1,6 +1,6 @@
 ---
 title: >
-  The `matchSCore2` User's Guide
+  Comparing scRNA-seq data with `matchSCore2`.
 author:
 - name: Elisabetta Mereu
   affiliation: 
@@ -42,24 +42,31 @@ knitr::opts_chunk$set(
     warning  = FALSE,
     eval     = FALSE,
     message  = FALSE,
-    fig.width = 10
+    fig.width = 10,
+    fig.height = 8
+    
 )
 options(width = 100)
+
 ```
   
 # Introduction {#introduction}
 
-This vignette describes how to use the `r BiocStyle::Biocpkg("matchSCore2")` package for the comparison of single cell RNA-seq data across tools and experiments. The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells. A more detailed version of the method is at the bioRxiv paper: http://dx.doi.org/10.1101/630087 [@Mereu2019]. 
+This vignette describes how to use the `r BiocStyle::Biocpkg("matchSCore2")` package for the comparison of single cell RNA-seq data across experiments. The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells. A more detailed version of the method is at the bioRxiv paper: http://dx.doi.org/10.1101/630087 [@Mereu2019]. 
 By using a reference dataset in which the cellular type of individual cells is defined and gene markers are computed, matchSCore2 trains a multinomial logistic model to classify unknown cells in new datasets from similar tissues. The method consists of the following steps:
 
-1. The reference dataset is subsetted in two parts, train and test data, in order to estimate the accuracy of predictions in the reference.
-2. For each cell in the reference, a cell type signature score is assigned by using the top 100 ranked gene markers.
+1. The reference dataset is subsetted in two parts, train and test data, in order to estimate the accuracy of the model.
+2. For each cell type in the reference, a signature score is assigned to each cell by using the top 100 gene markers.
 3. The signature scores are the predictors of the multinomial logistic model.
-4. Once the model is trained, a probability value is assigned to each cell per cell type. The highest likelihood can then be used to annotate the cell if it reaches the minimum value provided by the user (default = 0.5).    
-
-This approach allows to fastly transfer annotations from one dataset to another. Sometimes we are also interested in comparing gene measurements in cells coming from different experiments (e.g. WT vs KO, disease vs control, etc..). In the matchSCore2 package, we provide a mathematical framework to align datasets, by projecting them to the same coordinates space of an assigned reference dataset. The approach, which is based on the single value decomposition, allows a direct comparison of datasets, by finding the optimal linear transformation between data points.         
+4. Once the model is trained, a probability value is assigned to each cell per cell type. The highest likelihood can then be used to annotate that cell if it reaches the minimum value provided by the user (default = 0.5).    
 
 
+![](overview_package.png){width=800%} 
+
+
+
+
+    
 # Getting started {#gettingstarted}
 
 To install this package, start R and enter:
@@ -76,137 +83,181 @@ BiocManager::install("elimereu/matchSCore2")
 
 Once installed, the package can be loaded and attached to your current workspace as follows:
 
-```{r loadlib, eval = TRUE}
+```{r loadlib,eval=FALSE}
 library("matchSCore2")
 ```
 
-In this vignette, we showcase the functionality of `r BiocStyle::Biocpkg("matchSCore2")` using the PBMC+HEK293T data from our benchmarking of 13 protocols [@Mereu2019]. You can download the `SingleCellExperiment` object from which you can extract the counts from each protocol by the following link: https://www.dropbox.com/s/i8mwmyymchx8mn8/sce.all_classified.technologies.RData?dl=0. 
-
+In this vignette, we showcase the functionality of `r BiocStyle::Biocpkg("matchSCore2")` using the PBMC+HEK293T data from our benchmarking of 13 protocols [@Mereu2019]. The list of all seurat objects, including UMAPs and tSNEs are provided here: https://www.dropbox.com/sh/wgu6kcioqkkva4g/AABHJaFsiqYZeYc-xv6qtg3ba?dl=0. From the same link, you can also download the `SingleCellExperiment` object from which you can extract the counts from each protocol by following the instructions below.
 
 ```{r,message=FALSE, warning=FALSE}
 
 library(scater)
-load(file="sce.all_classified.technologies.RData") ## load the data
+url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?raw=true"
+download.file(url = url,destfile = "~/Downloads/sce.all_classified.technologies.RData",mode = "wb")
+load(file="~/Downloads/sce.all_classified.technologies.RData") ## load the data
 
 ```
 
 After you load it into R, if you check the `colData(object)` there are three metadata, which are: nnet2, ident, batch .
-
 1. `nnet2` is the annotation from the `MatchSCore2` classifier. 
-2. `ident` is the Seurat clustering result. The clusters are manually annotated by looking are known gene markers.
-3. `batch` is the protocol. 
+2. `ident` is the Seurat clustering result. The clusters are manually annotated by looking at the expression of known gene markers.
+3. `batch` is the sequencing protocol. 
 
-```{r}
+
+```{r,eval=FALSE}
 
 colData(sce) ### give access to the metadata DataFrame
 
-table(colData(sce)$nnet2) ## Number of cells from each classified cell type (by matchSCore2 classification)
+table(colData(sce)$nnet2) ## Number of cells from each classified cell type (by matchSCore2)
 table(colData(sce)$ident) ## Number of cells from each Seurat cluster
 table(colData(sce)$batch) ## Number of cells from each protocol
 
 ```
 
-
-For example, we can consider the Quartz-Seq2 dataset as reference and drop-seq as test data.
-
+You can extract counts, PCA and UMAP of the integrated dataset, by the following commands:
 ```{r}
+counts <- sce@assays$data$counts
+logcounts <- sce@assays$data$logcounts
 
-chromium <- sce[, sce$batch=="Chromium"]
-logcounts_chromium <- chromium@assays$data@listData$logcounts ## chromium logcounts
-clus.chromium <- factor(chromium@colData$nnet2)
-names(clus.chromium) <- colnames(logcounts_chromium)
-table(clus.chromium)
+umap <- sce@reducedDims$UMAP
+pca <- sce@reducedDims$PCA
 
-# # We remove the only cell annotated as Megakaryocytes
-# p <- grep("Megakaryocytes",clus.qs)
-# clus.qs <- factor(clus.qs[-p])
-# logcounts_qs2 <- logcounts_qs2[,-p]
+## if you are interested in a specific protocol (e.g. Chromium)
+chromium <- filter(sce,batch=="Chromium") 
+logcounts <- chromium@assays$data@listData$logcounts 
 
-marsseq <- sce[, sce$batch=="MARS-Seq"]
-logcounts_ms <- marsseq@assays$data@listData$logcounts ## MARS-seq logcounts
 
 ```
 
-# Training the matchSCore2 model.
+In case you are interested in working with the seurat objects, all datasets are in the `data.list` list, whose elements represent the protocols. Let us suppose Chromium is the reference and Smart-seq2 the test data we want to annotate. The cell type specific markers from each protocol are also provided.
+
+```{r}
+
+library(Seurat)
+
+url <- "https://www.dropbox.com/s/2ketqbof6tvnv07/data.list_seurat.obj_all_datasets.RData?raw=true"
+download.file(url = url,
+              destfile = "~/Downloads/data.list_seurat.obj_all_datasets.RData",
+              mode = "wb")
+
+load(file="~/Downloads/data.list_seurat.obj_all_datasets.RData")
+ref <- data.list$Chromium
+nnet2 <- ref$nnet2
+
+
+smartseq2 <- data.list$`Smart-Seq2`
+
+
+```
+
+# Training the model
 
 To train the multinomial logistic model implemented in `MatchSCore2`, we use the function `train_model`, which requires the following inputs:
 
-1. `scale.data`: A matrix of log-normalized and/or scaled gene expression values from the reference dataset (in the manuscript we used the scale.data slot in the Seurat objects).
+1. `scale.data`: A matrix of log-normalized or scaled gene expression values from the reference dataset (in the manuscript we used the scale.data slot in the seurat objects. Make sure that the markers are all included in the scale.data).
 2. `clus`: A named factor with reference identities (like in the "ident" slot in Seurat object).
-3. `gene_cl.ref`: A named list of markers. Each element of the list contains cell type specific gene markers (Usually top100 ranked markers of each cell type). An example of gene_cl.ref can be found at the data folder of this repository. If you have the output of FindAllMarkers from Seurat, you could use the cut_markers function to get gene_cl.ref by the function `cut_markers`.
+3. `gene_cl.ref`: A named list of markers. Each element of the list contains cell type specific gene markers (Usually top100 ranked markers of each cell type). If you have the output of FindAllMarkers from Seurat, you could use the cut_markers function to get gene_cl.ref by the function `cut_markers`.
 
 
-```{r, eval=FALSE}
+```{r}
 
 library("matchSCore2")
 library("nnet")
 
-# load(file="data/markers_quartzseq2.RData")
-# gene_cl.qs <- cut_markers(levels(markers$cluster),markers = markers,ntop=100)
-# str(gene_cl.qs)
+url <- "https://www.dropbox.com/s/wijdjhbm17fd7fp/markers_all_datasets.RData?raw=true"
+download.file(url = url,destfile = "~/Downloads/markers_all_datasets.RData",mode = "wb")
 
-load(file="data/gene_cl.ref_Chromium.RData")
+load(file="~/Downloads/markers_all_datasets.RData")
+ref.markers <- markers$Chromium
+
+gene_cl.ref <- cut_markers(levels(ref.markers$cluster),
+                           markers = ref.markers,
+                           ntop = 100)
+
+str(gene_cl.ref)
+
+scaled <- ref@assays$RNA@scale.data
+```
+
 
 ### Training of the model  
-mod <- train_model(scale.data = logcounts_chromium,clus = clus.chromium,gene_cl.ref = gene_cl.chromium,prop = 0.9)
-
-
+```{r}
+mod <- train_model(scale.data = scaled,clus = nnet2,
+                   gene_cl.ref = gene_cl.ref,
+                   prop = 0.5)
 ```
+
+
 
 ## Cell classification
-Once the model is done, it can be used to predict the identity of unknown cells from another dataset. Here, we will test the model in drop-seq data. With the function `identity_map`, we assign the cell identity in the test data based on the highest probability predicted by the model.
-```{r, eval=FALSE}
+Once the model is done, it can be used to predict the identity of unknown cells from another dataset. Here, we will test the model in MARS-seq data. With the function `identity_map`, we assign the cell identity in the test data based on the highest probability predicted by the model.
+```{r}
 
+scaled <- ScaleData(smartseq2,features = unlist(gene_cl.ref))
+scaled <- scaled@assays$RNA@scale.data
 
 ## Cell projection
-out <- identity_map(scale.data = logcounts_ms,model = mod,gene_cl.ref = gene_cl.chromium)
+out <- identity_map(scale.data = scaled,
+                    model = mod,
+                    gene_cl.ref = gene_cl.ref)
 
-### cell identities
-ids <- out$ids 
-table(ids)
 
-## To each cell probabilities are assigned for any possible identity class
-probabilities <- out$fit.prob
-
-head(round(probabilities*100,digits = 2))
-
+identity_heatmap(out)
 
 ```
+
+![](identity_heatmaps.png){width=100%} 
+
+From the heatmap, you can observe the probability of cells to be assigned to each cell identity. Cells assigned to a specific identity have the highest probability (magenta color) for that class and probability close to zero (white-blue colors) in other classes.   
 
 ## Comparison between matchSCore2 and clustering annotations
  `MatchSCore2` can be used to improve the clustering annotation, detecting subtle differences between cell types that are difficult to be detected by clustering (e.g. NK and CD8 T cells, CD4 and CD8 T cells, etc..). 
 ```{r}
 
-clus.ms <- factor(marsseq@colData$ident)
-original_annotation <- factor(marsseq@colData$nnet2)
-table(clus.ms,ids)
+smseq.clus <- smartseq2$ident
+
 
 col=c("aquamarine","orange","green4","blueviolet","black","maroon","coral2","deepskyblue3","lightgray")
 
-summary_barplot(class.fac = ids ,obs.fac = clus.ms)+scale_fill_manual(values = col)
+
+summary_barplot(class.fac = out$ids ,obs.fac = smseq.clus)+scale_fill_manual(values = col)
+
 
 ```
-
+![](summary_barplots.png){width=100%} 
+Here, you can see the distribution of the assigned cell identities per cluster. This is helpful to visualize the agreement between clustering and cell identity projection. Also, it highlights differences in cluster resolution (e.g. the cluster of monocytes contains both types CD14+ and FCGR3A+).
 
 # Clustering Annotation
 
 We can also measure the grade of matching across clusters by looking at the level of similarity of their cluster-specific gene markers, measured by the Jaccard Index. For example, you could use the top 100 ranked markers per cluster from the Chromium and MARS-Seq dataset.
 
-```{r, eval=FALSE}
-
-## We used the Chromium data as reference
-load(file="data/gene_cl.ref_Chromium.RData")
+```{r}
 
 ## And the MARS-Seq as test
-load(file="data/gene_cl_MARS-Seq.RData")
+test.markers <- markers$`Smart-Seq2`
+
+gene_cl.test <- cut_markers(levels(test.markers$cluster),markers = test.markers,ntop = 100)
 
 
 ## The matchSCore2 function computes the clustering comparison and produce the heatmap table with Jaccard Indexes for each group combination
 
-matchSCore2(gene_cl.ref = gene_cl.chromium,gene_cl.obs = gene_cl,ylab = "Chromium",xlab = "MARS-Seq")
+matchSCore2(gene_cl.ref = gene_cl.ref,gene_cl.obs = gene_cl.test,ylab = "Chromium",xlab = "Smart-seq2")
 
 
 ```
+![](Cluster-sp_markers_comparison.png){width=100%} 
+
+In the heatmap, we can observe the Jaccard similarity between cluster-specific markers from the two experiments. Notably, you can see how the jaccard indexes between markers reflect the cellular composition of clusters, in agreement with the previous plot. 
+
+# Alignment of datasets
+While with the previous approach we can fastly transfer annotations from one dataset to another, sometimes we are interested in comparing gene measurements between cells coming from different experiments (e.g. WT vs KO, disease vs control, etc..). In the matchSCore2 package, we provide a mathematical framework to align datasets, by projecting them to the same coordinate space of an assigned reference dataset. The method is based on the single value decomposition and allows a direct comparison of datasets, by finding the optimal linear transformation between data points.     
+By using the function `align_run` two or more gene expression matrixes are compared and aligned to the same reference dataset.  
+
+```{r, eval=FALSE}
+
+
+```
+
 
 # Session Info {-}
 
