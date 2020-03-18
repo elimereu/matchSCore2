@@ -4,17 +4,9 @@
 \alias{GOannotation}
 \title{Compute the weighted GO enrichment of cluster-specific markers.}
 \usage{
-GOannotation(
-  markers,
-  go.db,
-  species = "mouse",
-  ontology.type = "BP",
-  reformat.gene.names = FALSE,
-  go.score.class = "weight01Score",
-  p.val.threshold = 0.05,
-  dag.file.prefix = FALSE,
-  ngenes = 20
-)
+GOannotation(markers, go.db, species = "mouse", ontology.type = "BP",
+  reformat.gene.names = FALSE, go.score.class = "weight01Score",
+  p.val.threshold = 0.05, dag.file.prefix = FALSE, ngenes = 20)
 }
 \arguments{
 \item{markers}{A data.frame of cluster specific gene markers like in the Seurat output of the function FindAllMarkers. The used columns are c("p_val","cluster","gene")}

@@ -4,16 +4,8 @@
 \alias{seurat3_run}
 \title{This function run Seurat3 by using the output of the align_run function.}
 \usage{
-seurat3_run(
-  counts,
-  integrated,
-  annotation,
-  dataset,
-  dims = c(1:10),
-  res = 0.2,
-  col_anno = NULL,
-  col_data = NULL
-)
+seurat3_run(counts, integrated, annotation, dataset, dims = c(1:10),
+  res = 0.2, col_anno = NULL, col_data = NULL)
 }
 \arguments{
 \item{counts}{The output of the function align_run. The combined count matrix used to create the new integrated Seurat object.}

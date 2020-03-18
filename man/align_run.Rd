@@ -4,24 +4,28 @@
 \alias{align_run}
 \title{Integration of different datasets}
 \usage{
-align_run(dataset_list, marker_list)
+align_run(dataset_list, marker_list, ref)
 }
 \arguments{
-\item{dataset_list}{A named list of annotated Seurat objects. The cell annotations are in the @active.ident slots.}
+\item{dataset_list}{A named list of annotated SingleCellExperiments objects. The cell
+annotations are in the `cluster` slots.}
 
-\item{marker_list}{A list of cell-type specific markers from the input dataset.}
+\item{marker_list}{A list of `cluster` specific markers from the input dataset.}
+
+\item{ref}{The name of the reference dataset from the dataset_list. It has to be the first in the dataset_list.}
 }
 \value{
-A list containing: 
-\item integrated: the integrated scaled matrix.
-\item counts: the combined count matrix.
-\item annotation_label: the cell annotations.
-\item dataset_label: a vector indicating the dataset of origin for each cell.
-\item genes: the set of common genes used.
+A list containing:
+- `sce`: the integrated SingleCellExperiment object.
+- `integrated`: the integrated scaled matrix.
+- `counts`: the combined count matrix.
+- `annotation_label`: the cell annotations.
+- `dataset_label`: a vector indicating the dataset of origin for each cell.
+- `genes`: the set of common genes used.
 }
 \description{
 Integration of different datasets
 }
 \examples{
-
+# TODO
 }

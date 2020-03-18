@@ -19,7 +19,7 @@ matchSCore2(gene_cl.ref, gene_cl.obs, ylab, xlab)
 A list with the matchSCore matrix and the ggplot table at the ggplot slot.
 }
 \description{
-This function computes the matchSCore across reference gene markers and 
+This function computes the matchSCore across reference gene markers and
 cluster-specific genes computationally obtained from the tool.
 }
 \examples{
