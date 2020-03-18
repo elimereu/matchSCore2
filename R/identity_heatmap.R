@@ -31,6 +31,3 @@ gg <-  ggplot(my_df.melt, aes(x=factor(x),y=variable,fill=value)) + labs(x="Cell
 return(gg)
 }
 
-png(file="vignettes/identity_heatmaps.png",width = 7, height = 6, units = 'in', res = 600)
-gg
-dev.off()
