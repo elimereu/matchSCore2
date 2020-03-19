@@ -4,17 +4,12 @@
 \alias{seurat3_run}
 \title{This function run Seurat3 by using the output of the align_run function.}
 \usage{
-seurat3_run(counts, integrated, annotation, dataset, dims = c(1:10),
-  res = 0.2, col_anno = NULL, col_data = NULL)
+seurat3_run(out_align, dims = c(1:10), res = 0.2, col_anno = NULL,
+  col_data = NULL)
 }
 \arguments{
-\item{counts}{The output of the function align_run. The combined count matrix used to create the new integrated Seurat object.}
-
-\item{integrated}{The output of the function align_run. It will be used as the scale.data of the new integrated Seurat object.}
-
-\item{annotation}{A vector with the cell annotation like the annotation_label output of the align_run function.}
-
-\item{dataset}{a vector indicating the dataset of origin for each cell like the dataset_label output of the align_run function.}
+\item{out_align}{The output of the function align_run. The combined count matrix is used
+to create the Seurat object and the integrated is provided to the slot @data.}
 
 \item{dims}{Seurat parameter. It is the dimension of the PCA space.}
 
