@@ -30,7 +30,7 @@ bibliography: matchSCore2.bib
 
 **Compiled date**: `r Sys.Date()`
 
-**Last edited**: 2020-02-28
+**Last edited**: 2020-03-19
 
 **License**: `r packageDescription("matchSCore2")[["License"]]`
 
@@ -250,11 +250,44 @@ matchSCore2(gene_cl.ref = gene_cl.ref,gene_cl.obs = gene_cl.test,ylab = "Chromiu
 In the heatmap, we can observe the Jaccard similarity between cluster-specific markers from the two experiments. Notably, you can see how the jaccard indexes between markers reflect the cellular composition of clusters, in agreement with the previous plot. 
 
 # Alignment of datasets
-While with the previous approach we can fastly transfer annotations from one dataset to another, sometimes we are interested in comparing gene measurements between cells coming from different experiments (e.g. WT vs KO, disease vs control, etc..). In the matchSCore2 package, we provide a mathematical framework to align datasets, by projecting them to the same coordinate space of an assigned reference dataset. The method is based on the single value decomposition and allows a direct comparison of datasets, by finding the optimal linear transformation between data points.     
+While with the previous approach we can fastly transfer annotations from one dataset to another, sometimes we are interested in comparing gene measurements between cells coming from different experiments (e.g. WT vs KO, disease vs control, different protocols, etc..). In the matchSCore2 package, we provide a mathematical framework to align datasets, by projecting them to the same coordinate space of an assigned reference dataset. The method is based on the single value decomposition and allows a direct comparison of datasets, by finding the optimal linear transformation between data points.     
 By using the function `align_run` two or more gene expression matrixes are compared and aligned to the same reference dataset.  
 
+In this example, we want to align 3 of the PBMC+HEK293T experiments sequenced with different protocols: Chromium, Quartz-Seq2 and Smart-Seq2. In this case, the choice of the reference is not so important, we will choose the Chromium dataset. The method requires the clusters (more than 1 cell), they will be used to compute a centroid point at each dataset, useful for their comparison. 
 ```{r, eval=FALSE}
 
+url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?dl=0"
+download.file(url = url,destfile = "~/Downloads/sce.all_classified.technologies.RData",mode = "wb")
+load(file="~/Downloads/sce.all_classified.technologies.RData") ## load the data
+
+chromium <- scater::filter(sce,batch=="Chromium")
+smartseq2 <- scater::filter(sce,batch=="Smart-Seq2")
+quartzseq <- scater::filter(sce,batch=="Quartz-Seq2")
+
+chromium$cluster <- factor(chromium$ident)
+smartseq2$cluster <- factor(smartseq2$ident)
+quartzseq$cluster <- factor(quartzseq$ident)
+
+
+list_data <- list(Chromium=chromium,Smartseq2=smartseq2,Quartz.seq=quartzseq)
+
+markers.qs <- markers$`Quartz-Seq2`
+gene_cl.qs <- cut_markers(levels(markers.qs$cluster),markers = markers.qs,ntop = 100)
+
+markers_list <- unique(c(unlist(gene_cl.ref),unlist(gene_cl.test),unlist(gene_cl.qs)))
+
+out_align <- align_run(dataset_list = list_data,marker_list = markers_list,ref = "Chromium")
+
+
+```
+
+The output contains a `SingleCellExperiment` object with the joint raw count and integrated matrixes from the 3 datasets. See the manual of the `align_run` function for more details about the output.
+
+Once data are integrated, you can use the normalized matrix to cluster your cells. For example, if you want to use Seurat to cluster your cells, you can provide that matrix in the @data slot, as in the `seurat3_run` function. 
+
+```{r, eval=FALSE}
+library(Seurat)
+data <- seurat3_run(o)
 
 ```
 
