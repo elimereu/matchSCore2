@@ -174,8 +174,6 @@ gene_cl.ref <- cut_markers(levels(ref.markers$cluster),
                            markers = ref.markers,
                            ntop = 100)
 
-str(gene_cl.ref)
-
 scaled <- ref@assays$RNA@scale.data
 ```
 
@@ -253,7 +251,7 @@ In the heatmap, we can observe the Jaccard similarity between cluster-specific m
 While with the previous approach we can fastly transfer annotations from one dataset to another, sometimes we are interested in comparing gene measurements between cells coming from different experiments (e.g. WT vs KO, disease vs control, different protocols, etc..). In the matchSCore2 package, we provide a mathematical framework to align datasets, by projecting them to the same coordinate space of an assigned reference dataset. The method is based on the single value decomposition and allows a direct comparison of datasets, by finding the optimal linear transformation between data points.     
 By using the function `align_run` two or more gene expression matrixes are compared and aligned to the same reference dataset.  
 
-In this example, we want to align 3 of the PBMC+HEK293T experiments sequenced with different protocols: Chromium, Quartz-Seq2 and Smart-Seq2. In this case, the choice of the reference is not so important, we will choose the Chromium dataset. The method requires the clusters (more than 1 cell), they will be used to compute a centroid point at each dataset, useful for their comparison. 
+In this example, we want to align 3 of the PBMC+HEK293T experiments sequenced with different protocols: Chromium, Smart-Seq2 and ddSEQ. In this case, the choice of the reference is not so important, we will choose the Chromium dataset. The method requires the clusters (more than 1 cell), they will be used to compute a centroid point at each dataset, useful for their comparison. 
 ```{r, eval=FALSE}
 
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?dl=0"
@@ -262,39 +260,64 @@ load(file="~/Downloads/sce.all_classified.technologies.RData") ## load the data
 
 chromium <- scater::filter(sce,batch=="Chromium")
 smartseq2 <- scater::filter(sce,batch=="Smart-Seq2")
-quartzseq <- scater::filter(sce,batch=="Quartz-Seq2")
+ddseq <- scater::filter(sce,batch=="ddSEQ")
 
-chromium$cluster <- factor(chromium$ident)
-smartseq2$cluster <- factor(smartseq2$ident)
-quartzseq$cluster <- factor(quartzseq$ident)
+chromium$cluster <- factor(chromium$nnet2)
+smartseq2$cluster <- factor(smartseq2$nnet2)
+ddseq$cluster <- factor(ddseq$nnet2)
 
 
-list_data <- list(Chromium=chromium,Smartseq2=smartseq2,Quartz.seq=quartzseq)
+list_data <- list(Chromium=chromium,Smartseq2=smartseq2,ddseq=ddseq)
 
-markers.qs <- markers$`Quartz-Seq2`
-gene_cl.qs <- cut_markers(levels(markers.qs$cluster),markers = markers.qs,ntop = 100)
+markers.dds <- markers$ddSEQ
+gene_cl.dds <- cut_markers(levels(markers.dds$cluster),markers = markers.dds,ntop = 100)
 
-markers_list <- unique(c(unlist(gene_cl.ref),unlist(gene_cl.test),unlist(gene_cl.qs)))
+markers_list <- unique(c(unlist(gene_cl.ref),unlist(gene_cl.test),unlist(gene_cl.dds)))
 
 out_align <- align_run(dataset_list = list_data,marker_list = markers_list,ref = "Chromium")
 
 
 ```
 
-The output contains a `SingleCellExperiment` object with the joint raw count and integrated matrixes from the 3 datasets. See the manual of the `align_run` function for more details about the output.
+The output contains a `SingleCellExperiment` object with the joint raw counts and the integrated matrix from the 3 datasets. See the manual of the `align_run` function for more details about the output.
 
-Once data are integrated, you can use the normalized matrix to cluster your cells. For example, if you want to use Seurat to cluster your cells, you can provide that matrix in the @data slot, as in the `seurat3_run` function. 
+Once data are integrated, you can use the normalized matrix to cluster your cells. For example, if you want to use Seurat, you can provide that matrix in the @data slot, as in the `seurat3_run` function. 
 
 ```{r, eval=FALSE}
-library(Seurat)
-data <- seurat3_run(o)
 
+col2 <- c("maroon","orange","cyan")
+data <- seurat3_run(out_align = out_align,
+                    dims = 1:10,
+                    res = 0.2,
+                    col_anno = col,
+                    col_data = col2)
+
+
+DimPlot(data,group.by = "cluster",cols = col)+
+  theme(legend.text = element_text(size = 14))
+
+
+DimPlot(data,group.by = "dataset",cols = col2)+
+  theme(legend.text = element_text(size = 14))
+
+
+```
+![](UMAP_celltype_after_integration.png){width=100%} 
+![](UMAP_dataset_after_integration.png){width=100%} 
+We can explore some of the markers we used for the integration with the Seurat `FeaturePlot` function:
+
+```{r, eval=FALSE}
+FeaturePlot(data,features = c("CD79B","IL7R","CD3D","NKG7",
+                              "GNLY","CD14","FCGR3A","CTTN"))
 ```
 
 
+
+![](UMAP_markers_after_integration.png){width=800%,height=800%} 
+
 # Session Info {-}
 
-```{r}
+```{r,eval=TRUE}
 sessionInfo()
 ```
 
