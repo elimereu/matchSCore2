@@ -18,12 +18,12 @@
 
 - ~~harmonize filenames .R/.r~~
 
-- Working off R CMD check + BiocCheck
+- ~~Working off R CMD check~~ + BiocCheck
 
 - dedicated examples
 
 - pkgdown?
-- code of conduct?
+- ~~code of conduct?~~
 - ~~NEWS.md~~
 
 - ~~<- vs =~~
