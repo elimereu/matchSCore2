@@ -4,17 +4,20 @@
 \alias{align_run}
 \title{Integration of different datasets}
 \usage{
-align_run(dataset_list, marker_list)
+align_run(dataset_list, marker_list, ref)
 }
 \arguments{
-\item{dataset_list}{A named list of annotated Seurat objects. The cell
-annotations are in the \code{active.ident} slots.}
+\item{dataset_list}{A named list of annotated SingleCellExperiments objects. The cell
+annotations are in the \code{cluster} slots.}
 
-\item{marker_list}{A list of cell-type specific markers from the input dataset.}
+\item{marker_list}{A list of \code{cluster} specific markers from the input dataset.}
+
+\item{ref}{The name of the reference dataset from the dataset_list. It has to be the first in the dataset_list.}
 }
 \value{
 A list containing:
 \itemize{
+\item \code{sce}: the integrated SingleCellExperiment object.
 \item \code{integrated}: the integrated scaled matrix.
 \item \code{counts}: the combined count matrix.
 \item \code{annotation_label}: the cell annotations.
