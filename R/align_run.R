@@ -103,7 +103,7 @@ align_run <- function(dataset_list,
 
 
   cc <- lapply(seq(1:length(d_list)), function(x) sapply(levels(cl1[[x]]), function(y) rowMeans(d_list[[x]][genes, which(dataset_list[[x]]@colData$cluster == y)])))
-  cc <- lapply(cc, function(x) apply(x, 1, function(y) median(y, na.rm = T)))
+  cc <- lapply(cc, function(x) apply(x, 1, function(y) median(y, na.rm = TRUE)))
 
   progress <- 4
   Sys.sleep(0.1)
@@ -177,7 +177,7 @@ align_run <- function(dataset_list,
 
   sce <- SingleCellExperiment(assays = list(counts = counts))
   minx <- 0
-  maxx <- max(as.vector(log10(counts + 1)), na.rm = T)
+  maxx <- max(as.vector(log10(counts + 1)), na.rm = TRUE)
   integrated <- t(apply(integrated, 1, function(x) (x - min(x)) / (max(x) - min(x))))
   sce@assays$data$integrated <- integrated
   sce@colData <- DataFrame(cluster = annotation, batch = dataset)

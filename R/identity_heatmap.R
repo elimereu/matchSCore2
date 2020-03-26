@@ -12,7 +12,7 @@ identity_heatmap <- function(out) {
   ids.ord <- order(out$ids)
   ord.p <- out$fit.prob[ids.ord, ]
 
-  my_df <- data.frame(ord.p, check.names = F, check.rows = F)
+  my_df <- data.frame(ord.p, check.names = FALSE, check.rows = FALSE)
   my_df.melt <- melt(cbind(x = 1:nrow(my_df), my_df), id = "x")
 
   gg <- ggplot(my_df.melt, aes(x = factor(x), y = variable, fill = value)) +

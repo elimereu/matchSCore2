@@ -32,7 +32,7 @@ tscores_plots <- function(scores_df) {
   ) +
     geom_point(alpha = 0.7, size = 2.5) +
     scale_colour_gradientn(colours = c("gold", "gray", "blue")) +
-    geom_smooth(span = 1.3, se = F) +
+    geom_smooth(span = 1.3, se = FALSE) +
     theme_bw()
 
   p3 <- ggplot(
