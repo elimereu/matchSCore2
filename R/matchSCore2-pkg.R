@@ -21,6 +21,7 @@
 #' @importFrom cowplot plot_grid
 #' @import Seurat
 #' @importFrom SingleCellExperiment colData rowData
+#' @importFrom corpcor fast.svd
 #'
 #' @name matchSCore2-pkg
 #' @docType package

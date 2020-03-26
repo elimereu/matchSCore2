@@ -39,7 +39,8 @@ Imports:
     igraph,
     cowplot,
     Seurat,
-    SingleCellExperiment
+    SingleCellExperiment,
+    corpcor
 Suggests: 
     knitr,
     rmarkdown,
