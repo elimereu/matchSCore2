@@ -99,7 +99,7 @@ align_run <- function(dataset_list,marker_list,ref){
   Sys.sleep(0.1)
   setTxtProgressBar(pb,progress)
 
-  require(corpcor)
+  # require(corpcor)
 
   len <- length(dataset_list)
   sequence <- c(1:len)
@@ -173,7 +173,7 @@ align_run <- function(dataset_list,marker_list,ref){
   time <- difftime(end.time,start.time,units="mins")
   message(paste("The runtime is:",time,"min",sep=" "))
 
-  require(SingleCellExperiment)
+  # require(SingleCellExperiment)
   sce <- SingleCellExperiment(assays=list(counts=counts))
   minx <- 0
   maxx <- max(as.vector(log10(counts+1)),na.rm = T)

@@ -9,9 +9,9 @@
 #'
 
 identity_heatmap <- function(out){
-library(ggplot2)
-library(reshape2)
-library(grid)
+# library(ggplot2)
+# library(reshape2)
+# library(grid)
 
 
 ids.ord <- order(out$ids)
