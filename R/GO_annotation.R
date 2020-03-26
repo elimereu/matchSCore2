@@ -40,7 +40,7 @@ GOannotation <- function (markers, go.db,species="mouse",ontology.type = "BP", r
     go.db = go.db$packageName
 
   if (reformat.gene.names) {
-    cat("Reformatting gene names (to lower case names starting with capital)")
+    message("Reformatting gene names (to lower case names starting with capital)")
     .simpleCap <- function(x) {
       s <- strsplit(x, " ")[[1]]
       paste(toupper(substring(s, 1, 1)), substring(s, 2),
@@ -80,7 +80,7 @@ go.env <- eapply(godb, function(x) as.character(na.omit(rids[x])))
 
 
 for (clus in levels(cluster)) {
-  cat(paste("Computing GO enrichment for cluster:", clus,
+  message(paste("Computing GO enrichment for cluster:", clus,
             "\n"))
   df <- markers[which(markers$cluster==clus),]
   all.genes = df$p_val

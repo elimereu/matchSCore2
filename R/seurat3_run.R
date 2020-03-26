@@ -27,7 +27,7 @@ seurat3_run <- function(out_align,dims=c(1:10),res=0.2,col_anno=NULL,col_data=NU
   annotation <- out_align$annotation_label
   dataset <- out_align$dataset_label
 
-  print("Running Seurat by using as normalized data the integrated matrix..")
+  message("Running Seurat by using as normalized data the integrated matrix..")
 
   counts <- counts[,colnames(integrated)]
   data <- CreateSeuratObject(counts = counts, min.features = 0, min.cells = 0,project = "integrated")

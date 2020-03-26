@@ -30,7 +30,7 @@ align_run <- function(dataset_list,marker_list,ref){
 
   original <- dataset_list
 
-  print("Defining the set of common genes")
+  message("Defining the set of common genes")
 
   total <- 10
   # create progress bar
@@ -107,9 +107,9 @@ align_run <- function(dataset_list,marker_list,ref){
   sequence <- sequence[-pos]
 
   H <- lapply(c(1:len),function(x) d_list[[x]]-cc[[x]])
-  print(" Computing covariance matrixes... ")
+  message(" Computing covariance matrixes... ")
   cov <- lapply(sequence, function(x) cov(H[[pos]],H[[x]]))
-  print(" Single Value Decomposition of covariance matrixes ... ")
+  message(" Single Value Decomposition of covariance matrixes ... ")
   svd_out <- lapply(cov, function(x) fast.svd(x))
 
   progress <- 5
@@ -171,7 +171,7 @@ align_run <- function(dataset_list,marker_list,ref){
   close(pb)
   end.time <- Sys.time()
   time <- difftime(end.time,start.time,units="mins")
-  print(paste("The runtime is:",time,"min",sep=" "))
+  message(paste("The runtime is:",time,"min",sep=" "))
 
   require(SingleCellExperiment)
   sce <- SingleCellExperiment(assays=list(counts=counts))
