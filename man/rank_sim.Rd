@@ -10,11 +10,13 @@ rank_sim(sim)
 \item{sim}{A Splatter sim object with simulated cellular groups or paths.}
 }
 \value{
-A data frame containing the group gene ranking and other additional information for each gene from the simulated data set.
+A \code{data.frame} containing the group gene ranking and other additional
+information for each gene from the simulated data set.
 }
 \description{
-This function rank group markers according their relative specificity based on fold changes.
+This function rank group markers according their relative specificity based
+on fold changes.
 }
 \examples{
-
+# TODO
 }

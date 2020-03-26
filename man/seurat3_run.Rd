@@ -2,7 +2,7 @@
 % Please edit documentation in R/seurat3_run.R
 \name{seurat3_run}
 \alias{seurat3_run}
-\title{This function run Seurat3 by using the output of the align_run function.}
+\title{This function runs Seurat3 by using the output of the \code{align_run} function.}
 \usage{
 seurat3_run(
   out_align,
@@ -19,13 +19,18 @@ to create the Seurat object and the integrated is provided to the slot @data.}
 \item{dims}{Seurat parameter. It is the dimension of the PCA space.}
 
 \item{res}{Seurat resolution parameter.}
+
+\item{col_anno}{TODO}
+
+\item{col_data}{TODO}
 }
 \value{
-The integrated Seurat object. Two UMAP plots with cells coloured by annotation and dataset will be generated.
+The integrated Seurat object. Two UMAP plots with cells coloured by
+annotation and dataset will be generated.
 }
 \description{
-This function run Seurat3 by using the output of the align_run function.
+This function runs Seurat3 by using the output of the \code{align_run} function.
 }
 \examples{
-
+# TODO
 }

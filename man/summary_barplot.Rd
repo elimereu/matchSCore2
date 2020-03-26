@@ -7,12 +7,14 @@
 summary_barplot(class.fac, obs.fac)
 }
 \arguments{
-\item{class.fac}{A named vector of classified cells (e.g. the output$ids from the identity_map function).}
+\item{class.fac}{A named vector of classified cells (e.g. the \code{output$ids}
+from the \code{\link[=identity_map]{identity_map()}} function).}
 
 \item{obs.fac}{A named vector of clusters.}
 }
 \value{
-A cumulative barplot describing the cell identity compositions of the observed clusters onto the reference
+A cumulative barplot describing the cell identity compositions of the
+observed clusters onto the reference
 }
 \description{
 This function identifies true label groups between reference groups and clusters.

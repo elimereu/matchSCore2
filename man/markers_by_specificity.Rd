@@ -7,20 +7,24 @@
 markers_by_specificity(rank_df, spec, n_clust)
 }
 \arguments{
-\item{rank_df}{The data frame with the ranked group genes as returned by the rank_sim function.}
+\item{rank_df}{The data frame with the ranked group genes as returned by the
+\code{\link[=rank_sim]{rank_sim()}} function.}
 
-\item{spec}{The proportion of top ranked genes. It has to be a number between 0 and 1.}
+\item{spec}{The proportion of top ranked genes. It has to be a number between
+0 and 1.}
 
 \item{n_clust}{The number of simulated cell groups.}
 }
 \value{
-A list with n_clust elements representing their corresponding group markers.
-Each element of the list contains the relative set of marker indexes as ordered in the original rowData(sim).
+A list with \code{n_clust} elements representing their corresponding group
+markers. Each element of the list contains the relative set of marker indexes
+as ordered in the original \code{rowData(sim)}.
 The list doesn't keep the order of the ranking.
 }
 \description{
-This function gives you the ranked list of group markers at the specified proportion of top markers (specificity)
+This function gives you the ranked list of group markers at the specified
+proportion of top markers (specificity)
 }
 \examples{
-
+# TODO
 }

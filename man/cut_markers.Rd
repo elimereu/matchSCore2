@@ -9,7 +9,8 @@ cut_markers(clusters, markers, ntop)
 \arguments{
 \item{clusters}{A vector of cluster labels.}
 
-\item{markers}{A data.frame as in the output of the FindAllMarkers Seurat function.}
+\item{markers}{A \code{data.frame} as in the output of the \code{FindAllMarkers} Seurat
+function.}
 
 \item{ntop}{The number of top markers you want.}
 }
@@ -20,5 +21,5 @@ A list of ntop markers per cluster.
 This function identifies true label groups between reference groups and clusters.
 }
 \examples{
-
+# TODO
 }
