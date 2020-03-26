@@ -17,6 +17,7 @@
 #'
 #' @examples
 #' # TODO
+#'
 align_run <- function(dataset_list,marker_list,ref){
 
   if(names(dataset_list)[1]!=ref){
@@ -24,11 +25,12 @@ align_run <- function(dataset_list,marker_list,ref){
   }
 
   if(ncol(dataset_list[[ref]])>2000){
-       prop <- round(2000/(ncol(dataset_list[[ref]])),digits = 2)
+    prop <- round(2000/(ncol(dataset_list[[ref]])),digits = 2)
   }else{ prop <- 0.9}
 
   original <- dataset_list
-  print("Defining the set of common genes")
+
+  message("Defining the set of common genes")
 
   total <- 10
   # create progress bar
@@ -97,7 +99,7 @@ align_run <- function(dataset_list,marker_list,ref){
   Sys.sleep(0.1)
   setTxtProgressBar(pb,progress)
 
-  require(corpcor)
+  # require(corpcor)
 
   len <- length(dataset_list)
   sequence <- c(1:len)
@@ -105,9 +107,9 @@ align_run <- function(dataset_list,marker_list,ref){
   sequence <- sequence[-pos]
 
   H <- lapply(c(1:len),function(x) d_list[[x]]-cc[[x]])
-  print(" Computing covariance matrixes... ")
+  message(" Computing covariance matrixes... ")
   cov <- lapply(sequence, function(x) cov(H[[pos]],H[[x]]))
-  print(" Single Value Decomposition of covariance matrixes ... ")
+  message(" Single Value Decomposition of covariance matrixes ... ")
   svd_out <- lapply(cov, function(x) fast.svd(x))
 
   progress <- 5
@@ -169,9 +171,9 @@ align_run <- function(dataset_list,marker_list,ref){
   close(pb)
   end.time <- Sys.time()
   time <- difftime(end.time,start.time,units="mins")
-  print(paste("The runtime is:",time,"min",sep=" "))
+  message(paste("The runtime is:",time,"min",sep=" "))
 
-  require(SingleCellExperiment)
+  # require(SingleCellExperiment)
   sce <- SingleCellExperiment(assays=list(counts=counts))
   minx <- 0
   maxx <- max(as.vector(log10(counts+1)),na.rm = T)

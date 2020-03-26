@@ -6,28 +6,26 @@
 #'
 #' @export
 #' @examples
-#'
-
+#' # TODO
 identity_heatmap <- function(out){
-library(ggplot2)
-library(reshape2)
-library(grid)
+  # library(ggplot2)
+  # library(reshape2)
+  # library(grid)
+
+  ids.ord <- order(out$ids)
+  ord.p <- out$fit.prob[ids.ord,]
+
+  my_df <- data.frame(ord.p,check.names = F,check.rows = F)
+  my_df.melt <-  melt(cbind(x=1:nrow(my_df),my_df),id ="x")
 
 
-ids.ord <- order(out$ids)
-ord.p <- out$fit.prob[ids.ord,]
+  gg <-  ggplot(my_df.melt, aes(x=factor(x),y=variable,fill=value)) + labs(x="Cells",y="Cell identity")+
+    geom_tile(aes(fill = value)) + scale_fill_gradientn(colours = c("gray100","blue","yellow","deeppink"),
+                                                        name="Probability\n")+
+    theme(axis.text.x=element_blank(),
+          axis.text.y = element_text(colour = "black",size=16),axis.title = element_text(size=16),
+          legend.text = element_text(size=12),legend.title = element_text(size = 12))
 
-my_df <- data.frame(ord.p,check.names = F,check.rows = F)
-my_df.melt <-  melt(cbind(x=1:nrow(my_df),my_df),id ="x")
-
-
-gg <-  ggplot(my_df.melt, aes(x=factor(x),y=variable,fill=value)) + labs(x="Cells",y="Cell identity")+
-  geom_tile(aes(fill = value)) + scale_fill_gradientn(colours = c("gray100","blue","yellow","deeppink"),
-                                                      name="Probability\n")+
-   theme(axis.text.x=element_blank(),
-        axis.text.y = element_text(colour = "black",size=16),axis.title = element_text(size=16),
-        legend.text = element_text(size=12),legend.title = element_text(size = 12))
-
-return(gg)
+  return(gg)
 }
 
