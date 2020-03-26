@@ -99,6 +99,7 @@ for (clus in levels(cluster)) {
   cor.p.val.threshold <- p.val.threshold
   ks.results = topGO::getSigGroups(go.data, ks.test)
   if (is.character(dag.file.prefix)) {
+    topic <- "" # TODOELI: do we need this?
     topGO::printGraph(go.data, ks.results, firstSigNodes = sum(score(ks.results) <
                                                                  cor.p.val.threshold), fn.prefix = paste(dag.file.prefix,
                                                                                                          "_T", topic, "_", ontology.type, "_DAG", sep = ""),
