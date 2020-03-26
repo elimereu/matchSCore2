@@ -4,8 +4,13 @@
 \alias{seurat3_run}
 \title{This function run Seurat3 by using the output of the align_run function.}
 \usage{
-seurat3_run(out_align, dims = c(1:10), res = 0.2, col_anno = NULL,
-  col_data = NULL)
+seurat3_run(
+  out_align,
+  dims = c(1:10),
+  res = 0.2,
+  col_anno = NULL,
+  col_data = NULL
+)
 }
 \arguments{
 \item{out_align}{The output of the function align_run. The combined count matrix is used

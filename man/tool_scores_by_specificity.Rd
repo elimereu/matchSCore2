@@ -4,8 +4,14 @@
 \alias{tool_scores_by_specificity}
 \title{Compute matchSCore for a specified value of specificity and ntop ranked genes}
 \usage{
-tool_scores_by_specificity(sim, specificity, tool_out, ntop,
-  tool_run = seurat_run, labels)
+tool_scores_by_specificity(
+  sim,
+  specificity,
+  tool_out,
+  ntop,
+  tool_run = seurat_run,
+  labels
+)
 }
 \arguments{
 \item{sim}{A Splatter simulation object.}

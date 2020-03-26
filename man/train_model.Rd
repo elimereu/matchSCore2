@@ -4,8 +4,14 @@
 \alias{train_model}
 \title{Model training}
 \usage{
-train_model(scale.data, clus, gene_cl.ref, prop = NULL,
-  p.threshold = NULL, ...)
+train_model(
+  scale.data,
+  clus,
+  gene_cl.ref,
+  prop = NULL,
+  p.threshold = NULL,
+  ...
+)
 }
 \arguments{
 \item{scale.data}{A scaled matrix of gene expressions like in the scale.data of the Seurat object. Rows are genes and columns are cells from the reference dataset.}

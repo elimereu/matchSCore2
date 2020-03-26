@@ -4,9 +4,17 @@
 \alias{GOannotation}
 \title{Compute the weighted GO enrichment of cluster-specific markers.}
 \usage{
-GOannotation(markers, go.db, species = "mouse", ontology.type = "BP",
-  reformat.gene.names = FALSE, go.score.class = "weight01Score",
-  p.val.threshold = 0.05, dag.file.prefix = FALSE, ngenes = 20)
+GOannotation(
+  markers,
+  go.db,
+  species = "mouse",
+  ontology.type = "BP",
+  reformat.gene.names = FALSE,
+  go.score.class = "weight01Score",
+  p.val.threshold = 0.05,
+  dag.file.prefix = FALSE,
+  ngenes = 20
+)
 }
 \arguments{
 \item{markers}{A data.frame of cluster specific gene markers like in the Seurat output of the function FindAllMarkers. The used columns are c("p_val","cluster","gene")}
@@ -18,7 +26,7 @@ GOannotation(markers, go.db, species = "mouse", ontology.type = "BP",
 \item{ontology.type}{Ontology family to be examined ("BP"= 'Biological Process', "MF"='Molecular Function',"CC"='Cellular Component')}
 }
 \value{
-A list with two elements: "GOenrich" contains data.frames with GO enrichments for each cluster. 
+A list with two elements: "GOenrich" contains data.frames with GO enrichments for each cluster.
 "genes_byGO" provides the set of genes from each resulting GO pathway that are in overlap between your data and the pathway.
 }
 \description{
