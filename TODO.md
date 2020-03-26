@@ -1,6 +1,6 @@
 # A list of todo items off the top of our heads
 
-- move out the suppl stuff for reviewers to a separate repo (`matchSCore2-manuscript`?)
+- ~~move out the suppl stuff for reviewers to a separate repo (`matchSCore2-manuscript`?)~~
 
 - vignette, fully fledged to show off the nice method :)
 - roxygen with md? 
