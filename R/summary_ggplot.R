@@ -14,7 +14,6 @@ summary_ggplot <- function(data,ylab,xlab){
     geom_text(aes(label = round(value, 2))) +
     scale_fill_gradient(low = "white", high = "red",name="Jaccard Index")
 
-
   return(gg)
 }
 

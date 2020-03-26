@@ -35,6 +35,5 @@ identity_map <- function(scale.data,model,gene_cl.ref,p.threshold=NULL){
   if(is.null(p.threshold)){p.threshold <- 0.5}
   fit <- apply(fitted.results,1,function(x) ifelse(max(x)>p.threshold,colnames(fitted.results)[which(x==max(x))],"unclassified"))
 
-
   return(list(ids=fit,fit.prob=data.frame(fitted.results)))
 }

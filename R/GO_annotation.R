@@ -119,7 +119,6 @@ for (clus in levels(cluster)) {
   tables = append(tables, list(t2))
   genes_byGO <- append(genes_byGO,gt)
 
-
 }
 
   names(tables) <- levels(cluster)

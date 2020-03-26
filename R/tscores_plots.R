@@ -12,7 +12,6 @@
 #' # TODO
 tscores_plots = function(scores_df){
 
-
   names(scores_df)[c(2,3)]=c("top_genes","matchSCore")
 
   p1 <- ggplot(scores_df, aes_string(x="specificity", y="matchSCore", colour="top_genes",group="top_genes")) +
@@ -24,7 +23,6 @@ tscores_plots = function(scores_df){
 
   p3 <- ggplot(scores_df, aes(specificity, matchSCore, fill = top_genes))+ geom_bar( stat="identity",position = "dodge",width=0.03,col="white") +
     scale_fill_gradientn(colours = rainbow(15)) +  theme_bw()
-
 
   plot_grid(p1, p2, p3, align = "v", ncol = 1)
 

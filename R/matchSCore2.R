@@ -49,5 +49,5 @@ matchSCore2 <- function(gene_cl.ref,gene_cl.obs,ylab,xlab){
 
   return(list(matchScore=score,labels=anno.lab,max_JI=max_ji,JI.mat=ji_mat,ggplot=gg))
 
-  }
+}
 

@@ -130,6 +130,6 @@ train_model <- function(scale.data,clus,gene_cl.ref,prop=NULL,p.threshold=NULL,.
   time <- difftime(end.time,start.time,units="mins")
   message(paste("The runtime is:",time,"min",sep=" "))
 
-return(mod)
+  return(mod)
 
-  }
+}

@@ -30,16 +30,12 @@ tool_scores_by_specificity <- function(sim,
   lev=levels(groups)
   k=length(lev)
 
-
   gene_cl=do.call(tool_run,args=list(sim,ntop,tool_out))
 
   rank_df =rank_sim(sim)
   markers=markers_by_specificity(rank_df,specificity,k)
 
-
   score=matchSCore(markers,gene_cl,labels)
 
-
   return(score)
-
 }

@@ -25,7 +25,7 @@ align_run <- function(dataset_list,marker_list,ref){
   }
 
   if(ncol(dataset_list[[ref]])>2000){
-       prop <- round(2000/(ncol(dataset_list[[ref]])),digits = 2)
+    prop <- round(2000/(ncol(dataset_list[[ref]])),digits = 2)
   }else{ prop <- 0.9}
 
   original <- dataset_list

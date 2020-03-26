@@ -30,11 +30,10 @@ summary_barplot <- function(class.fac,obs.fac){
   y$Freq <- df$Freq
   names(y)[2] <- "Cell.type.percent"
 
-
   gg <- ggplot(y,aes(x=obs.fac,y=Cell.type.percent)) + geom_bar(aes(y = Cell.type.percent, x = obs.fac, fill = class.fac),stat="identity")+theme_bw()+
     theme(axis.title = element_blank(),legend.title = element_blank(),legend.text = element_text(size = 13),
           axis.text.x = element_text(colour = "black",size = 14,angle = 45,hjust = 1,vjust = 1),axis.text.y = element_text(colour = "black",size = 16),
           axis.line = element_line(colour = "black",size = 1),panel.grid.major = element_blank(),panel.border = element_blank())
 
-          return(gg)
+  return(gg)
 }

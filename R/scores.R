@@ -20,7 +20,6 @@
 #' # TODO
 scores <- function(sim,tool_out,ntop,tool_run=seurat3_run,labels){
 
-
   for(y in seq(0.1,1,0.1)){
 
     score=sapply(ntop,function(x) tool_scores_by_specificity(sim,specificity = y,tool_out,x,seurat3_run,labels))
@@ -29,8 +28,7 @@ scores <- function(sim,tool_out,ntop,tool_run=seurat3_run,labels){
     }else{
       s=rbind(s,cbind(specificity=rep(y,length(ntop)),ntop,score))}
 
-
   }
 
-return(s)
+  return(s)
 }

@@ -31,7 +31,5 @@ rank_sim = function(sim){
 
   rank_df=data.frame(fd[,c(1:4)],r_info=rank_info,rank_info,Rank=rank)
 
-
-
   return(rank_df)
 }
