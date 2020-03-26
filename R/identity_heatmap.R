@@ -14,10 +14,11 @@ identity_heatmap <- function(out) {
 
   my_df <- data.frame(ord.p, check.names = FALSE, check.rows = FALSE)
   my_df.melt <- melt(cbind(x = 1:nrow(my_df), my_df), id = "x")
+  my_df.melt$x <- factor(my_df.melt$x)
 
-  gg <- ggplot(my_df.melt, aes(x = factor(x), y = variable, fill = value)) +
+  gg <- ggplot(my_df.melt, aes_string(x = "x", y = "variable", fill = "value")) +
     labs(x = "Cells", y = "Cell identity") +
-    geom_tile(aes(fill = value)) +
+    geom_tile(aes_string(fill = "value")) +
     scale_fill_gradientn(
       colours = c("gray100", "blue", "yellow", "deeppink"),
       name = "Probability\n"
@@ -26,7 +27,8 @@ identity_heatmap <- function(out) {
       axis.text.x = element_blank(),
       axis.text.y = element_text(colour = "black", size = 16),
       axis.title = element_text(size = 16),
-      legend.text = element_text(size = 12), legend.title = element_text(size = 12)
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12)
     )
 
   return(gg)

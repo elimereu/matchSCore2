@@ -15,12 +15,7 @@ tscores_plots <- function(scores_df) {
 
   p1 <- ggplot(
     scores_df,
-    aes_string(
-      x = "specificity",
-      y = "matchSCore",
-      colour = "top_genes",
-      group = "top_genes"
-    )
+    aes_string(x = "specificity", y = "matchSCore", colour = "top_genes", group = "top_genes")
   ) +
     geom_line() +
     scale_colour_gradientn(colours = rainbow(15)) +
@@ -28,7 +23,7 @@ tscores_plots <- function(scores_df) {
 
   p2 <- ggplot(
     scores_df,
-    aes(x = top_genes, y = matchSCore, colour = specificity)
+    aes_string(x = "top_genes", y = "matchSCore", colour = "specificity")
   ) +
     geom_point(alpha = 0.7, size = 2.5) +
     scale_colour_gradientn(colours = c("gold", "gray", "blue")) +
@@ -37,7 +32,7 @@ tscores_plots <- function(scores_df) {
 
   p3 <- ggplot(
     scores_df,
-    aes(specificity, matchSCore, fill = top_genes)
+    aes_string(x = "specificity", y = "matchSCore", fill = "top_genes")
   ) +
     geom_bar(stat = "identity", position = "dodge", width = 0.03, col = "white") +
     scale_fill_gradientn(colours = rainbow(15)) +
