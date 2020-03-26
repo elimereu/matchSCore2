@@ -30,3 +30,5 @@
 #' @name matchSCore2-pkg
 #' @docType package
 NULL
+
+globalVariables(c("value"))
