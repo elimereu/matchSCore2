@@ -3,7 +3,7 @@
 - ~~move out the suppl stuff for reviewers to a separate repo (`matchSCore2-manuscript`?)~~
 
 - vignette, fully fledged to show off the nice method :)
-- roxygen with md? 
+- ~~roxygen with md? ~~
 - description fields to be proper filled
 - biocviews
 - ~~license~~
@@ -24,5 +24,6 @@
 
 - travis?
 - pkgdown?
-- code of conduct?
-- NEWS.md
+- ~~code of conduct?~~
+- ~~NEWS.md~~
+- ~~message vs print~~
