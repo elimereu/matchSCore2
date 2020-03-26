@@ -278,7 +278,7 @@ Notably, you can see how the jaccard indexes between markers reflect the cellula
 # Alignment of datasets
 
 While with the previous approach we can fastly transfer annotations from one dataset to another, sometimes we are interested in comparing gene measurements between cells coming from different experiments (e.g. WT vs KO, disease vs control, different protocols, etc..). 
-In the matchSCore2 package, we provide a mathematical framework to align datasets, by projecting them to the same coordinate space of an assigned reference dataset. 
+In the `r BiocStyle::Biocpkg("matchSCore2")` package, we provide a mathematical framework to align datasets, by projecting them to the same coordinate space of an assigned reference dataset. 
 The method is based on the single value decomposition and allows a direct comparison of datasets, by finding the optimal linear transformation between data points.     
 By using the function `align_run` two or more gene expression matrixes are compared and aligned to the same reference dataset.  
 

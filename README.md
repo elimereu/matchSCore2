@@ -55,7 +55,7 @@ meta.data <- as.data.frame(colData(quartzseq2)) ## Quartz-Seq2 meta.data datafra
 ```{r,eval=FALSE}
 
 library("devtools")
-install_github('elimereu/matchSCore2')
+install_github("elimereu/matchSCore2")
 
 
 ```
