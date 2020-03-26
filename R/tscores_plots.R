@@ -26,6 +26,6 @@ tscores_plots = function(scores_df){
     scale_fill_gradientn(colours = rainbow(15)) +  theme_bw()
 
 
-  ggarrange(p1,p2,p3,ncol = 1,nrow = 3)
+  plot_grid(p1, p2, p3, align = "v", ncol = 1)
 
 }

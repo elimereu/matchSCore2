@@ -18,7 +18,7 @@
 #' @importFrom corrplot corrplot
 #' @importFrom nnet multinom
 #' @import igraph
-#' @import cowplot
+#' @importFrom cowplot plot_grid
 #' @import Seurat
 #' @importFrom SingleCellExperiment colData rowData
 #'
