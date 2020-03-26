@@ -7,12 +7,13 @@
 align_run(dataset_list, marker_list, ref)
 }
 \arguments{
-\item{dataset_list}{A named list of annotated SingleCellExperiments objects. The cell
-annotations are in the \code{cluster} slots.}
+\item{dataset_list}{A named list of annotated SingleCellExperiments objects.
+The cell annotations are in the \code{cluster} slots.}
 
 \item{marker_list}{A list of \code{cluster} specific markers from the input dataset.}
 
-\item{ref}{The name of the reference dataset from the dataset_list. It has to be the first in the dataset_list.}
+\item{ref}{The name of the reference dataset from the dataset_list. It has to
+be the first in the \code{dataset_list}.}
 }
 \value{
 A list containing:
@@ -30,5 +31,4 @@ Integration of different datasets
 }
 \examples{
 # TODO
-
 }
