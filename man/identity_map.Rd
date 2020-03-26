@@ -28,5 +28,5 @@ This function infers cell identities by using the model learned by the
 reference dataset.
 }
 \examples{
-
+# TODO
 }
