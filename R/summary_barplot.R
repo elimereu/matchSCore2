@@ -11,8 +11,7 @@
 #' @export
 #'
 #' @examples
-#'
-
+#' # TODO
 summary_barplot <- function(class.fac,obs.fac){
 
   # library(ggplot2)

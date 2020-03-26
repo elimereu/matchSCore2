@@ -18,8 +18,7 @@
 #' @export
 #'
 #' @examples
-#'
-
+#' # TODO
 identity_map <- function(scale.data,model,gene_cl.ref,p.threshold=NULL){
 
   # require(Matrix)

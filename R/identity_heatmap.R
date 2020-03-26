@@ -6,8 +6,7 @@
 #'
 #' @export
 #' @examples
-#'
-
+#' # TODO
 identity_heatmap <- function(out){
 # library(ggplot2)
 # library(reshape2)
