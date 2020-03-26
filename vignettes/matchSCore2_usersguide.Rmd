@@ -36,18 +36,17 @@ bibliography: matchSCore2.bib
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-    collapse = TRUE,
-    comment = "#>",
-    error = FALSE,
-    warning = FALSE,
-    eval = TRUE,
-    message = FALSE,
-    fig.width = 10,
-    fig.height = 8,
-    fig.align = "center"
+  collapse = TRUE,
+  comment = "#>",
+  error = FALSE,
+  warning = FALSE,
+  eval = TRUE,
+  message = FALSE,
+  fig.width = 10,
+  fig.height = 8,
+  fig.align = "center"
 )
 options(width = 100)
-
 ```
   
 # Introduction {#introduction}
@@ -74,8 +73,9 @@ knitr::include_graphics("overview_package.png")
 To install this package, start R and enter:
 
 ```{r install, eval=FALSE}
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
 
 BiocManager::install("matchSCore2")
 
@@ -98,9 +98,8 @@ From the same link, you can also download the `SingleCellExperiment` object from
 
 library(scater)
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?raw=true"
-download.file(url = url,destfile = "~/Downloads/sce.all_classified.technologies.RData",mode = "wb")
-load(file="~/Downloads/sce.all_classified.technologies.RData") ## load the data
-
+download.file(url = url, destfile = "~/Downloads/sce.all_classified.technologies.RData", mode = "wb")
+load(file = "~/Downloads/sce.all_classified.technologies.RData") ## load the data
 ```
 
 After you load it into R, if you check the `colData(object)` there are three metadata, which are: `nnet2`, `ident`, and `batch`.
@@ -128,8 +127,8 @@ umap <- sce@reducedDims$UMAP
 pca <- sce@reducedDims$PCA
 
 ## if you are interested in a specific protocol (e.g. Chromium)
-chromium <- filter(sce,batch=="Chromium") 
-logcounts <- chromium@assays$data@listData$logcounts 
+chromium <- filter(sce, batch == "Chromium")
+logcounts <- chromium@assays$data@listData$logcounts
 ```
 
 In case you are interested in working with the seurat objects, all datasets are in the `data.list` list, whose elements represent the protocols. 
@@ -141,18 +140,18 @@ The cell type specific markers from each protocol are also provided.
 library(Seurat)
 
 url <- "https://www.dropbox.com/s/2ketqbof6tvnv07/data.list_seurat.obj_all_datasets.RData?raw=true"
-download.file(url = url,
-              destfile = "~/Downloads/data.list_seurat.obj_all_datasets.RData",
-              mode = "wb")
+download.file(
+  url = url,
+  destfile = "~/Downloads/data.list_seurat.obj_all_datasets.RData",
+  mode = "wb"
+)
 
-load(file="~/Downloads/data.list_seurat.obj_all_datasets.RData")
+load(file = "~/Downloads/data.list_seurat.obj_all_datasets.RData")
 ref <- data.list$Chromium
 nnet2 <- ref$nnet2
 
 
 smartseq2 <- data.list$`Smart-Seq2`
-
-
 ```
 
 # Training the model
@@ -173,14 +172,15 @@ library("matchSCore2")
 library("nnet")
 
 url <- "https://www.dropbox.com/s/wijdjhbm17fd7fp/markers_all_datasets.RData?raw=true"
-download.file(url = url,destfile = "~/Downloads/markers_all_datasets.RData",mode = "wb")
+download.file(url = url, destfile = "~/Downloads/markers_all_datasets.RData", mode = "wb")
 
-load(file="~/Downloads/markers_all_datasets.RData")
+load(file = "~/Downloads/markers_all_datasets.RData")
 ref.markers <- markers$Chromium
 
 gene_cl.ref <- cut_markers(levels(ref.markers$cluster),
-                           markers = ref.markers,
-                           ntop = 100)
+  markers = ref.markers,
+  ntop = 100
+)
 
 scaled <- ref@assays$RNA@scale.data
 ```
@@ -189,9 +189,11 @@ scaled <- ref@assays$RNA@scale.data
 ### Training of the model
 
 ```{r eval=FALSE}
-mod <- train_model(scale.data = scaled,clus = nnet2,
-                   gene_cl.ref = gene_cl.ref,
-                   prop = 0.5)
+mod <- train_model(
+  scale.data = scaled, clus = nnet2,
+  gene_cl.ref = gene_cl.ref,
+  prop = 0.5
+)
 ```
 
 ## Cell classification
@@ -202,17 +204,18 @@ With the function `identity_map`, we assign the cell identity in the test data b
 
 ```{r eval=FALSE}
 
-scaled <- ScaleData(smartseq2,features = unlist(gene_cl.ref))
+scaled <- ScaleData(smartseq2, features = unlist(gene_cl.ref))
 scaled <- scaled@assays$RNA@scale.data
 
 ## Cell projection
-out <- identity_map(scale.data = scaled,
-                    model = mod,
-                    gene_cl.ref = gene_cl.ref)
+out <- identity_map(
+  scale.data = scaled,
+  model = mod,
+  gene_cl.ref = gene_cl.ref
+)
 
 
 identity_heatmap(out)
-
 ```
 
 ![](identity_heatmaps.png){width=100%} 
@@ -229,12 +232,10 @@ Cells assigned to a specific identity have the highest probability (magenta colo
 smseq.clus <- smartseq2$ident
 
 
-col=c("aquamarine","orange","green4","blueviolet","black","maroon","coral2","deepskyblue3","lightgray")
+col <- c("aquamarine", "orange", "green4", "blueviolet", "black", "maroon", "coral2", "deepskyblue3", "lightgray")
 
 
-summary_barplot(class.fac = out$ids ,obs.fac = smseq.clus)+scale_fill_manual(values = col)
-
-
+summary_barplot(class.fac = out$ids, obs.fac = smseq.clus) + scale_fill_manual(values = col)
 ```
 
 ![](summary_barplots.png){width=100%} 
@@ -253,14 +254,12 @@ For example, you could use the top 100 ranked markers per cluster from the Chrom
 ## And the MARS-Seq as test
 test.markers <- markers$`Smart-Seq2`
 
-gene_cl.test <- cut_markers(levels(test.markers$cluster),markers = test.markers,ntop = 100)
+gene_cl.test <- cut_markers(levels(test.markers$cluster), markers = test.markers, ntop = 100)
 
 
 ## The matchSCore2 function computes the clustering comparison and produce the heatmap table with Jaccard Indexes for each group combination
 
-matchSCore2(gene_cl.ref = gene_cl.ref,gene_cl.obs = gene_cl.test,ylab = "Chromium",xlab = "Smart-seq2")
-
-
+matchSCore2(gene_cl.ref = gene_cl.ref, gene_cl.obs = gene_cl.test, ylab = "Chromium", xlab = "Smart-seq2")
 ```
 
 ![](Cluster-sp_markers_comparison.png){width=100%} 
@@ -282,28 +281,26 @@ The method requires the clusters (more than 1 cell), they will be used to comput
 ```{r, eval=FALSE}
 
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?dl=0"
-download.file(url = url,destfile = "~/Downloads/sce.all_classified.technologies.RData",mode = "wb")
-load(file="~/Downloads/sce.all_classified.technologies.RData") ## load the data
+download.file(url = url, destfile = "~/Downloads/sce.all_classified.technologies.RData", mode = "wb")
+load(file = "~/Downloads/sce.all_classified.technologies.RData") ## load the data
 
-chromium <- scater::filter(sce,batch=="Chromium")
-smartseq2 <- scater::filter(sce,batch=="Smart-Seq2")
-ddseq <- scater::filter(sce,batch=="ddSEQ")
+chromium <- scater::filter(sce, batch == "Chromium")
+smartseq2 <- scater::filter(sce, batch == "Smart-Seq2")
+ddseq <- scater::filter(sce, batch == "ddSEQ")
 
 chromium$cluster <- factor(chromium$nnet2)
 smartseq2$cluster <- factor(smartseq2$nnet2)
 ddseq$cluster <- factor(ddseq$nnet2)
 
 
-list_data <- list(Chromium=chromium,Smartseq2=smartseq2,ddseq=ddseq)
+list_data <- list(Chromium = chromium, Smartseq2 = smartseq2, ddseq = ddseq)
 
 markers.dds <- markers$ddSEQ
-gene_cl.dds <- cut_markers(levels(markers.dds$cluster),markers = markers.dds,ntop = 100)
+gene_cl.dds <- cut_markers(levels(markers.dds$cluster), markers = markers.dds, ntop = 100)
 
-markers_list <- unique(c(unlist(gene_cl.ref),unlist(gene_cl.test),unlist(gene_cl.dds)))
+markers_list <- unique(c(unlist(gene_cl.ref), unlist(gene_cl.test), unlist(gene_cl.dds)))
 
-out_align <- align_run(dataset_list = list_data,marker_list = markers_list,ref = "Chromium")
-
-
+out_align <- align_run(dataset_list = list_data, marker_list = markers_list, ref = "Chromium")
 ```
 
 The output contains a `SingleCellExperiment` object with the joint raw counts and the integrated matrix from the 3 datasets. 
@@ -314,22 +311,22 @@ For example, if you want to use Seurat, you can provide that matrix in the `@dat
 
 ```{r, eval=FALSE}
 
-col2 <- c("maroon","orange","cyan")
-data <- seurat3_run(out_align = out_align,
-                    dims = 1:10,
-                    res = 0.2,
-                    col_anno = col,
-                    col_data = col2)
+col2 <- c("maroon", "orange", "cyan")
+data <- seurat3_run(
+  out_align = out_align,
+  dims = 1:10,
+  res = 0.2,
+  col_anno = col,
+  col_data = col2
+)
 
 
-DimPlot(data,group.by = "cluster",cols = col)+
+DimPlot(data, group.by = "cluster", cols = col) +
   theme(legend.text = element_text(size = 14))
 
 
-DimPlot(data,group.by = "dataset",cols = col2)+
+DimPlot(data, group.by = "dataset", cols = col2) +
   theme(legend.text = element_text(size = 14))
-
-
 ```
 
 ![](UMAP_celltype_after_integration.png){width=100%} 
@@ -339,8 +336,10 @@ DimPlot(data,group.by = "dataset",cols = col2)+
 We can explore some of the markers we used for the integration with the Seurat `FeaturePlot` function:
 
 ```{r, eval=FALSE}
-FeaturePlot(data,features = c("CD79B","IL7R","CD3D","NKG7",
-                              "GNLY","CD14","FCGR3A","CTTN"))
+FeaturePlot(data, features = c(
+  "CD79B", "IL7R", "CD3D", "NKG7",
+  "GNLY", "CD14", "FCGR3A", "CTTN"
+))
 ```
 
 ![](UMAP_markers_after_integration.png){width=800%,height=800%} 
