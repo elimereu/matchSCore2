@@ -19,26 +19,31 @@
 #'
 #' @examples
 #' # TODO
-defac_matrix = function(sim){
+defac_matrix <- function(sim) {
+  pd <- colData(sim)
+  fd <- rowData(sim)
+  group <- factor(pd$Group)
+  k <- length(levels(group))
 
-  pd=colData(sim)
-  fd=rowData(sim)
-  group=factor(pd$Group)
-  k=length(levels(group))
+  fc <- fd[, grep("^DEFac", names(fd))]
 
-  fc=fd[,grep("^DEFac",names(fd))]
+  l <- length(levels(group))
+  de <- sapply(1:l, function(x) ifelse(fc[, x] != 1, 1, 0))
 
-  l=length(levels(group))
-  de=sapply(1:l,function(x) ifelse(fc[,x]!=1,1,0))
+  clust_set <- apply(de, 2, function(x) which(x == 1))
 
-  clust_set = apply(de,2,function(x) which(x==1))
+  de <- sapply(1:l, function(x) ifelse(fc[, x] > 1, 1, 0))
+  markers <- apply(de, 2, function(x) which(x == 1))
 
-  de=sapply(1:l,function(x) ifelse(fc[,x]>1,1,0))
-  markers = apply(de,2,function(x) which(x==1))
+  dd <- apply(fc, 1, function(x) ifelse(length(which(x != 1)) == 1, which(x > 1), 0))
+  sp_markers <- lapply(1:k, function(x) which(dd == x))
 
-  dd=apply(fc,1,function(x) ifelse(length(which(x!=1))==1,which(x>1),0))
-  sp_markers=lapply(1:k,function(x) which(dd==x))
-
-  return(list(de=de,gr_de=clust_set,markers=markers,sp_markers=sp_markers))
-
+  return(
+    list(
+      de = de,
+      gr_de = clust_set,
+      markers = markers,
+      sp_markers = sp_markers
+    )
+  )
 }

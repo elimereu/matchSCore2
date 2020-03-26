@@ -18,34 +18,48 @@
 #'
 #' @examples
 #' # TODO
-cor_batch <- function(raw,nnet,cell_types,batch,n=NULL,genes=NULL){
-
-  id <- factor(nnet[grep(cell_types,nnet)])
+cor_batch <- function(raw,
+                      nnet,
+                      cell_types,
+                      batch,
+                      n = NULL,
+                      genes = NULL) {
+  id <- factor(nnet[grep(cell_types, nnet)])
   cells <- names(id)
 
-  if(is.null(genes)){
-    raw <- raw[,cells]
-  }else{
-
-    raw <- raw[which(rownames(raw) %in% genes),cells]
-
+  if (is.null(genes)) {
+    raw <- raw[, cells]
+  } else {
+    raw <- raw[which(rownames(raw) %in% genes), cells]
   }
 
   batch <- factor(batch[cells])
-  t <- table(id,batch)
+  t <- table(id, batch)
   t
-  sizes <- apply(t,1,function(x) min(x))
+  sizes <- apply(t, 1, function(x) min(x))
 
-  sub.tech <- sapply(levels(batch),function(x) cells[which(batch==x)])
-  sub.id <- sapply(levels(id),function(x) sapply(sub.tech,function(y) sample(x=y[which(id[y]==x)],size = sizes[which(names(sizes)==x)])))
+  sub.tech <- sapply(levels(batch), function(x) cells[which(batch == x)])
+  sub.id <- sapply(levels(id), function(x) sapply(sub.tech, function(y) sample(x = y[which(id[y] == x)], size = sizes[which(names(sizes) == x)])))
 
-  merge <- lapply(sub.id,function(x) apply(x,2,function(y) rowSums(raw[,y])))
-  corr <- lapply(merge,function(x) cor(x,use="pairwise.complete.obs",method="pearson"))
+  merge <- lapply(sub.id, function(x) apply(x, 2, function(y) rowSums(raw[, y])))
+  corr <- lapply(merge, function(x) cor(x, use = "pairwise.complete.obs", method = "pearson"))
 
-  # library(corrplot)
-  col <- colorRampPalette(c(rep("white",3),"#FFECB3","#E85285","#6A1B9A"))
+  col <- colorRampPalette(c(rep("white", 3), "#FFECB3", "#E85285", "#6A1B9A"))
 
-  lapply(corr,function(x) corrplot(x, method = "square",order = "hclust",hclust.method = "ward.D2",type="upper",tl.col="black",tl.cex=2,number.cex = 20))
+  lapply(
+    corr,
+    function(x) {
+      corrplot(x,
+        method = "square",
+        order = "hclust",
+        hclust.method = "ward.D2",
+        type = "upper",
+        tl.col = "black",
+        tl.cex = 2,
+        number.cex = 20
+      )
+    }
+  )
 
   return(corr)
 }

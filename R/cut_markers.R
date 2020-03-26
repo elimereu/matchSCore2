@@ -13,13 +13,18 @@
 #'
 #' @examples
 #' # TODO
-cut_markers <- function(clusters,markers,ntop){
+cut_markers <- function(clusters,
+                        markers,
+                        ntop) {
+  gene_cl <- lapply(
+    clusters,
+    function(x) markers$gene[markers$cluster == x][1:ntop]
+  )
+  gene_cl <- lapply(
+    gene_cl,
+    function(x) x[!is.na(x)]
+  )
+  names(gene_cl) <- clusters
 
-  gene_cl=lapply(clusters,function(x) markers$gene[markers$cluster==x][1:ntop])
-  gene_cl=lapply(gene_cl,function(x) x[!is.na(x)])
-  names(gene_cl)=clusters
   return(gene_cl)
 }
-
-
-

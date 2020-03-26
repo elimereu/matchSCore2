@@ -1,6 +1,6 @@
 #' matchSCore2
 #'
-#' `matchSCore2` is a Bioconductor package that provides ...
+#' `matchSCore2` is a Bioconductor package that provides ... # TODOELI, we need a nice short para for this
 #'
 #' @importFrom graphics plot
 #' @importFrom grDevices colorRampPalette rainbow
@@ -26,5 +26,3 @@
 #' @name matchSCore2-pkg
 #' @docType package
 NULL
-
-# cowplot although here we use ggarrange, TODO? (is it from ggpubr)

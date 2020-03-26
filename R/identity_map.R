@@ -19,21 +19,28 @@
 #'
 #' @examples
 #' # TODO
-identity_map <- function(scale.data,model,gene_cl.ref,p.threshold=NULL){
+identity_map <- function(scale.data,
+                         model,
+                         gene_cl.ref,
+                         p.threshold = NULL) {
+  p <- lapply(gene_cl.ref, function(x) rownames(scale.data)[which(rownames(scale.data) %in% x)])
 
-  # require(Matrix)
-
-  p<- lapply(gene_cl.ref,function(x) rownames(scale.data)[which(rownames(scale.data) %in% x)])
-
-  var.test <- sapply(p,function(x) Matrix::colSums(scale.data[x,]))
-  var.test <- t(apply(var.test,1, function(x) (x-min(x))/(max(x)-min(x))))
+  var.test <- sapply(p, function(x) Matrix::colSums(scale.data[x, ]))
+  var.test <- t(apply(var.test, 1, function(x) (x - min(x)) / (max(x) - min(x))))
 
   model.test <- data.frame(var.test)
   fitted.results <- predict(model, newdata = model.test, "probs")
 
-  fit <- apply(fitted.results,1,function(x) colnames(fitted.results)[which(x==max(x))])
-  if(is.null(p.threshold)){p.threshold <- 0.5}
-  fit <- apply(fitted.results,1,function(x) ifelse(max(x)>p.threshold,colnames(fitted.results)[which(x==max(x))],"unclassified"))
+  fit <- apply(fitted.results, 1, function(x) colnames(fitted.results)[which(x == max(x))])
+  if (is.null(p.threshold)) {
+    p.threshold <- 0.5
+  }
+  fit <- apply(fitted.results, 1, function(x) ifelse(max(x) > p.threshold, colnames(fitted.results)[which(x == max(x))], "unclassified"))
 
-  return(list(ids=fit,fit.prob=data.frame(fitted.results)))
+  return(
+    list(
+      ids = fit,
+      fit.prob = data.frame(fitted.results)
+    )
+  )
 }
