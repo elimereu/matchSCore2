@@ -5,7 +5,7 @@
 - vignette, fully fledged to show off the nice method :)
 - ~~roxygen with md? ~~
 - description fields to be proper filled
-- biocviews
+- ~~biocviews~~
 - ~~license~~
 - namespace imports and so
 - readme Rmd?

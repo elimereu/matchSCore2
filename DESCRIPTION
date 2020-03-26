@@ -1,5 +1,5 @@
 Package: matchSCore2
-Title: What the Package Does (One Line, Title Case)
+Title: What the Package Does (One Line, Title Case) TODOELI
 Version: 0.1.0
 Authors@R: 
     c(
@@ -7,13 +7,13 @@ Authors@R:
            "Mereu", 
            role=c("aut", "cre"), 
            email="TODO@gmail.com", 
-           comment = c(ORCID = 'TODO')),
+           comment = c(ORCID = '0000-0001-6101-8472')),
     person("Federico", 
            "Marini", 
            role="ctb", 
            email="marinif@uni-mainz.de", 
            comment = c(ORCID = '0000-0003-3252-7758')))
-Description: TODO, the long version.
+Description: TODO, the long version. TODOELI
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
