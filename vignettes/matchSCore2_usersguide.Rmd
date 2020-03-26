@@ -1,6 +1,6 @@
 ---
 title: >
-  Comparing scRNA-seq data with `matchSCore2`.
+  The `matchSCore2` User's Guide
 author:
 - name: Elisabetta Mereu
   affiliation: 
@@ -30,21 +30,20 @@ bibliography: matchSCore2.bib
 
 **Compiled date**: `r Sys.Date()`
 
-**Last edited**: 2020-03-19
+**Last edited**: 2020-03-26
 
 **License**: `r packageDescription("matchSCore2")[["License"]]`
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
     collapse = TRUE,
-    comment  = "#>",
-    error    = FALSE,
-    warning  = FALSE,
-    eval     = FALSE,
-    message  = FALSE,
+    comment = "#>",
+    error = FALSE,
+    warning = FALSE,
+    eval = FALSE,
+    message = FALSE,
     fig.width = 10,
     fig.height = 8
-    
 )
 options(width = 100)
 
