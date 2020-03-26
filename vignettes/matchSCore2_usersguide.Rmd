@@ -63,7 +63,7 @@ The method consists of the following steps:
 4. Once the model is trained, a probability value is assigned to each cell per cell type. 
    The highest likelihood can then be used to annotate that cell if it reaches the minimum value provided by the user (default = 0.5).    
 
-```{r overview, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+```{r ss-overview, echo=FALSE, eval=TRUE, fig.wide = TRUE}
 knitr::include_graphics("overview_package.png")
 ```
 
@@ -104,7 +104,7 @@ load(file = "~/Downloads/sce.all_classified.technologies.RData") ## load the dat
 
 After you load it into R, if you check the `colData(object)` there are three metadata, which are: `nnet2`, `ident`, and `batch`.
 
-1. `nnet2` is the annotation from the `MatchSCore2` classifier. 
+1. `nnet2` is the annotation from the `MatchSCore2()` classifier. 
 2. `ident` is the Seurat clustering result. The clusters are manually annotated by looking at the expression of known gene markers.
 3. `batch` is the sequencing protocol. 
 
@@ -156,7 +156,7 @@ smartseq2 <- data.list$`Smart-Seq2`
 
 # Training the model
 
-To train the multinomial logistic model implemented in `MatchSCore2`, we use the function `train_model`, which requires the following inputs:
+To train the multinomial logistic model implemented in `r BiocStyle::Biocpkg("matchSCore2")`, we use the function `train_model`, which requires the following inputs:
 
 1. `scale.data`: A matrix of log-normalized or scaled gene expression values from the reference dataset (in the manuscript we used the scale.data slot in the seurat objects. 
    Make sure that the markers are all included in the scale.data).
@@ -218,14 +218,18 @@ out <- identity_map(
 identity_heatmap(out)
 ```
 
-![](identity_heatmaps.png){width=100%} 
+```{r ss-identityheat, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+knitr::include_graphics("identity_heatmaps.png")
+```
+
+
 
 From the heatmap, you can observe the probability of cells to be assigned to each cell identity.
 Cells assigned to a specific identity have the highest probability (magenta color) for that class and probability close to zero (white-blue colors) in other classes.   
 
-## Comparison between matchSCore2 and clustering annotations
+## Comparison between `matchSCore2` and clustering annotations
 
-`MatchSCore2` can be used to improve the clustering annotation, detecting subtle differences between cell types that are difficult to be detected by clustering (e.g. NK and CD8 T cells, CD4 and CD8 T cells, etc..). 
+`r BiocStyle::Biocpkg("matchSCore2")` can be used to improve the clustering annotation, detecting subtle differences between cell types that are difficult to be detected by clustering (e.g. NK and CD8 T cells, CD4 and CD8 T cells, etc..). 
 
 ```{r eval=FALSE}
 
@@ -238,7 +242,9 @@ col <- c("aquamarine", "orange", "green4", "blueviolet", "black", "maroon", "cor
 summary_barplot(class.fac = out$ids, obs.fac = smseq.clus) + scale_fill_manual(values = col)
 ```
 
-![](summary_barplots.png){width=100%} 
+```{r ss-barplots, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+knitr::include_graphics("summary_barplots.png")
+```
 
 Here, you can see the distribution of the assigned cell identities per cluster. 
 This is helpful to visualize the agreement between clustering and cell identity projection. 
@@ -262,7 +268,9 @@ gene_cl.test <- cut_markers(levels(test.markers$cluster), markers = test.markers
 matchSCore2(gene_cl.ref = gene_cl.ref, gene_cl.obs = gene_cl.test, ylab = "Chromium", xlab = "Smart-seq2")
 ```
 
-![](Cluster-sp_markers_comparison.png){width=100%} 
+```{r ss-clustercomp, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+knitr::include_graphics("Cluster-sp_markers_comparison.png")
+```
 
 In the heatmap, we can observe the Jaccard similarity between cluster-specific markers from the two experiments. 
 Notably, you can see how the jaccard indexes between markers reflect the cellular composition of clusters, in agreement with the previous plot. 
@@ -292,7 +300,6 @@ chromium$cluster <- factor(chromium$nnet2)
 smartseq2$cluster <- factor(smartseq2$nnet2)
 ddseq$cluster <- factor(ddseq$nnet2)
 
-
 list_data <- list(Chromium = chromium, Smartseq2 = smartseq2, ddseq = ddseq)
 
 markers.dds <- markers$ddSEQ
@@ -320,18 +327,20 @@ data <- seurat3_run(
   col_data = col2
 )
 
-
 DimPlot(data, group.by = "cluster", cols = col) +
   theme(legend.text = element_text(size = 14))
-
 
 DimPlot(data, group.by = "dataset", cols = col2) +
   theme(legend.text = element_text(size = 14))
 ```
 
-![](UMAP_celltype_after_integration.png){width=100%} 
+```{r ss-umapcelltype, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+knitr::include_graphics("UMAP_celltype_after_integration.png")
+```
 
-![](UMAP_dataset_after_integration.png){width=100%} 
+```{r ss-umapafter, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+knitr::include_graphics("UMAP_dataset_after_integration.png")
+```
 
 We can explore some of the markers we used for the integration with the Seurat `FeaturePlot` function:
 
@@ -342,7 +351,9 @@ FeaturePlot(data, features = c(
 ))
 ```
 
-![](UMAP_markers_after_integration.png){width=800%,height=800%} 
+```{r ss-umapmarkers, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+knitr::include_graphics("UMAP_markers_after_integration.png")
+```
 
 # Session Info {-}
 
