@@ -13,8 +13,9 @@ seurat3_run(
 )
 }
 \arguments{
-\item{out_align}{The output of the function align_run. The combined count matrix is used
-to create the Seurat object and the integrated is provided to the slot @data.}
+\item{out_align}{The output of the function \code{align_run}. The combined count
+matrix is used to create the Seurat object and the integrated is provided
+to the slot \verb{@data}.}
 
 \item{dims}{Seurat parameter. It is the dimension of the PCA space.}
 

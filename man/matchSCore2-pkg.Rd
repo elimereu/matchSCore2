@@ -5,5 +5,5 @@
 \alias{matchSCore2-pkg}
 \title{matchSCore2}
 \description{
-\code{matchSCore2} is a Bioconductor package that provides ...
+\code{matchSCore2} is a Bioconductor package that provides ... # TODOELI, we need a nice short para for this
 }

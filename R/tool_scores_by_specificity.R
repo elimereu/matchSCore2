@@ -23,19 +23,18 @@ tool_scores_by_specificity <- function(sim,
                                        ntop,
                                        tool_run = seurat3_run,
                                        labels) {
+  fd <- rowData(sim)
+  pd <- colData(sim)
+  groups <- factor(pd$Group)
+  lev <- levels(groups)
+  k <- length(lev)
 
-  fd=rowData(sim)
-  pd=colData(sim)
-  groups=factor(pd$Group)
-  lev=levels(groups)
-  k=length(lev)
+  gene_cl <- do.call(tool_run, args = list(sim, ntop, tool_out))
 
-  gene_cl=do.call(tool_run,args=list(sim,ntop,tool_out))
+  rank_df <- rank_sim(sim)
+  markers <- markers_by_specificity(rank_df, specificity, k)
 
-  rank_df =rank_sim(sim)
-  markers=markers_by_specificity(rank_df,specificity,k)
-
-  score=matchSCore(markers,gene_cl,labels)
+  score <- matchSCore(markers, gene_cl, labels)
 
   return(score)
 }

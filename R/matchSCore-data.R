@@ -15,3 +15,15 @@ NULL
 #' @name gene_cl.ref
 #' @docType data
 NULL
+
+#' gene_cl.chromium
+#'
+#' @name gene_cl.chromium
+#' @docType data
+NULL
+
+#' markers
+#'
+#' @name markers
+#' @docType data
+NULL

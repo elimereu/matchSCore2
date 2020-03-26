@@ -1,5 +1,5 @@
 Package: matchSCore2
-Title: What the Package Does (One Line, Title Case) TODOELI
+Title: What the Package Does TODOELI
 Version: 0.1.0
 Authors@R: 
     c(
@@ -13,7 +13,7 @@ Authors@R:
            role="ctb", 
            email="marinif@uni-mainz.de", 
            comment = c(ORCID = '0000-0003-3252-7758')))
-Description: TODO, the long version. TODOELI
+Description: TODO, the long version. TODOELI.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -36,8 +36,8 @@ Imports:
     grid,
     corrplot,
     nnet,
-    igraph,
     cowplot,
+    S4Vectors,
     Seurat,
     SingleCellExperiment,
     corpcor

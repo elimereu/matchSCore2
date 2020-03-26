@@ -32,7 +32,7 @@ Default=0.65.}
 \item{...}{TODOELI}
 }
 \value{
-A multinomial fitted model as in the \code{nnet} package.
+A multinomial fitted model, as in the \code{nnet} package.
 }
 \description{
 This function train a model from the reference dataset

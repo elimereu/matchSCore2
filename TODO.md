@@ -4,13 +4,13 @@
 
 - vignette, fully fledged to show off the nice method :)
 - ~~roxygen with md? ~~
-- description fields to be proper filled
+- ~~description fields to be proper filled~~
 - ~~biocviews~~
 - ~~license~~
-- namespace imports and so
+- ~~namespace imports and so~~
 - readme Rmd?
 
-- cleanup
+- ~~cleanup~~
 - travis integration
 - unit testing 
 
@@ -18,11 +18,10 @@
 
 - ~~harmonize filenames .R/.r~~
 
-- Working off R CMD check + BiocCheck
+- ~~Working off R CMD check + BiocCheck~~
 
 - dedicated examples
 
-- travis?
 - pkgdown?
 - ~~code of conduct?~~
 - ~~NEWS.md~~

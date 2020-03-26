@@ -27,7 +27,7 @@ Corresponding R packages have to be installed.}
 \item{species}{character indicating the species. Only 'human' or 'mouse'.}
 
 \item{ontology.type}{Ontology family to be examined ("BP"= 'Biological Process',
-"MF"='Molecular Function',"CC"='Cellular Component')}
+"MF"='Molecular Function', "CC"='Cellular Component')}
 
 \item{reformat.gene.names}{TODO}
 

@@ -18,16 +18,18 @@
 #'
 #' @examples
 #' # TODO
-scores <- function(sim,tool_out,ntop,tool_run=seurat3_run,labels){
-
-  for(y in seq(0.1,1,0.1)){
-
-    score=sapply(ntop,function(x) tool_scores_by_specificity(sim,specificity = y,tool_out,x,seurat3_run,labels))
-    if(y==0.1){
-      s=cbind(specificity=rep(y,length(ntop)),ntop,score)
-    }else{
-      s=rbind(s,cbind(specificity=rep(y,length(ntop)),ntop,score))}
-
+scores <- function(sim,
+                   tool_out,
+                   ntop,
+                   tool_run = seurat3_run,
+                   labels) {
+  for (y in seq(0.1, 1, 0.1)) {
+    score <- sapply(ntop, function(x) tool_scores_by_specificity(sim, specificity = y, tool_out, x, seurat3_run, labels))
+    if (y == 0.1) {
+      s <- cbind(specificity = rep(y, length(ntop)), ntop, score)
+    } else {
+      s <- rbind(s, cbind(specificity = rep(y, length(ntop)), ntop, score))
+    }
   }
 
   return(s)

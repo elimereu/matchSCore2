@@ -7,7 +7,7 @@
 tscores_plots(scores_df)
 }
 \arguments{
-\item{scores_df}{A character vector of reference group labels. TODO: df or vector?}
+\item{scores_df}{A character vector of reference group labels. TODOELI: df or vector?}
 }
 \value{
 A plot object, TODO

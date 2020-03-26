@@ -7,7 +7,7 @@
 compute_labels(idc, idc1)
 }
 \arguments{
-\item{idc}{A character vector of reference group labels.}
+\item{idc}{A character vector of reference group labels. # TODOELI: more informative param names?}
 
 \item{idc1}{Vector of labels for clusters.}
 }
