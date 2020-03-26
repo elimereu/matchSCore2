@@ -11,6 +11,7 @@
 #' Default=0.5.
 #' @param p.threshold Probability threshold to consider a cell classified.
 #' Default=0.65.
+#' @param ... TODOELI
 #'
 #' @return A multinomial fitted model as in the `nnet` package.
 #'
