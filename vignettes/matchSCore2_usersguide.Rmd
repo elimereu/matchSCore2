@@ -255,16 +255,17 @@ We can also measure the grade of matching across clusters by looking at the leve
 For example, you could use the top 100 ranked markers per cluster from the Chromium and MARS-Seq dataset.
 
 ```{r eval=FALSE}
-
 ## And the MARS-Seq as test
 test.markers <- markers$`Smart-Seq2`
 
 gene_cl.test <- cut_markers(levels(test.markers$cluster), markers = test.markers, ntop = 100)
 
-
 ## The matchSCore2 function computes the clustering comparison and produce the heatmap table with Jaccard Indexes for each group combination
 
-matchSCore2(gene_cl.ref = gene_cl.ref, gene_cl.obs = gene_cl.test, ylab = "Chromium", xlab = "Smart-seq2")
+matchSCore2(gene_cl.ref = gene_cl.ref, 
+            gene_cl.obs = gene_cl.test, 
+            xlab = "Smart-seq2",
+            ylab = "Chromium")
 ```
 
 ```{r ss-clustercomp, echo=FALSE, eval=TRUE, fig.wide = TRUE}
@@ -272,34 +273,35 @@ knitr::include_graphics("Cluster-sp_markers_comparison.png")
 ```
 
 In the heatmap, we can observe the Jaccard similarity between cluster-specific markers from the two experiments. 
-Notably, you can see how the jaccard indexes between markers reflect the cellular composition of clusters, in agreement with the previous plot. 
+Notably, you can see how the Jaccard indexes between markers reflect the cellular composition of clusters, in agreement with the previous plot. 
 
 # Alignment of datasets
 
-While with the previous approach we can fastly transfer annotations from one dataset to another, sometimes we are interested in comparing gene measurements between cells coming from different experiments (e.g. WT vs KO, disease vs control, different protocols, etc..). 
+While with the previous approach we can quickly transfer annotations from one dataset to another, sometimes we are interested in comparing gene measurements between cells coming from different experimental conditions (e.g. WT vs KO, disease vs control, different protocols, etc..). 
 In the `r BiocStyle::Biocpkg("matchSCore2")` package, we provide a mathematical framework to align datasets, by projecting them to the same coordinate space of an assigned reference dataset. 
+
 The method is based on the single value decomposition and allows a direct comparison of datasets, by finding the optimal linear transformation between data points.     
-By using the function `align_run` two or more gene expression matrixes are compared and aligned to the same reference dataset.  
+By using the function `align_run`, two or more gene expression matrices are compared and aligned to the same reference dataset.  
 
 In this example, we want to align 3 of the PBMC+HEK293T experiments sequenced with different protocols: Chromium, Smart-Seq2 and ddSEQ. 
 In this case, the choice of the reference is not so important, we will choose the Chromium dataset.
 The method requires the clusters (more than 1 cell), they will be used to compute a centroid point at each dataset, useful for their comparison. 
+<!-- TODOELI: unclear sentence here above -->
 
 ```{r, eval=FALSE}
-
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?dl=0"
-download.file(url = url, destfile = "~/Downloads/sce.all_classified.technologies.RData", mode = "wb")
-load(file = "~/Downloads/sce.all_classified.technologies.RData") ## load the data
+download.file(url = url, destfile = "sce.all_classified.technologies.RData", mode = "wb")
+load(file = "sce.all_classified.technologies.RData") ## load the data
 
-chromium <- scater::filter(sce, batch == "Chromium")
-smartseq2 <- scater::filter(sce, batch == "Smart-Seq2")
-ddseq <- scater::filter(sce, batch == "ddSEQ")
+sce_chromium <- sce[, sce$batch == "Chromium"]
+sce_smartseq2 <- sce[, sce$batch == "Smart-Seq2"]
+sce_ddseq <- sce[, sce$batch == "ddSEQ"]
 
-chromium$cluster <- factor(chromium$nnet2)
-smartseq2$cluster <- factor(smartseq2$nnet2)
-ddseq$cluster <- factor(ddseq$nnet2)
+sce_chromium$cluster <- factor(sce_chromium$nnet2)
+sce_smartseq2$cluster <- factor(sce_smartseq2$nnet2)
+sce_ddseq$cluster <- factor(sce_ddseq$nnet2)
 
-list_data <- list(Chromium = chromium, Smartseq2 = smartseq2, ddseq = ddseq)
+list_data <- list(Chromium = sce_chromium, Smartseq2 = sce_smartseq2, ddseq = sce_ddseq)
 
 markers.dds <- markers$ddSEQ
 gene_cl.dds <- cut_markers(levels(markers.dds$cluster), markers = markers.dds, ntop = 100)
@@ -307,18 +309,18 @@ gene_cl.dds <- cut_markers(levels(markers.dds$cluster), markers = markers.dds, n
 markers_list <- unique(c(unlist(gene_cl.ref), unlist(gene_cl.test), unlist(gene_cl.dds)))
 
 out_align <- align_run(dataset_list = list_data, marker_list = markers_list, ref = "Chromium")
+# TODOELI: this one up here returns an error - can you double check this by running the vignette as a whole till here?
 ```
 
 The output contains a `SingleCellExperiment` object with the joint raw counts and the integrated matrix from the 3 datasets. 
 See the manual of the `align_run` function for more details about the output.
 
-Once data are integrated, you can use the normalized matrix to cluster your cells. 
+Once the datasets are integrated, you can use the normalized matrix to cluster your cells. 
 For example, if you want to use Seurat, you can provide that matrix in the `@data` slot, as in the `seurat3_run` function. 
 
 ```{r, eval=FALSE}
-
 col2 <- c("maroon", "orange", "cyan")
-data <- seurat3_run(
+out_seurat <- seurat3_run(
   out_align = out_align,
   dims = 1:10,
   res = 0.2,
@@ -326,10 +328,10 @@ data <- seurat3_run(
   col_data = col2
 )
 
-DimPlot(data, group.by = "cluster", cols = col) +
+DimPlot(out_seurat, group.by = "cluster", cols = col) +
   theme(legend.text = element_text(size = 14))
 
-DimPlot(data, group.by = "dataset", cols = col2) +
+DimPlot(out_seurat, group.by = "dataset", cols = col2) +
   theme(legend.text = element_text(size = 14))
 ```
 
