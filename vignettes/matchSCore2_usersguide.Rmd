@@ -52,13 +52,14 @@ options(width = 100)
 # Introduction {#introduction}
 
 This vignette describes how to use the `r BiocStyle::Biocpkg("matchSCore2")` package for the comparison of single cell RNA-seq data across experiments. 
-The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells. 
+The package allows a gene marker-based projection of single cells onto a reference sample and, thus, the identification of cell types in unknown cells. TODOELI: rather "in new datasets of unknown composition"?
 A more detailed version of the method is at the bioRxiv paper: http://dx.doi.org/10.1101/630087 [@Mereu2019]. 
 By using a reference dataset in which the cellular type of individual cells is defined and gene markers are computed, `r BiocStyle::Biocpkg("matchSCore2")` trains a multinomial logistic model to classify unknown cells in new datasets from similar tissues. 
+
 The method consists of the following steps:
 
-1. The reference dataset is subset in two parts, train and test data, in order to estimate the accuracy of the model.
-2. For each cell type in the reference, a signature score is assigned to each cell by using the top 100 gene markers.
+1. The reference dataset is subset in two parts, train and test data, in order to estimate the accuracy of the model. []TODOELI: did you ever investigate whether e.g. k fold cross-validation could help?
+2. For each cell type in the reference, a signature score is assigned to each cell by using the top 100 gene markers. []TODOELI: could this be adjusted? if so, we can say "top N (default N = 100)"
 3. The signature scores are the predictors of the multinomial logistic model.
 4. Once the model is trained, a probability value is assigned to each cell per cell type. 
    The highest likelihood can then be used to annotate that cell if it reaches the minimum value provided by the user (default = 0.5).    
@@ -66,7 +67,6 @@ The method consists of the following steps:
 ```{r ss-overview, echo=FALSE, eval=TRUE, fig.wide = TRUE}
 knitr::include_graphics("overview_package.png")
 ```
-
     
 # Getting started {#gettingstarted}
 
