@@ -5,7 +5,7 @@
 \title{Compute the cellular phenotype matching across reference cell groups and
 computational clusters}
 \usage{
-matchSCore2(gene_cl.ref, gene_cl.obs, ylab, xlab)
+matchSCore2(gene_cl.ref, gene_cl.obs, xlab, ylab)
 }
 \arguments{
 \item{gene_cl.ref}{A list of reference group markers. Each element of the
@@ -13,11 +13,11 @@ list represents the set of markers for each biological group.}
 
 \item{gene_cl.obs}{A list of cluster-specific gene sets to match with \code{gene_cl.ref}.}
 
-\item{ylab}{A character label (ylab) indicating the reference technology to plot
-in the matchSCore table(e.g. "Smart-Seq2").}
+\item{xlab}{A character label, indicating the tested technology to plot
+in the matchSCore table (e.g. "Chromium") on the x axis}
 
-\item{xlab}{A character label (xlab) indicating the tested technology to plot
-in the matchSCore table (e.g. "Chromium").}
+\item{ylab}{A character label, indicating the reference technology to plot
+in the matchSCore table(e.g. "Smart-Seq2") on the y axis}
 }
 \value{
 A list with the \code{matchSCore} matrix and the ggplot table at the
