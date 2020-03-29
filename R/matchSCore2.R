@@ -7,10 +7,10 @@
 #' @param gene_cl.ref A list of reference group markers. Each element of the
 #' list represents the set of markers for each biological group.
 #' @param gene_cl.obs A list of cluster-specific gene sets to match with `gene_cl.ref`.
-#' @param ylab A character label (ylab) indicating the reference technology to plot
-#' in the matchSCore table(e.g. "Smart-Seq2").
-#' @param xlab A character label (xlab) indicating the tested technology to plot
-#' in the matchSCore table (e.g. "Chromium").
+#' @param xlab A character label, indicating the tested technology to plot
+#' in the matchSCore table (e.g. "Chromium") on the x axis
+#' @param ylab A character label, indicating the reference technology to plot
+#' in the matchSCore table(e.g. "Smart-Seq2") on the y axis
 #'
 #' @return A list with the `matchSCore` matrix and the ggplot table at the
 #' `ggplot` slot.
@@ -21,8 +21,8 @@
 #' # TODO
 matchSCore2 <- function(gene_cl.ref,
                         gene_cl.obs,
-                        ylab,
-                        xlab) {
+                        xlab,
+                        ylab) {
   score <- 0
   lab.ref <- seq(1:length(gene_cl.ref))
   lab.obs <- seq(1:length(gene_cl.obs))
