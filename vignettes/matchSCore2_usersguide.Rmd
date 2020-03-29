@@ -173,14 +173,13 @@ To train the multinomial logistic model implemented in `r BiocStyle::Biocpkg("ma
 
 
 ```{r eval=FALSE}
-
 library("matchSCore2")
 library("nnet")
 
 url <- "https://www.dropbox.com/s/wijdjhbm17fd7fp/markers_all_datasets.RData?raw=true"
-download.file(url = url, destfile = "~/Downloads/markers_all_datasets.RData", mode = "wb")
+download.file(url = url, destfile = "markers_all_datasets.RData", mode = "wb")
 
-load(file = "~/Downloads/markers_all_datasets.RData")
+load(file = "markers_all_datasets.RData")
 ref.markers <- markers$Chromium
 
 gene_cl.ref <- cut_markers(levels(ref.markers$cluster),
@@ -188,13 +187,14 @@ gene_cl.ref <- cut_markers(levels(ref.markers$cluster),
   ntop = 100
 )
 
+# TODO there's no accessor available in Seurat?!
 scaled <- ref@assays$RNA@scale.data
 ```
-
 
 ### Training of the model
 
 ```{r eval=FALSE}
+# TODO - train_model should have a `verbose` element to prevent printing of unessential messages 
 mod <- train_model(
   scale.data = scaled, clus = nnet2,
   gene_cl.ref = gene_cl.ref,
@@ -204,14 +204,13 @@ mod <- train_model(
 
 ## Cell classification
 
-Once the model is done, it can be used to predict the identity of unknown cells from another dataset. 
+Once the model has been calculated, it can be used to predict the identity of unknown cells from another dataset. 
 Here, we will test the model in MARS-seq data. 
 With the function `identity_map`, we assign the cell identity in the test data based on the highest probability predicted by the model.
 
 ```{r eval=FALSE}
-
 scaled <- ScaleData(smartseq2, features = unlist(gene_cl.ref))
-scaled <- scaled@assays$RNA@scale.data
+scaled <- scaled@assays$RNA@scale.data # TODOELI: are there no accessors in Seurat to do so?
 
 ## Cell projection
 out <- identity_map(
@@ -220,15 +219,12 @@ out <- identity_map(
   gene_cl.ref = gene_cl.ref
 )
 
-
 identity_heatmap(out)
 ```
 
 ```{r ss-identityheat, echo=FALSE, eval=TRUE, fig.wide = TRUE}
 knitr::include_graphics("identity_heatmaps.png")
 ```
-
-
 
 From the heatmap, you can observe the probability of cells to be assigned to each cell identity.
 Cells assigned to a specific identity have the highest probability (magenta color) for that class and probability close to zero (white-blue colors) in other classes.   
@@ -238,12 +234,9 @@ Cells assigned to a specific identity have the highest probability (magenta colo
 `r BiocStyle::Biocpkg("matchSCore2")` can be used to improve the clustering annotation, detecting subtle differences between cell types that are difficult to be detected by clustering (e.g. NK and CD8 T cells, CD4 and CD8 T cells, etc..). 
 
 ```{r eval=FALSE}
-
 smseq.clus <- smartseq2$ident
 
-
 col <- c("aquamarine", "orange", "green4", "blueviolet", "black", "maroon", "coral2", "deepskyblue3", "lightgray")
-
 
 summary_barplot(class.fac = out$ids, obs.fac = smseq.clus) + scale_fill_manual(values = col)
 ```
