@@ -350,8 +350,10 @@ knitr::include_graphics("UMAP_dataset_after_integration.png")
 
 We can explore some of the markers we used for the integration with the Seurat `FeaturePlot` function:
 
+<!-- TODOELI: We should stick to sce outputs and inputs + use for example here plotExpression from scater, which does the same de facto -->
+
 ```{r, eval=FALSE}
-FeaturePlot(data, features = c(
+FeaturePlot(out_seurat, features = c(
   "CD79B", "IL7R", "CD3D", "NKG7",
   "GNLY", "CD14", "FCGR3A", "CTTN"
 ))
