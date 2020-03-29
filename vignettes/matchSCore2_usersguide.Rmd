@@ -92,14 +92,15 @@ library("matchSCore2")
 In this vignette, we showcase the functionality of `r BiocStyle::Biocpkg("matchSCore2")` using the PBMC+HEK293T data from our benchmarking of 13 protocols [@Mereu2019]. 
 The list of all seurat objects, including UMAPs and tSNEs are provided here: https://www.dropbox.com/sh/wgu6kcioqkkva4g/AABHJaFsiqYZeYc-xv6qtg3ba?dl=0. 
 
+[]TODOELI: this is quite huge. IMHO it makes much much sense to have this in EHub. Or even better, have it "componible" with the pieces found in EHub
+
 From the same link, you can also download the `SingleCellExperiment` object from which you can extract the counts from each protocol by following the instructions below.
 
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
-
-library(scater)
+library("SingleCellExperiment")
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?raw=true"
 download.file(url = url, destfile = "~/Downloads/sce.all_classified.technologies.RData", mode = "wb")
-load(file = "~/Downloads/sce.all_classified.technologies.RData") ## load the data
+load(file = "sce.all_classified.technologies.RData") ## load the data
 ```
 
 After you load it into R, if you check the `colData(object)` there are three metadata, which are: `nnet2`, `ident`, and `batch`.
@@ -109,47 +110,52 @@ After you load it into R, if you check the `colData(object)` there are three met
 3. `batch` is the sequencing protocol. 
 
 ```{r,eval=FALSE}
-
 colData(sce) ### give access to the metadata DataFrame
 
 table(colData(sce)$nnet2) ## Number of cells from each classified cell type (by matchSCore2)
 table(colData(sce)$ident) ## Number of cells from each Seurat cluster
 table(colData(sce)$batch) ## Number of cells from each protocol
+
+# or as a shortcut
+table(sce$batch)
 ```
 
-You can extract counts, PCA and UMAP of the integrated dataset, by the following commands:
+You can extract counts (raw or log-normalized), PCA, and UMAP of the integrated dataset, by the following commands:
 
 ```{r eval=FALSE}
-counts <- sce@assays$data$counts
-logcounts <- sce@assays$data$logcounts
+counts <- counts(sce)
+logcounts <- logcounts(sce)
 
-umap <- sce@reducedDims$UMAP
-pca <- sce@reducedDims$PCA
+umap <- reducedDim(sce, "UMAP")
+pca <- reducedDim(sce, "PCA")
 
 ## if you are interested in a specific protocol (e.g. Chromium)
-chromium <- filter(sce, batch == "Chromium")
-logcounts <- chromium@assays$data@listData$logcounts
+sce_chromium <- sce[, sce$batch == "Chromium"]
+logcounts_chromium <- logcounts(sce_chromium)
 ```
 
 In case you are interested in working with the seurat objects, all datasets are in the `data.list` list, whose elements represent the protocols. 
+
+[]TODOELI: I think again it would be super cool to have a- them on EHub, and b- while we are at it, my suggestion is that on EHub they would belong stored as SingleCellExperiment objects
+
 Let us suppose Chromium is the reference and Smart-seq2 the test data we want to annotate. 
 The cell type specific markers from each protocol are also provided.
 
 ```{r eval=FALSE}
-
-library(Seurat)
+library("Seurat")
 
 url <- "https://www.dropbox.com/s/2ketqbof6tvnv07/data.list_seurat.obj_all_datasets.RData?raw=true"
 download.file(
   url = url,
-  destfile = "~/Downloads/data.list_seurat.obj_all_datasets.RData",
+  destfile = "data.list_seurat.obj_all_datasets.RData",
   mode = "wb"
 )
 
-load(file = "~/Downloads/data.list_seurat.obj_all_datasets.RData")
+
+# NOTEELI: this looks like the perfect case to provide these objects via EHub
+load(file = "data.list_seurat.obj_all_datasets.RData")
 ref <- data.list$Chromium
 nnet2 <- ref$nnet2
-
 
 smartseq2 <- data.list$`Smart-Seq2`
 ```
