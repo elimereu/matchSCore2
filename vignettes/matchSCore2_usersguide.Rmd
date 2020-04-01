@@ -194,7 +194,6 @@ scaled <- ref@assays$RNA@scale.data
 ### Training of the model
 
 ```{r eval=FALSE}
-# TODO - train_model should have a `verbose` element to prevent printing of unessential messages 
 mod <- train_model(
   scale.data = scaled, clus = nnet2,
   gene_cl.ref = gene_cl.ref,
