@@ -13,7 +13,8 @@ GOannotation(
   go.score.class = "weight01Score",
   p.val.threshold = 0.05,
   dag.file.prefix = FALSE,
-  ngenes = 20
+  ngenes = 20,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -38,6 +39,9 @@ Corresponding R packages have to be installed.}
 \item{dag.file.prefix}{TODO}
 
 \item{ngenes}{TODO}
+
+\item{verbose}{Logical, controls the displaying of additional messages while
+running the function. Defaults to \code{TRUE}.}
 }
 \value{
 A list with two elements:
