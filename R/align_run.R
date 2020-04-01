@@ -72,17 +72,17 @@ align_run <- function(dataset_list,
     )
   )
   s <- colnames(dataset_list[[ref]])[train.sample]
-  train.data <- dataset_list[[ref]]@assays$data$logcount[, train.sample]
+  train.data <- logcounts(dataset_list[[ref]])[, train.sample]
 
   test.sample <- which(!colnames(dataset_list[[ref]]) %in% s)
-  test.data <- dataset_list[[ref]]@assays$data$logcount[, test.sample]
+  test.data <- logcounts(dataset_list[[ref]])[, test.sample]
 
   len <- length(dataset_list)
   dataset_list$ref <- dataset_list[[ref]][, train.sample]
   dataset_list$test <- dataset_list[[ref]][, test.sample]
   dataset_list <- dataset_list[-ref.p]
 
-  d_list <- lapply(dataset_list, function(x) x@assays$data$logcount[genes, ])
+  d_list <- lapply(dataset_list, function(x) logcounts(x)[genes, ])
   d_list <- lapply(d_list, function(x) (x - min(x)) / (max(x) - min(x)))
   cl <- lapply(dataset_list, function(x) factor(colData(x)$cluster))
 
@@ -140,7 +140,7 @@ align_run <- function(dataset_list,
   cells <- unlist(lapply(original, function(x) colnames(x)))
   colnames(integrated) <- cells
 
-  counts_list <- lapply(original, function(x) x@assays$data$counts[genes, colnames(x)])
+  counts_list <- lapply(original, function(x) counts(x)[genes, colnames(x)])
 
   progress <- 7
   Sys.sleep(0.1)
