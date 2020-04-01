@@ -24,7 +24,10 @@
 #' @importFrom S4Vectors DataFrame
 #' @importFrom Seurat CreateSeuratObject ElbowPlot FindClusters FindNeighbors
 #' NormalizeData RunPCA RunUMAP VariableFeatures `VariableFeatures<-`
+#' AddMetaData
 #' @importFrom SingleCellExperiment SingleCellExperiment colData rowData
+#' logcounts
+#' @importFrom SummarizedExperiment `assay<-` `colData<-`
 #' @importFrom corpcor fast.svd
 #'
 #' @name matchSCore2-pkg
