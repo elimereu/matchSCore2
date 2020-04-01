@@ -16,6 +16,8 @@
 #' @param p.val.threshold TODO
 #' @param dag.file.prefix TODO
 #' @param ngenes TODO
+#' @param verbose Logical, controls the displaying of additional messages while
+#' running the function. Defaults to `TRUE`.
 #'
 #' @return A list with two elements:
 #' - `GOenrich` contains data.frames with GO enrichments for each cluster.
@@ -34,7 +36,8 @@ GOannotation <- function(markers,
                          go.score.class = "weight01Score",
                          p.val.threshold = 0.05,
                          dag.file.prefix = FALSE,
-                         ngenes = 20) {
+                         ngenes = 20,
+                         verbose = TRUE) {
   if (!ontology.type %in% c("BP", "MF", "CC")) {
     stop("Only 'BP', 'CC' and 'MF' are supported as ontology types")
   }
@@ -43,7 +46,7 @@ GOannotation <- function(markers,
   }
 
   if (reformat.gene.names) {
-    message("Reformatting gene names (to lower case names starting with capital)")
+    if (verbose) message("Reformatting gene names (to lower case names starting with capital)")
     .simpleCap <- function(x) {
       s <- strsplit(x, " ")[[1]]
       paste(toupper(substring(s, 1, 1)), substring(s, 2),
@@ -85,10 +88,7 @@ GOannotation <- function(markers,
   # names(go.env) <- paste(names(go.env), desc)
 
   for (clus in levels(cluster)) {
-    message(paste(
-      "Computing GO enrichment for cluster:", clus,
-      "\n"
-    ))
+    if (verbose) message(paste("Computing GO enrichment for cluster:", clus,"\n"))
     df <- markers[which(markers$cluster == clus), ]
     all.genes <- df$p_val
     names(all.genes) <- df$gene

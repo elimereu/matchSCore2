@@ -10,6 +10,7 @@ train_model(
   gene_cl.ref,
   prop = NULL,
   p.threshold = NULL,
+  verbose = TRUE,
   ...
 )
 }
@@ -28,6 +29,9 @@ Default=0.5.}
 
 \item{p.threshold}{Probability threshold to consider a cell classified.
 Default=0.65.}
+
+\item{verbose}{Logical, controls the displaying of additional messages while
+running the function. Defaults to \code{TRUE}.}
 
 \item{...}{TODOELI}
 }
