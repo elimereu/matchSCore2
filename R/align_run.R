@@ -58,7 +58,7 @@ align_run <- function(dataset_list,
   setTxtProgressBar(pb, progress)
 
   ref.p <- which(names(dataset_list) == ref)
-  ref.cl <- factor(dataset_list[[ref]]@colData$cluster)
+  ref.cl <- factor(colData(dataset_list[[ref]])$cluster)
   sizes <- unlist(lapply(
     levels(ref.cl),
     function(x) length(ref.cl[which(ref.cl %in% x)])
@@ -72,19 +72,19 @@ align_run <- function(dataset_list,
     )
   )
   s <- colnames(dataset_list[[ref]])[train.sample]
-  train.data <- dataset_list[[ref]]@assays$data$logcount[, train.sample]
+  train.data <- logcounts(dataset_list[[ref]])[, train.sample]
 
   test.sample <- which(!colnames(dataset_list[[ref]]) %in% s)
-  test.data <- dataset_list[[ref]]@assays$data$logcount[, test.sample]
+  test.data <- logcounts(dataset_list[[ref]])[, test.sample]
 
   len <- length(dataset_list)
   dataset_list$ref <- dataset_list[[ref]][, train.sample]
   dataset_list$test <- dataset_list[[ref]][, test.sample]
   dataset_list <- dataset_list[-ref.p]
 
-  d_list <- lapply(dataset_list, function(x) x@assays$data$logcount[genes, ])
+  d_list <- lapply(dataset_list, function(x) logcounts(x)[genes, ])
   d_list <- lapply(d_list, function(x) (x - min(x)) / (max(x) - min(x)))
-  cl <- lapply(dataset_list, function(x) factor(x@colData$cluster))
+  cl <- lapply(dataset_list, function(x) factor(colData(x)$cluster))
 
   progress <- 3
   Sys.sleep(0.1)
@@ -92,7 +92,7 @@ align_run <- function(dataset_list,
 
   to_rm <- lapply(
     dataset_list,
-    function(x) names(table(x@colData$cluster))[which(as.vector(table(x@colData$cluster)) < 10)]
+    function(x) names(table(colData(x)$cluster))[which(as.vector(table(colData(x)$cluster)) < 10)]
   )
 
   cl1 <- cl
@@ -102,7 +102,7 @@ align_run <- function(dataset_list,
   }
 
 
-  cc <- lapply(seq(1:length(d_list)), function(x) sapply(levels(cl1[[x]]), function(y) rowMeans(d_list[[x]][genes, which(dataset_list[[x]]@colData$cluster == y)])))
+  cc <- lapply(seq(1:length(d_list)), function(x) sapply(levels(cl1[[x]]), function(y) rowMeans(d_list[[x]][genes, which(colData(dataset_list[[x]])$cluster == y)])))
   cc <- lapply(cc, function(x) apply(x, 1, function(y) median(y, na.rm = TRUE)))
 
   progress <- 4
@@ -140,7 +140,7 @@ align_run <- function(dataset_list,
   cells <- unlist(lapply(original, function(x) colnames(x)))
   colnames(integrated) <- cells
 
-  counts_list <- lapply(original, function(x) x@assays$data$counts[genes, colnames(x)])
+  counts_list <- lapply(original, function(x) counts(x)[genes, colnames(x)])
 
   progress <- 7
   Sys.sleep(0.1)
@@ -159,7 +159,7 @@ align_run <- function(dataset_list,
   Sys.sleep(0.1)
   setTxtProgressBar(pb, progress)
 
-  annotation <- unlist(lapply(original, function(x) x@colData$cluster))
+  annotation <- unlist(lapply(original, function(x) colData(x)$cluster))
 
   progress <- 9
   Sys.sleep(0.1)
@@ -179,18 +179,18 @@ align_run <- function(dataset_list,
   minx <- 0
   maxx <- max(as.vector(log10(counts + 1)), na.rm = TRUE)
   integrated <- t(apply(integrated, 1, function(x) (x - min(x)) / (max(x) - min(x))))
-  sce@assays$data$integrated <- integrated
-  sce@colData <- DataFrame(cluster = annotation, batch = dataset)
+  assay(sce, "integrated") <- integrated
+  colData(sce) <- DataFrame(cluster = annotation, batch = dataset)
   colnames(sce) <- cells
 
   return(
     list(
       sce = sce,
-      counts = counts,
-      integrated = integrated,
-      annotation_label = annotation,
+      counts = counts,    # TODOELI: I do not think it is required to return this, it is included in the sce itself (the counts assay)
+      integrated = integrated,   # TODOELI: I do not think it is required to return this, it is included in the sce itself (the corresponding slot)
+      annotation_label = annotation, # TODOELI: I do not think it is required to return this, it is included in the sce itself (the colData)
       dataset_label = dataset,
-      genes = genes
+      genes = genes # TODOELI: I do not think it is required to return this - could this be simply the list of all genes included in the final object anyway
     )
   )
 }

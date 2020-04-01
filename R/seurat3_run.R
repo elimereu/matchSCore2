@@ -2,7 +2,8 @@
 #'
 #' @param out_align The output of the function `align_run`. The combined count
 #' matrix is used to create the Seurat object and the integrated is provided
-#' to the slot `@data`.
+#' to the slot `@data`. # TODOELI: we would need to say a little more on how this
+#' list is expected to look like
 #' @param dims Seurat parameter. It is the dimension of the PCA space.
 #' @param res Seurat resolution parameter.
 #' @param col_anno TODO
@@ -29,12 +30,14 @@ seurat3_run <- function(out_align,
 
   counts <- counts[, colnames(integrated)]
   data <- CreateSeuratObject(counts = counts, min.features = 0, min.cells = 0, project = "integrated")
-  data@meta.data$cluster <- annotation
-  data@meta.data$dataset <- dataset
+
+  data <- AddMetaData(object = data, metadata = annotation, col.name = "cluster")
+  data <- AddMetaData(object = data, metadata = dataset, col.name = "dataset")
+
   data <- NormalizeData(object = data)
   VariableFeatures(data) <- rownames(integrated)
 
-  data@assays$RNA@scale.data <- integrated
+  data@assays$RNA@scale.data <- integrated  # TODOELI: is there a Seurat specific function for this?
 
   data <- RunPCA(data, features = VariableFeatures(object = data))
   plot(ElbowPlot(data))
