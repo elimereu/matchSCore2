@@ -9,7 +9,8 @@ seurat3_run(
   dims = c(1:10),
   res = 0.2,
   col_anno = NULL,
-  col_data = NULL
+  col_data = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ to the slot \verb{@data}.}
 \item{col_anno}{TODO}
 
 \item{col_data}{TODO}
+
+\item{verbose}{Logical, controls the displaying of additional messages while
+running the function. Defaults to \code{TRUE}.}
 }
 \value{
 The integrated Seurat object. Two UMAP plots with cells coloured by

@@ -4,7 +4,7 @@
 \alias{align_run}
 \title{Integration of different datasets}
 \usage{
-align_run(dataset_list, marker_list, ref)
+align_run(dataset_list, marker_list, ref, verbose = TRUE)
 }
 \arguments{
 \item{dataset_list}{A named list of annotated SingleCellExperiments objects.
@@ -14,6 +14,9 @@ The cell annotations are in the \code{cluster} slots.}
 
 \item{ref}{The name of the reference dataset from the dataset_list. It has to
 be the first in the \code{dataset_list}.}
+
+\item{verbose}{Logical, controls the displaying of additional messages while
+running the function. Defaults to \code{TRUE}.}
 }
 \value{
 A list containing:

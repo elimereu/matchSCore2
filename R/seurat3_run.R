@@ -8,6 +8,8 @@
 #' @param res Seurat resolution parameter.
 #' @param col_anno TODO
 #' @param col_data TODO
+#' @param verbose Logical, controls the displaying of additional messages while
+#' running the function. Defaults to `TRUE`.
 #'
 #' @return The integrated Seurat object. Two UMAP plots with cells coloured by
 #' annotation and dataset will be generated.
@@ -20,13 +22,14 @@ seurat3_run <- function(out_align,
                         dims = c(1:10),
                         res = 0.2,
                         col_anno = NULL,
-                        col_data = NULL) {
+                        col_data = NULL,
+                        verbose = TRUE) {
   counts <- out_align$counts
   integrated <- out_align$integrated
   annotation <- out_align$annotation_label
   dataset <- out_align$dataset_label
 
-  message("Running Seurat by using as normalized data the integrated matrix..")
+  if (verbose) message("Running Seurat by using the integrated matrix as normalized data...")
 
   counts <- counts[, colnames(integrated)]
   data <- CreateSeuratObject(counts = counts, min.features = 0, min.cells = 0, project = "integrated")

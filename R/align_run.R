@@ -5,6 +5,8 @@
 #' @param marker_list A list of `cluster` specific markers from the input dataset.
 #' @param ref The name of the reference dataset from the dataset_list. It has to
 #' be the first in the `dataset_list`.
+#' @param verbose Logical, controls the displaying of additional messages while
+#' running the function. Defaults to `TRUE`.
 #'
 #' @return A list containing:
 #' - `sce`: the integrated SingleCellExperiment object.
@@ -20,7 +22,8 @@
 #' # TODO
 align_run <- function(dataset_list,
                       marker_list,
-                      ref) {
+                      ref,
+                      verbose = TRUE) {
   if (names(dataset_list)[1] != ref) {
     stop("The reference dataset is not the first of the dataset list")
   }
@@ -33,7 +36,7 @@ align_run <- function(dataset_list,
 
   original <- dataset_list
 
-  message("Defining the set of common genes")
+  if (verbose) message("Defining the set of common genes")
 
   total <- 10
   # create progress bar
@@ -115,9 +118,11 @@ align_run <- function(dataset_list,
   sequence <- sequence[-pos]
 
   H <- lapply(c(1:len), function(x) d_list[[x]] - cc[[x]])
-  message(" Computing covariance matrixes... ")
+
+  if (verbose) message(" Computing covariance matrixes... ")
   cov <- lapply(sequence, function(x) cov(H[[pos]], H[[x]]))
-  message(" Single Value Decomposition of covariance matrixes ... ")
+
+  if (verbose) message(" Single Value Decomposition of covariance matrixes ... ")
   svd_out <- lapply(cov, function(x) fast.svd(x))
 
   progress <- 5
@@ -146,7 +151,6 @@ align_run <- function(dataset_list,
   Sys.sleep(0.1)
   setTxtProgressBar(pb, progress)
 
-
   for (i in seq(1, l)) {
     if (i > 1) {
       counts <- cbind(counts, counts_list[[i]])
@@ -173,7 +177,8 @@ align_run <- function(dataset_list,
   close(pb)
   end.time <- Sys.time()
   time <- difftime(end.time, start.time, units = "mins")
-  message(paste("The runtime is:", time, "min", sep = " "))
+
+  if (verbose) message(paste("The runtime is:", time, "min", sep = " "))
 
   sce <- SingleCellExperiment(assays = list(counts = counts))
   minx <- 0
