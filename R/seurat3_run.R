@@ -37,7 +37,7 @@ seurat3_run <- function(out_align,
   data <- NormalizeData(object = data)
   VariableFeatures(data) <- rownames(integrated)
 
-  data@assays$RNA@scale.data <- integrated
+  data@assays$RNA@scale.data <- integrated  # TODOELI: is there a Seurat specific function for this?
 
   data <- RunPCA(data, features = VariableFeatures(object = data))
   plot(ElbowPlot(data))
