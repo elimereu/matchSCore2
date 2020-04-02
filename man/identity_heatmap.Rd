@@ -10,7 +10,8 @@ identity_heatmap(out)
 \item{out}{output of the function identity_map. # TODOELI: here as well, some param name more informative of what needs to be provided?}
 }
 \value{
-The heatmap displaying the probability of each cell to belong to the identity classes according the model.
+A ggplot object, with the heatmap displaying the probability of each
+cell to belong to the identity classes according the model.
 }
 \description{
 This function identifies true label groups between reference groups and clusters.
