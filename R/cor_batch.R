@@ -46,6 +46,8 @@ cor_batch <- function(raw,
 
   col <- colorRampPalette(c(rep("white", 3), "#FFECB3", "#E85285", "#6A1B9A"))
 
+  # TODOELI: shouldn't we return this to "corr <- "?
+  # otherwise this last step is not returned!
   lapply(
     corr,
     function(x) {

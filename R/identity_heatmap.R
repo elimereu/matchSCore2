@@ -1,9 +1,11 @@
 #' Heatmaps of class probabilities
 #'
 #' This function identifies true label groups between reference groups and clusters.
+#'
 #' @param out output of the function identity_map. # TODOELI: here as well, some param name more informative of what needs to be provided?
 #'
-#' @return The heatmap displaying the probability of each cell to belong to the identity classes according the model.
+#' @return A ggplot object, with the heatmap displaying the probability of each
+#' cell to belong to the identity classes according the model.
 #'
 #' @export
 #' @examples

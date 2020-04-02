@@ -2,6 +2,7 @@
 #'
 #' This function computes the matchSCore for different cutoffs of marker specificity
 #' and top cluster markers
+#'
 #' @param sim A Splatter simulation object.
 #' @param specificity The proportion of top-ranked markers for each simulated group.
 #' @param tool_out The output of the used tool to cluster your data. It should be

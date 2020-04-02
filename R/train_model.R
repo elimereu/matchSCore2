@@ -1,6 +1,7 @@
 #' Model training
 #'
-#' This function train a model from the reference dataset
+#' This function trains a model from the reference dataset
+#'
 #' @param scale.data A scaled matrix of gene expressions like in the `scale.data`
 #' of the Seurat object. Rows are genes and columns are cells from the reference
 #' dataset.

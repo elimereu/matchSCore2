@@ -1,6 +1,7 @@
 #' Plots matchSCore trends for a specific tool
 #'
 #' This function identifies true label groups between reference groups and clusters
+#' #TODOELI: this function actually seems to "just" plot the scores data frame?
 #'
 #' @param scores_df A character vector of reference group labels. TODOELI: df or vector?
 #'
