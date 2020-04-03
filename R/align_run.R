@@ -179,7 +179,7 @@ align_run <- function(dataset_list,
   minx <- 0
   maxx <- max(as.vector(log10(counts + 1)), na.rm = TRUE)
   integrated <- t(apply(integrated, 1, function(x) (x - min(x)) / (max(x) - min(x))))
-  sce@assays$integrated <- integrated
+  sce@assays@data$integrated <- integrated
   sce@colData <- DataFrame(cluster = annotation, batch = dataset)
   colnames(sce) <- cells
 
