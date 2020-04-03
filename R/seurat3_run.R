@@ -29,7 +29,7 @@ seurat3_run <- function(out_align,
   annotation <- out_align$annotation_label
   dataset <- out_align$dataset_label
 
-  if (verbose) message("Running Seurat by using the integrated matrix as normalized data...")
+  if (verbose) message("Running Seurat by using the integrated matrix as log normalized data...")
 
   counts <- counts[, colnames(integrated)]
   data <- CreateSeuratObject(counts = counts, min.features = 0, min.cells = 0, project = "integrated")
@@ -37,10 +37,10 @@ seurat3_run <- function(out_align,
   data <- AddMetaData(object = data, metadata = annotation, col.name = "cluster")
   data <- AddMetaData(object = data, metadata = dataset, col.name = "dataset")
 
-  data <- NormalizeData(object = data)
+  data@assays$RNA@data <- integrated
   VariableFeatures(data) <- rownames(integrated)
 
-  data@assays$RNA@scale.data <- integrated  # TODOELI: is there a Seurat specific function for this?
+  data <- ScaleData(data)
 
   data <- RunPCA(data, features = VariableFeatures(object = data))
   plot(ElbowPlot(data))
