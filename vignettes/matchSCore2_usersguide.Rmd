@@ -194,7 +194,6 @@ scaled <- ref@assays$RNA@scale.data
 ### Training of the model
 
 ```{r eval=FALSE}
-# TODO - train_model should have a `verbose` element to prevent printing of unessential messages 
 mod <- train_model(
   scale.data = scaled, clus = nnet2,
   gene_cl.ref = gene_cl.ref,
@@ -284,10 +283,12 @@ The method is based on the single value decomposition and allows a direct compar
 By using the function `align_run`, two or more gene expression matrices are compared and aligned to the same reference dataset.  
 
 In this example, we want to align 3 of the PBMC+HEK293T experiments sequenced with different protocols: Chromium, Smart-Seq2 and ddSEQ. 
-Given that a centroid is computed for each dataset, by combining the gene measurements from each cluster, the method requires that clusters have more than 1 cells.
+In this case, the choice of the reference is not so important, we will choose the Chromium dataset.
+The method requires the clusters (more than 1 cell), they will be used to compute a centroid point at each dataset, useful for their comparison. 
+<!-- TODOELI: unclear sentence here above -->
 
 ```{r, eval=FALSE}
-url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?raw=true"
+url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?dl=0"
 download.file(url = url, destfile = "sce.all_classified.technologies.RData", mode = "wb")
 load(file = "sce.all_classified.technologies.RData") ## load the data
 
@@ -307,8 +308,7 @@ gene_cl.dds <- cut_markers(levels(markers.dds$cluster), markers = markers.dds, n
 markers_list <- unique(c(unlist(gene_cl.ref), unlist(gene_cl.test), unlist(gene_cl.dds)))
 
 out_align <- align_run(dataset_list = list_data, marker_list = markers_list, ref = "Chromium")
-# TODOELI: this one up here returns an error - can you double check this by running the vignette as a whole till here? 
-# xFEDE: Now, it should work.
+# TODOELI: this one up here returns an error - can you double check this by running the vignette as a whole till here?
 ```
 
 The output contains a `SingleCellExperiment` object with the joint raw counts and the integrated matrix from the 3 datasets. 
