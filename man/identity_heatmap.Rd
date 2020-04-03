@@ -7,7 +7,7 @@
 identity_heatmap(out)
 }
 \arguments{
-\item{out}{output of the function identity_map.}
+\item{out}{output of the function identity_map. # TODOELI: here as well, some param name more informative of what needs to be provided?}
 }
 \value{
 The heatmap displaying the probability of each cell to belong to the identity classes according the model.
@@ -16,5 +16,5 @@ The heatmap displaying the probability of each cell to belong to the identity cl
 This function identifies true label groups between reference groups and clusters.
 }
 \examples{
-
+# TODO
 }

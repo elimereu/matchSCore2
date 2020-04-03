@@ -4,24 +4,30 @@
 \alias{align_run}
 \title{Integration of different datasets}
 \usage{
-align_run(dataset_list, marker_list, ref)
+align_run(dataset_list, marker_list, ref, verbose = TRUE)
 }
 \arguments{
-\item{dataset_list}{A named list of annotated SingleCellExperiments objects. The cell
-annotations are in the `cluster` slots.}
+\item{dataset_list}{A named list of annotated SingleCellExperiments objects.
+The cell annotations are in the \code{cluster} slots.}
 
-\item{marker_list}{A list of `cluster` specific markers from the input dataset.}
+\item{marker_list}{A list of \code{cluster} specific markers from the input dataset.}
 
-\item{ref}{The name of the reference dataset from the dataset_list. It has to be the first in the dataset_list.}
+\item{ref}{The name of the reference dataset from the dataset_list. It has to
+be the first in the \code{dataset_list}.}
+
+\item{verbose}{Logical, controls the displaying of additional messages while
+running the function. Defaults to \code{TRUE}.}
 }
 \value{
 A list containing:
-- `sce`: the integrated SingleCellExperiment object.
-- `integrated`: the integrated scaled matrix.
-- `counts`: the combined count matrix.
-- `annotation_label`: the cell annotations.
-- `dataset_label`: a vector indicating the dataset of origin for each cell.
-- `genes`: the set of common genes used.
+\itemize{
+\item \code{sce}: the integrated SingleCellExperiment object.
+\item \code{integrated}: the integrated scaled matrix.
+\item \code{counts}: the combined count matrix.
+\item \code{annotation_label}: the cell annotations.
+\item \code{dataset_label}: a vector indicating the dataset of origin for each cell.
+\item \code{genes}: the set of common genes used.
+}
 }
 \description{
 Integration of different datasets

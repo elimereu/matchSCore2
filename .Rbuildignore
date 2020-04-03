@@ -1,2 +1,10 @@
 ^matchSCore2\.Rproj$
 ^\.Rproj\.user$
+TO_REMOVE/*
+^LICENSE\.md$
+TODO.md
+^CODE_OF_CONDUCT\.md$
+^sce*
+^datalist*
+^data.list*
+^markers*

@@ -7,20 +7,26 @@
 identity_map(scale.data, model, gene_cl.ref, p.threshold = NULL)
 }
 \arguments{
-\item{scale.data}{A scaled matrix of gene expressions like in the scale.data of the Seurat object. Rows are genes and columns are cells from the reference dataset.}
+\item{scale.data}{A scaled matrix of gene expressions like in the \code{scale.data}
+of the Seurat object. Rows are genes and columns are cells from the reference
+dataset.}
 
-\item{model}{The model as in output of the train_model function.}
+\item{model}{The model as in output of the \code{train_model} function.}
 
-\item{gene_cl.ref}{A list of cluster-specific markers. Each element of the list contains markers of a cell type. Usually only top100 ranked markers are used.}
+\item{gene_cl.ref}{A list of cluster-specific markers. Each element of the list
+contains markers of a cell type. Usually only top100 ranked markers are used.}
 
-\item{p.threshold}{Probability threshold to consider a cell classified. Default=0.5.}
+\item{p.threshold}{Probability threshold to consider a cell classified.
+Default=0.5.}
 }
 \value{
-A list with a vector with cell identities predicted by the model (ids) and a dataframe with probabilities at each identity class.
+A list with a vector with cell identities predicted by the model (ids)
+and a dataframe with probabilities at each identity class.
 }
 \description{
-This function infers cell identities by using the model learned by the reference dataset.
+This function infers cell identities by using the model learned by the
+reference dataset.
 }
 \examples{
-
+# TODO
 }
