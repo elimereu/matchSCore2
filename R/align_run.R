@@ -1,12 +1,10 @@
 #' Integration of different datasets
 #'
 #' @param dataset_list A named list of annotated SingleCellExperiments objects.
-#' The cell annotations are in the `cluster` slots.
+#' The cell annotations are in the `cluster` slots. Logcounts stored in `x@assays$logcounts` are required for each dataset of the list.
 #' @param marker_list A list of `cluster` specific markers from the input dataset.
 #' @param ref The name of the reference dataset from the dataset_list. It has to
 #' be the first in the `dataset_list`.
-#' @param verbose Logical, controls the displaying of additional messages while
-#' running the function. Defaults to `TRUE`.
 #'
 #' @return A list containing:
 #' - `sce`: the integrated SingleCellExperiment object.
@@ -22,8 +20,7 @@
 #' # TODO
 align_run <- function(dataset_list,
                       marker_list,
-                      ref,
-                      verbose = TRUE) {
+                      ref) {
   if (names(dataset_list)[1] != ref) {
     stop("The reference dataset is not the first of the dataset list")
   }
@@ -36,7 +33,7 @@ align_run <- function(dataset_list,
 
   original <- dataset_list
 
-  if (verbose) message("Defining the set of common genes")
+  message("Defining the set of common genes")
 
   total <- 10
   # create progress bar
@@ -61,7 +58,7 @@ align_run <- function(dataset_list,
   setTxtProgressBar(pb, progress)
 
   ref.p <- which(names(dataset_list) == ref)
-  ref.cl <- factor(colData(dataset_list[[ref]])$cluster)
+  ref.cl <- factor(dataset_list[[ref]]@colData$cluster)
   sizes <- unlist(lapply(
     levels(ref.cl),
     function(x) length(ref.cl[which(ref.cl %in% x)])
@@ -87,7 +84,7 @@ align_run <- function(dataset_list,
 
   d_list <- lapply(dataset_list, function(x) logcounts(x)[genes, ])
   d_list <- lapply(d_list, function(x) (x - min(x)) / (max(x) - min(x)))
-  cl <- lapply(dataset_list, function(x) factor(colData(x)$cluster))
+  cl <- lapply(dataset_list, function(x) factor(x@colData$cluster))
 
   progress <- 3
   Sys.sleep(0.1)
@@ -95,7 +92,7 @@ align_run <- function(dataset_list,
 
   to_rm <- lapply(
     dataset_list,
-    function(x) names(table(colData(x)$cluster))[which(as.vector(table(colData(x)$cluster)) < 10)]
+    function(x) names(table(x@colData$cluster))[which(as.vector(table(x@colData$cluster)) < 10)]
   )
 
   cl1 <- cl
@@ -105,7 +102,7 @@ align_run <- function(dataset_list,
   }
 
 
-  cc <- lapply(seq(1:length(d_list)), function(x) sapply(levels(cl1[[x]]), function(y) rowMeans(d_list[[x]][genes, which(colData(dataset_list[[x]])$cluster == y)])))
+  cc <- lapply(seq(1:length(d_list)), function(x) sapply(levels(cl1[[x]]), function(y) rowMeans(d_list[[x]][genes, which(dataset_list[[x]]@colData$cluster == y)])))
   cc <- lapply(cc, function(x) apply(x, 1, function(y) median(y, na.rm = TRUE)))
 
   progress <- 4
@@ -118,11 +115,9 @@ align_run <- function(dataset_list,
   sequence <- sequence[-pos]
 
   H <- lapply(c(1:len), function(x) d_list[[x]] - cc[[x]])
-
-  if (verbose) message(" Computing covariance matrixes... ")
+  message(" Computing covariance matrixes... ")
   cov <- lapply(sequence, function(x) cov(H[[pos]], H[[x]]))
-
-  if (verbose) message(" Single Value Decomposition of covariance matrixes ... ")
+  message(" Single Value Decomposition of covariance matrixes ... ")
   svd_out <- lapply(cov, function(x) fast.svd(x))
 
   progress <- 5
@@ -151,6 +146,7 @@ align_run <- function(dataset_list,
   Sys.sleep(0.1)
   setTxtProgressBar(pb, progress)
 
+
   for (i in seq(1, l)) {
     if (i > 1) {
       counts <- cbind(counts, counts_list[[i]])
@@ -163,7 +159,7 @@ align_run <- function(dataset_list,
   Sys.sleep(0.1)
   setTxtProgressBar(pb, progress)
 
-  annotation <- unlist(lapply(original, function(x) colData(x)$cluster))
+  annotation <- unlist(lapply(original, function(x) x@colData$cluster))
 
   progress <- 9
   Sys.sleep(0.1)
@@ -177,25 +173,24 @@ align_run <- function(dataset_list,
   close(pb)
   end.time <- Sys.time()
   time <- difftime(end.time, start.time, units = "mins")
-
-  if (verbose) message(paste("The runtime is:", time, "min", sep = " "))
+  message(paste("The runtime is:", time, "min", sep = " "))
 
   sce <- SingleCellExperiment(assays = list(counts = counts))
   minx <- 0
   maxx <- max(as.vector(log10(counts + 1)), na.rm = TRUE)
   integrated <- t(apply(integrated, 1, function(x) (x - min(x)) / (max(x) - min(x))))
-  assay(sce, "integrated") <- integrated
-  colData(sce) <- DataFrame(cluster = annotation, batch = dataset)
+  sce@assays$integrated <- integrated
+  sce@colData <- DataFrame(cluster = annotation, batch = dataset)
   colnames(sce) <- cells
 
   return(
     list(
       sce = sce,
-      counts = counts,    # TODOELI: I do not think it is required to return this, it is included in the sce itself (the counts assay)
-      integrated = integrated,   # TODOELI: I do not think it is required to return this, it is included in the sce itself (the corresponding slot)
-      annotation_label = annotation, # TODOELI: I do not think it is required to return this, it is included in the sce itself (the colData)
+      counts = counts,
+      integrated = integrated,
+      annotation_label = annotation,
       dataset_label = dataset,
-      genes = genes # TODOELI: I do not think it is required to return this - could this be simply the list of all genes included in the final object anyway
+      genes = genes
     )
   )
 }
