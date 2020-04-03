@@ -10,7 +10,7 @@ train_model(
   gene_cl.ref,
   prop = NULL,
   p.threshold = NULL,
-  verbose = TRUE,
+  verbose = FALSE,
   ...
 )
 }
@@ -30,10 +30,7 @@ Default=0.5.}
 \item{p.threshold}{Probability threshold to consider a cell classified.
 Default=0.65.}
 
-\item{verbose}{Logical, controls the displaying of additional messages while
-running the function. Defaults to \code{TRUE}.}
-
-\item{...}{TODOELI}
+\item{verbose}{Displays messages about the training process.}
 }
 \value{
 A multinomial fitted model, as in the \code{nnet} package.
