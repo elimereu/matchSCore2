@@ -1,7 +1,6 @@
 #' Model training
 #'
-#' This function trains a model from the reference dataset
-#'
+#' This function train a model from the reference dataset
 #' @param scale.data A scaled matrix of gene expressions like in the `scale.data`
 #' of the Seurat object. Rows are genes and columns are cells from the reference
 #' dataset.
@@ -12,9 +11,7 @@
 #' Default=0.5.
 #' @param p.threshold Probability threshold to consider a cell classified.
 #' Default=0.65.
-#' @param verbose Logical, controls the displaying of additional messages while
-#' running the function. Defaults to `TRUE`.
-#' @param ... TODOELI
+#' @param verbose Displays messages about the training process.
 #'
 #' @return A multinomial fitted model, as in the `nnet` package.
 #'
@@ -27,9 +24,9 @@ train_model <- function(scale.data,
                         gene_cl.ref,
                         prop = NULL,
                         p.threshold = NULL,
-                        verbose = TRUE,
+                        verbose = FALSE,
                         ...) {
-  if (verbose) message("Splitting the refence into train and test datasets...")
+  if(verbose){message("Splitting the refence into train and test datasets...")}
 
   total <- 10
   # create progress bar
@@ -91,10 +88,10 @@ train_model <- function(scale.data,
   Sys.sleep(0.1)
   setTxtProgressBar(pb, progress)
 
-  if (verbose) message("\n Learning the model from the training dataset...\n")
+  if(verbose){message("\n Learning the model from the training dataset...\n")}
 
   mod <- multinom(out.train ~ ., data = model.train, decay = 0.0001, maxit = 500)
-  # if (verbose) message(summary(mod)) # TODOELI: we do not need this here I guess
+  message(summary(mod))
 
   progress <- 8
   Sys.sleep(0.1)
@@ -102,7 +99,7 @@ train_model <- function(scale.data,
 
   fitted.results <- predict(mod, newdata = model.test, "probs")
 
-  if (verbose) message("\n Fitting identities in the set data.. \n")
+  if(verbose){message("\n Fitting identities in the set data.. \n")}
 
   fit <- apply(fitted.results, 1, function(x) colnames(fitted.results)[which(x == max(x))])
   if (is.null(p.threshold)) {
@@ -115,13 +112,13 @@ train_model <- function(scale.data,
   Sys.sleep(0.1)
   setTxtProgressBar(pb, progress)
 
-  if (verbose) message("\n Measuring the accuracy of the fitting..\n")
+  if(verbose){message("\n Measuring the accuracy of the fitting..\n")}
 
   acc <- length(which(as.character(fit_res$out.test) == as.character(fit_res$fit))) / length(fit_res$out.test)
 
-  if (verbose) message("\n", paste("The accuracy of the model is:", round(acc, digits = 2), sep = " "), "\n")
+  if(verbose){message("\n", paste("The accuracy of the model is:", round(acc, digits = 2), sep = " "), "\n")}
 
-  # if (verbose) message(table(id_test = fit_res$out.test, class = fit_res$fit)) # TODOELI: if we need fit_res, we should return this as well, otherwise there is not so much to do with it here IMHO
+  if(verbose){message(table(id_test = fit_res$out.test, class = fit_res$fit))}
 
   progress <- 10
   Sys.sleep(0.1)
@@ -129,7 +126,7 @@ train_model <- function(scale.data,
   close(pb)
   end.time <- Sys.time()
   time <- difftime(end.time, start.time, units = "mins")
-  if (verbose) message(paste("The runtime is:", time, "min", sep = " "))
+  if(verbose){message(paste("The runtime is:", time, "min", sep = " "))}
 
   return(mod)
 }
