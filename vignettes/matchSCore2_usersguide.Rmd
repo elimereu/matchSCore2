@@ -280,7 +280,7 @@ While with the previous approach we can quickly transfer annotations from one da
 In the `r BiocStyle::Biocpkg("matchSCore2")` package, we provide a mathematical framework to align datasets, by projecting them to the same coordinate space of an assigned reference dataset. 
 
 The method is based on the single value decomposition and allows a direct comparison of datasets, by finding the optimal linear transformation between data points.     
-By using the function `align_run`, two or more gene expression matrices are compared and aligned to the same reference dataset.  
+By using the function `ms_integrate`, two or more gene expression matrices are compared and aligned to the same reference dataset.  
 
 In this example, we want to align 3 of the PBMC+HEK293T experiments sequenced with different protocols: Chromium, Smart-Seq2 and ddSEQ. 
 In this case, the choice of the reference is not so important, we will choose the Chromium dataset.
@@ -307,12 +307,12 @@ gene_cl.dds <- cut_markers(levels(markers.dds$cluster), markers = markers.dds, n
 
 markers_list <- unique(c(unlist(gene_cl.ref), unlist(gene_cl.test), unlist(gene_cl.dds)))
 
-out_align <- align_run(dataset_list = list_data, marker_list = markers_list, ref = "Chromium")
+out_align <- ms_integrate(dataset_list = list_data, marker_list = markers_list, ref = "Chromium")
 # TODOELI: this one up here returns an error - can you double check this by running the vignette as a whole till here?
 ```
 
 The output contains a `SingleCellExperiment` object with the joint raw counts and the integrated matrix from the 3 datasets. 
-See the manual of the `align_run` function for more details about the output.
+See the manual of the `ms_integrate` function for more details about the output.
 
 Once the datasets are integrated, you can use the normalized matrix to cluster your cells. 
 For example, if you want to use Seurat, you can provide that matrix in the `@data` slot, as in the `seurat3_run` function. 

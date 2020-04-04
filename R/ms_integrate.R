@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' # TODO
-align_run <- function(dataset_list,
+ms_integrate <- function(dataset_list,
                       marker_list,
                       ref,
                       verbose = TRUE) {

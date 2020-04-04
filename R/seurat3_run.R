@@ -1,6 +1,6 @@
-#' This function runs Seurat3 by using the output of the `align_run` function.
+#' This function runs Seurat3 by using the output of the `ms_integrate` function.
 #'
-#' @param out_align The output of the function `align_run`. The combined count
+#' @param out_align The output of the function `ms_integrate`. The combined count
 #' matrix is used to create the Seurat object and the integrated is provided
 #' to the slot `@data`. # TODOELI: we would need to say a little more on how this
 #' list is expected to look like
