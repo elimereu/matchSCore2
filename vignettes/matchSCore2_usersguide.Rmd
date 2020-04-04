@@ -315,11 +315,11 @@ The output contains a `SingleCellExperiment` object with the joint raw counts an
 See the manual of the `ms_integrate` function for more details about the output.
 
 Once the datasets are integrated, you can use the normalized matrix to cluster your cells. 
-For example, if you want to use Seurat, you can provide that matrix in the `@data` slot, as in the `seurat3_run` function. 
+For example, if you want to use Seurat, you can provide that matrix in the `@data` slot, as in the `ms_runseurat` function. 
 
 ```{r, eval=FALSE}
 col2 <- c("maroon", "orange", "cyan")
-out_seurat <- seurat3_run(
+out_seurat <- ms_runseurat(
   out_align = out_align,
   dims = 1:10,
   res = 0.2,

@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' # TODO
-seurat3_run <- function(out_align,
+ms_runseurat <- function(out_align,
                         dims = c(1:10),
                         res = 0.2,
                         col_anno = NULL,
