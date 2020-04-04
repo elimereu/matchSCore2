@@ -3,7 +3,6 @@
 #' `matchSCore2` is a Bioconductor package that provides ... # TODOELI, we need a nice short para for this
 #'
 #' @importFrom graphics plot
-#' @importFrom grDevices colorRampPalette rainbow
 #' @importFrom methods new
 #' @importFrom stats cor median na.omit predict
 #' @importFrom utils setTxtProgressBar txtProgressBar
@@ -17,10 +16,7 @@
 #' @importFrom org.Hs.eg.db org.Hs.egALIAS2EG org.Hs.egGO2ALLEGS
 #' @importFrom org.Mm.eg.db org.Mm.egALIAS2EG org.Mm.egGO2ALLEGS
 #' @importFrom reshape2 melt
-#' @importFrom grid unit
-#' @importFrom corrplot corrplot
 #' @importFrom nnet multinom
-#' @importFrom cowplot plot_grid
 #' @importFrom S4Vectors DataFrame
 #' @importFrom Seurat CreateSeuratObject ElbowPlot FindClusters FindNeighbors
 #' NormalizeData RunPCA RunUMAP VariableFeatures `VariableFeatures<-`

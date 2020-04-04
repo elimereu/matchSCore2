@@ -23,7 +23,6 @@ Depends:
     R (>= 3.6.0)
 Imports:
     graphics, 
-    grDevices, 
     Matrix, 
     methods, 
     stats, 
@@ -33,10 +32,7 @@ Imports:
     org.Hs.eg.db,
     org.Mm.eg.db,
     reshape2,
-    grid,
-    corrplot,
     nnet,
-    cowplot,
     S4Vectors,
     Seurat,
     SingleCellExperiment,
