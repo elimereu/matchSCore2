@@ -169,7 +169,7 @@ To train the multinomial logistic model implemented in `r BiocStyle::Biocpkg("ma
 2. `clus`: A named factor with reference identities (like in the "ident" slot in the Seurat object).
 3. `gene_cl.ref`: A named list of markers. 
    Each element of the list contains cell type specific gene markers (Usually top100 ranked markers of each cell type). 
-   If you have the output of `FindAllMarkers` from Seurat, you could use the cut_markers function to get `gene_cl.ref` by the function `cut_markers`.
+   If you have the output of `FindAllMarkers` from Seurat, you could use the `ms_top_markers` function to get `gene_cl.ref`.
 
 
 ```{r eval=FALSE}
@@ -182,7 +182,7 @@ download.file(url = url, destfile = "markers_all_datasets.RData", mode = "wb")
 load(file = "markers_all_datasets.RData")
 ref.markers <- markers$Chromium
 
-gene_cl.ref <- cut_markers(levels(ref.markers$cluster),
+gene_cl.ref <- ms_top_markers(levels(ref.markers$cluster),
   markers = ref.markers,
   ntop = 100
 )
@@ -257,7 +257,7 @@ For example, you could use the top 100 ranked markers per cluster from the Chrom
 ## And the MARS-Seq as test
 test.markers <- markers$`Smart-Seq2`
 
-gene_cl.test <- cut_markers(levels(test.markers$cluster), markers = test.markers, ntop = 100)
+gene_cl.test <- ms_top_markers(levels(test.markers$cluster), markers = test.markers, ntop = 100)
 
 ## The matchSCore2 function computes the clustering comparison and produce the heatmap table with Jaccard Indexes for each group combination
 
@@ -303,7 +303,7 @@ sce_ddseq$cluster <- factor(sce_ddseq$nnet2)
 list_data <- list(Chromium = sce_chromium, Smartseq2 = sce_smartseq2, ddseq = sce_ddseq)
 
 markers.dds <- markers$ddSEQ
-gene_cl.dds <- cut_markers(levels(markers.dds$cluster), markers = markers.dds, ntop = 100)
+gene_cl.dds <- ms_top_markers(levels(markers.dds$cluster), markers = markers.dds, ntop = 100)
 
 markers_list <- unique(c(unlist(gene_cl.ref), unlist(gene_cl.test), unlist(gene_cl.dds)))
 

@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # TODO
-cut_markers <- function(clusters,
+ms_select_markers <- function(clusters,
                         markers,
                         ntop) {
   gene_cl <- lapply(
