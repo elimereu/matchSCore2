@@ -19,7 +19,7 @@
 #'
 #' @examples
 #' # TODO
-identity_map <- function(scale.data,
+ms_identity_map <- function(scale.data,
                          model,
                          gene_cl.ref,
                          p.threshold = NULL) {

@@ -2,7 +2,7 @@
 #'
 #' This function identifies true label groups between reference groups and clusters.
 #'
-#' @param out output of the function identity_map. # TODOELI: here as well, some param name more informative of what needs to be provided?
+#' @param out output of the function `ms_identity_map`. # TODOELI: here as well, some param name more informative of what needs to be provided?
 #'
 #' @return A ggplot object, with the heatmap displaying the probability of each
 #' cell to belong to the identity classes according the model.
@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' # TODO
-identity_heatmap <- function(out) {
+ms_identity_heatmap <- function(out) {
   ids.ord <- order(out$ids)
   ord.p <- out$fit.prob[ids.ord, ]
 

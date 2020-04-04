@@ -205,20 +205,20 @@ mod <- train_model(
 
 Once the model has been calculated, it can be used to predict the identity of unknown cells from another dataset. 
 Here, we will test the model in MARS-seq data. 
-With the function `identity_map`, we assign the cell identity in the test data based on the highest probability predicted by the model.
+With the function `ms_identity_map`, we assign the cell identity in the test data based on the highest probability predicted by the model.
 
 ```{r eval=FALSE}
 scaled <- ScaleData(smartseq2, features = unlist(gene_cl.ref))
 scaled <- scaled@assays$RNA@scale.data # TODOELI: are there no accessors in Seurat to do so?
 
 ## Cell projection
-out <- identity_map(
+out <- ms_identity_map(
   scale.data = scaled,
   model = mod,
   gene_cl.ref = gene_cl.ref
 )
 
-identity_heatmap(out)
+ms_identity_heatmap(out)
 ```
 
 ```{r ss-identityheat, echo=FALSE, eval=TRUE, fig.wide = TRUE}
