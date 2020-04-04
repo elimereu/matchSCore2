@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' # TODO
-train_model <- function(scale.data,
+ms_train_model <- function(scale.data,
                         clus,
                         gene_cl.ref,
                         prop = NULL,

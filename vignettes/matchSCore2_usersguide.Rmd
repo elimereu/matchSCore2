@@ -162,7 +162,7 @@ smartseq2 <- data.list$`Smart-Seq2`
 
 # Training the model
 
-To train the multinomial logistic model implemented in `r BiocStyle::Biocpkg("matchSCore2")`, we use the function `train_model`, which requires the following inputs:
+To train the multinomial logistic model implemented in `r BiocStyle::Biocpkg("matchSCore2")`, we use the function `ms_train_model`, which requires the following inputs:
 
 1. `scale.data`: A matrix of log-normalized or scaled gene expression values from the reference dataset (in the manuscript we used the scale.data slot in the seurat objects. 
    Make sure that the markers are all included in the scale.data).
@@ -194,7 +194,7 @@ scaled <- ref@assays$RNA@scale.data
 ### Training of the model
 
 ```{r eval=FALSE}
-mod <- train_model(
+mod <- ms_train_model(
   scale.data = scaled, clus = nnet2,
   gene_cl.ref = gene_cl.ref,
   prop = 0.5
@@ -237,7 +237,8 @@ smseq.clus <- smartseq2$ident
 
 col <- c("aquamarine", "orange", "green4", "blueviolet", "black", "maroon", "coral2", "deepskyblue3", "lightgray")
 
-summary_barplot(class.fac = out$ids, obs.fac = smseq.clus) + scale_fill_manual(values = col)
+ms_summary_barplot(class.fac = out$ids, obs.fac = smseq.clus) +
+  scale_fill_manual(values = col)
 ```
 
 ```{r ss-barplots, echo=FALSE, eval=TRUE, fig.wide = TRUE}

@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # TODO
-summary_barplot <- function(class.fac,
+ms_summary_barplot <- function(class.fac,
                             obs.fac) {
 
   # library(reshape2) # TODO: really needed?
