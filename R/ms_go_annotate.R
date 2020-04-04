@@ -28,7 +28,7 @@
 #'
 #' @examples
 #' # TODO
-GOannotation <- function(markers,
+ms_go_annotate <- function(markers,
                          go.db,
                          species = "mouse",
                          ontology.type = "BP",
