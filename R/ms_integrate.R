@@ -119,10 +119,10 @@ ms_integrate <- function(dataset_list,
 
   H <- lapply(c(1:len), function(x) d_list[[x]] - cc[[x]])
 
-  if (verbose) message(" Computing covariance matrixes... ")
+  if (verbose) message("\nComputing covariance matrixes... ")
   cov <- lapply(sequence, function(x) cov(H[[pos]], H[[x]]))
 
-  if (verbose) message(" Single Value Decomposition of covariance matrixes ... ")
+  if (verbose) message("Single Value Decomposition of covariance matrixes ... ")
   svd_out <- lapply(cov, function(x) fast.svd(x))
 
   progress <- 5
@@ -178,7 +178,7 @@ ms_integrate <- function(dataset_list,
   end.time <- Sys.time()
   time <- difftime(end.time, start.time, units = "mins")
 
-  if (verbose) message(paste("The runtime is:", time, "min", sep = " "))
+  if (verbose) message(paste("The runtime is:", format(time, digits = 3), sep = " "))
 
   sce <- SingleCellExperiment(assays = list(counts = counts))
   minx <- 0

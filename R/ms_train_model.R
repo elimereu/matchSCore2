@@ -129,7 +129,7 @@ ms_train_model <- function(scale.data,
   close(pb)
   end.time <- Sys.time()
   time <- difftime(end.time, start.time, units = "mins")
-  if (verbose) message(paste("The runtime is:", time, "min", sep = " "))
+  if (verbose) message(paste("The runtime is:", format(time, digits = 3), sep = " "))
 
   return(mod)
 }
