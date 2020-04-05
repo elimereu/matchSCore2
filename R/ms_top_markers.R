@@ -13,9 +13,9 @@
 #'
 #' @examples
 #' # TODO
-ms_select_markers <- function(clusters,
-                        markers,
-                        ntop) {
+ms_top_markers <- function(clusters,
+                           markers,
+                           ntop) {
   gene_cl <- lapply(
     clusters,
     function(x) markers$gene[markers$cluster == x][1:ntop]
