@@ -47,6 +47,8 @@ knitr::opts_chunk$set(
   fig.align = "center"
 )
 options(width = 100)
+
+run_code <- TRUE
 ```
   
 # Introduction {#introduction}
@@ -64,7 +66,7 @@ The method consists of the following steps:
 4. Once the model is trained, a probability value is assigned to each cell per cell type. 
    The highest likelihood can then be used to annotate that cell if it reaches the minimum value provided by the user (default = 0.5).    
 
-```{r ss-overview, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+```{r ss-overview, echo=FALSE, eval=run_code, fig.wide = TRUE}
 knitr::include_graphics("overview_package.png")
 ```
     
@@ -85,7 +87,7 @@ BiocManager::install("elimereu/matchSCore2")
 
 Once installed, the package can be loaded and attached to your current workspace as follows:
 
-```{r loadlib,eval=FALSE}
+```{r loadlib,eval=run_code}
 library("matchSCore2")
 ```
 
@@ -96,10 +98,17 @@ The list of all seurat objects, including UMAPs and tSNEs are provided here: htt
 
 From the same link, you can also download the `SingleCellExperiment` object from which you can extract the counts from each protocol by following the instructions below.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=run_code}
 library("SingleCellExperiment")
+```
+
+
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?raw=true"
 download.file(url = url, destfile = "~/Downloads/sce.all_classified.technologies.RData", mode = "wb")
+```
+
+```{r, message=FALSE, warning=FALSE, eval=run_code}
 load(file = "sce.all_classified.technologies.RData") ## load the data
 ```
 
@@ -109,7 +118,8 @@ After you load it into R, if you check the `colData(object)` there are three met
 2. `ident` is the Seurat clustering result. The clusters are manually annotated by looking at the expression of known gene markers.
 3. `batch` is the sequencing protocol. 
 
-```{r,eval=FALSE}
+```{r,eval=run_code}
+sce
 colData(sce) ### give access to the metadata DataFrame
 
 table(colData(sce)$nnet2) ## Number of cells from each classified cell type (by matchSCore2)
@@ -122,7 +132,7 @@ table(sce$batch)
 
 You can extract counts (raw or log-normalized), PCA, and UMAP of the integrated dataset, by the following commands:
 
-```{r eval=FALSE}
+```{r eval=run_code}
 counts <- counts(sce)
 logcounts <- logcounts(sce)
 
@@ -141,23 +151,31 @@ In case you are interested in working with the seurat objects, all datasets are 
 Let us suppose Chromium is the reference and Smart-seq2 the test data we want to annotate. 
 The cell type specific markers from each protocol are also provided.
 
-```{r eval=FALSE}
+```{r eval=run_code}
 library("Seurat")
+```
 
+```{r eval=FALSE}
 url <- "https://www.dropbox.com/s/2ketqbof6tvnv07/data.list_seurat.obj_all_datasets.RData?raw=true"
 download.file(
   url = url,
   destfile = "data.list_seurat.obj_all_datasets.RData",
   mode = "wb"
 )
+```
 
-
+```{r eval=run_code}
 # NOTEELI: this looks like the perfect case to provide these objects via EHub
-load(file = "data.list_seurat.obj_all_datasets.RData")
-ref <- data.list$Chromium
-nnet2 <- ref$nnet2
+##### load(file = "data.list_seurat.obj_all_datasets.RData")
+##### ref <- data.list$Chromium
+##### nnet2 <- ref$nnet2
+##### smartseq2 <- data.list$`Smart-Seq2`
+##### 
+##### rm(data.list) # to avoid having too large object loaded!
 
-smartseq2 <- data.list$`Smart-Seq2`
+ref <- readRDS("datalist_chromium.rds")
+nnet2 <- ref$nnet2
+smartseq2 <- readRDS("datalist_chromium.rds")
 ```
 
 # Training the model
@@ -172,13 +190,19 @@ To train the multinomial logistic model implemented in `r BiocStyle::Biocpkg("ma
    If you have the output of `FindAllMarkers` from Seurat, you could use the `ms_top_markers` function to get `gene_cl.ref`.
 
 
-```{r eval=FALSE}
+```{r eval=run_code}
 library("matchSCore2")
 library("nnet")
+```
 
+
+```{r eval=FALSE}
 url <- "https://www.dropbox.com/s/wijdjhbm17fd7fp/markers_all_datasets.RData?raw=true"
 download.file(url = url, destfile = "markers_all_datasets.RData", mode = "wb")
+```
 
+
+```{r eval=run_code}
 load(file = "markers_all_datasets.RData")
 ref.markers <- markers$Chromium
 
@@ -193,13 +217,14 @@ scaled <- ref@assays$RNA@scale.data
 
 ### Training of the model
 
-```{r eval=FALSE}
+```{r eval=run_code}
 mod <- ms_train_model(
   scale.data = scaled, 
   clus = nnet2,
   gene_cl.ref = gene_cl.ref,
   prop = 0.5
 )
+mod
 ```
 
 ## Cell classification
@@ -208,7 +233,7 @@ Once the model has been calculated, it can be used to predict the identity of un
 Here, we will test the model in MARS-seq data. 
 With the function `ms_identity_map`, we assign the cell identity in the test data based on the highest probability predicted by the model.
 
-```{r eval=FALSE}
+```{r eval=run_code}
 scaled <- ScaleData(smartseq2, features = unlist(gene_cl.ref))
 scaled <- scaled@assays$RNA@scale.data # TODOELI: are there no accessors in Seurat to do so?
 
@@ -222,7 +247,7 @@ out <- ms_identity_map(
 ms_identity_heatmap(out)
 ```
 
-```{r ss-identityheat, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+```{r ss-identityheat, echo=FALSE, eval=run_code, fig.wide = TRUE}
 knitr::include_graphics("identity_heatmaps.png")
 ```
 
@@ -233,16 +258,17 @@ Cells assigned to a specific identity have the highest probability (magenta colo
 
 `r BiocStyle::Biocpkg("matchSCore2")` can be used to improve the clustering annotation, detecting subtle differences between cell types that are difficult to be detected by clustering (e.g. NK and CD8 T cells, CD4 and CD8 T cells, etc..). 
 
-```{r eval=FALSE}
+```{r eval=run_code}
 smseq.clus <- smartseq2$ident
 
 col <- c("aquamarine", "orange", "green4", "blueviolet", "black", "maroon", "coral2", "deepskyblue3", "lightgray")
 
+library("ggplot2")
 ms_summary_barplot(class.fac = out$ids, obs.fac = smseq.clus) +
   scale_fill_manual(values = col)
 ```
 
-```{r ss-barplots, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+```{r ss-barplots, echo=FALSE, eval=run_code, fig.wide = TRUE}
 knitr::include_graphics("summary_barplots.png")
 ```
 
@@ -255,21 +281,24 @@ Also, it highlights differences in cluster resolution (e.g. the cluster of monoc
 We can also measure the grade of matching across clusters by looking at the level of similarity of their cluster-specific gene markers, measured by the Jaccard Index. 
 For example, you could use the top 100 ranked markers per cluster from the Chromium and MARS-Seq dataset.
 
-```{r eval=FALSE}
+```{r eval=run_code}
 ## And the MARS-Seq as test
 test.markers <- markers$`Smart-Seq2`
 
 gene_cl.test <- ms_top_markers(levels(test.markers$cluster), markers = test.markers, ntop = 100)
 
+head(gene_cl.test)
+
 ## The matchSCore2 function computes the clustering comparison and produce the heatmap table with Jaccard Indexes for each group combination
 
-matchSCore2(gene_cl.ref = gene_cl.ref, 
-            gene_cl.obs = gene_cl.test, 
-            xlab = "Smart-seq2",
-            ylab = "Chromium")
+ms_res <- matchSCore2(gene_cl.ref = gene_cl.ref, 
+                      gene_cl.obs = gene_cl.test, 
+                      xlab = "Smart-seq2",
+                      ylab = "Chromium")
+names(ms_res)
 ```
 
-```{r ss-clustercomp, echo=FALSE, eval=TRUE, fig.wide = TRUE}
+```{r ss-clustercomp, echo=FALSE, eval=run_code, fig.wide = TRUE}
 knitr::include_graphics("Cluster-sp_markers_comparison.png")
 ```
 
@@ -292,7 +321,11 @@ The method requires the clusters (more than 1 cell), they will be used to comput
 ```{r, eval=FALSE}
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?dl=0"
 download.file(url = url, destfile = "sce.all_classified.technologies.RData", mode = "wb")
-load(file = "sce.all_classified.technologies.RData") ## load the data
+```
+
+
+```{r, eval=run_code}
+# load(file = "sce.all_classified.technologies.RData") ## load the data
 
 sce_chromium <- sce[, sce$batch == "Chromium"]
 sce_smartseq2 <- sce[, sce$batch == "Smart-Seq2"]
@@ -305,7 +338,9 @@ sce_ddseq$cluster <- factor(sce_ddseq$nnet2)
 list_data <- list(Chromium = sce_chromium, Smartseq2 = sce_smartseq2, ddseq = sce_ddseq)
 
 markers.dds <- markers$ddSEQ
-gene_cl.dds <- ms_top_markers(levels(markers.dds$cluster), markers = markers.dds, ntop = 100)
+gene_cl.dds <- ms_top_markers(levels(markers.dds$cluster), 
+                              markers = markers.dds, 
+                              ntop = 100)
 
 markers_list <- unique(c(unlist(gene_cl.ref), unlist(gene_cl.test), unlist(gene_cl.dds)))
 
@@ -319,7 +354,7 @@ See the manual of the `ms_integrate` function for more details about the output.
 Once the datasets are integrated, you can use the normalized matrix to cluster your cells. 
 For example, if you want to use Seurat, you can provide that matrix in the `@data` slot, as in the `ms_runseurat` function. 
 
-```{r, eval=FALSE}
+```{r, eval=run_code}
 col2 <- c("maroon", "orange", "cyan")
 out_seurat <- ms_runseurat(
   out_align = out_align,
@@ -348,10 +383,11 @@ We can explore some of the markers we used for the integration with the Seurat `
 
 <!-- TODOELI: We should stick to sce outputs and inputs + use for example here plotExpression from scater, which does the same de facto -->
 
-```{r, eval=FALSE}
+```{r, eval=run_code}
 FeaturePlot(out_seurat, features = c(
-  "CD79B", "IL7R", "CD3D", "NKG7",
-  "GNLY", "CD14", "FCGR3A", "CTTN"
+  "CD79B", "MS4A1", "IL7R", 
+  "CD3D", "NKG7", "GNLY", 
+  "CD14", "FCGR3A", "CTTN"
 ))
 ```
 
