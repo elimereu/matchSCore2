@@ -20,9 +20,9 @@
 #' @examples
 #' # TODO
 ms_identity_map <- function(scale.data,
-                         model,
-                         gene_cl.ref,
-                         p.threshold = NULL) {
+                            model,
+                            gene_cl.ref,
+                            p.threshold = NULL) {
   p <- lapply(gene_cl.ref, function(x) rownames(scale.data)[which(rownames(scale.data) %in% x)])
 
   var.test <- sapply(p, function(x) Matrix::colSums(scale.data[x, ]))

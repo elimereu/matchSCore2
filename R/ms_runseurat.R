@@ -19,11 +19,11 @@
 #' @examples
 #' # TODO
 ms_runseurat <- function(out_align,
-                        dims = c(1:10),
-                        res = 0.2,
-                        col_anno = NULL,
-                        col_data = NULL,
-                        verbose = TRUE) {
+                         dims = c(1:10),
+                         res = 0.2,
+                         col_anno = NULL,
+                         col_data = NULL,
+                         verbose = TRUE) {
   counts <- out_align$counts
   integrated <- out_align$integrated
   annotation <- out_align$annotation_label
@@ -40,7 +40,7 @@ ms_runseurat <- function(out_align,
   data <- NormalizeData(object = data)
   VariableFeatures(data) <- rownames(integrated)
 
-  data@assays$RNA@scale.data <- integrated  # TODOELI: is there a Seurat specific function for this?
+  data@assays$RNA@scale.data <- integrated # TODOELI: is there a Seurat specific function for this?
 
   data <- RunPCA(data, features = VariableFeatures(object = data))
   plot(ElbowPlot(data))

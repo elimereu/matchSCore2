@@ -14,7 +14,7 @@
 #' @examples
 #' # TODO
 ms_summary_barplot <- function(class.fac,
-                            obs.fac) {
+                               obs.fac) {
 
   # library(reshape2) # TODO: really needed?
   # library(grid) # TODO: really needed?

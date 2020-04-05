@@ -29,15 +29,15 @@
 #' @examples
 #' # TODO
 ms_go_annotate <- function(markers,
-                         go.db,
-                         species = "mouse",
-                         ontology.type = "BP",
-                         reformat.gene.names = FALSE,
-                         go.score.class = "weight01Score",
-                         p.val.threshold = 0.05,
-                         dag.file.prefix = FALSE,
-                         ngenes = 20,
-                         verbose = TRUE) {
+                           go.db,
+                           species = "mouse",
+                           ontology.type = "BP",
+                           reformat.gene.names = FALSE,
+                           go.score.class = "weight01Score",
+                           p.val.threshold = 0.05,
+                           dag.file.prefix = FALSE,
+                           ngenes = 20,
+                           verbose = TRUE) {
   if (!ontology.type %in% c("BP", "MF", "CC")) {
     stop("Only 'BP', 'CC' and 'MF' are supported as ontology types")
   }
@@ -88,7 +88,7 @@ ms_go_annotate <- function(markers,
   # names(go.env) <- paste(names(go.env), desc)
 
   for (clus in levels(cluster)) {
-    if (verbose) message(paste("Computing GO enrichment for cluster:", clus,"\n"))
+    if (verbose) message(paste("Computing GO enrichment for cluster:", clus, "\n"))
     df <- markers[which(markers$cluster == clus), ]
     all.genes <- df$p_val
     names(all.genes) <- df$gene

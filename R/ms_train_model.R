@@ -23,12 +23,12 @@
 #' @examples
 #' # TODO
 ms_train_model <- function(scale.data,
-                        clus,
-                        gene_cl.ref,
-                        prop = NULL,
-                        p.threshold = NULL,
-                        verbose = TRUE,
-                        ...) {
+                           clus,
+                           gene_cl.ref,
+                           prop = NULL,
+                           p.threshold = NULL,
+                           verbose = TRUE,
+                           ...) {
   if (verbose) message("Splitting the refence into train and test datasets...")
 
   total <- 10

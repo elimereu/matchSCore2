@@ -195,7 +195,8 @@ scaled <- ref@assays$RNA@scale.data
 
 ```{r eval=FALSE}
 mod <- ms_train_model(
-  scale.data = scaled, clus = nnet2,
+  scale.data = scaled, 
+  clus = nnet2,
   gene_cl.ref = gene_cl.ref,
   prop = 0.5
 )

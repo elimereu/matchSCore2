@@ -21,9 +21,9 @@
 #' @examples
 #' # TODO
 ms_integrate <- function(dataset_list,
-                      marker_list,
-                      ref,
-                      verbose = TRUE) {
+                         marker_list,
+                         ref,
+                         verbose = TRUE) {
   if (names(dataset_list)[1] != ref) {
     stop("The reference dataset is not the first of the dataset list")
   }
@@ -191,8 +191,8 @@ ms_integrate <- function(dataset_list,
   return(
     list(
       sce = sce,
-      counts = counts,    # TODOELI: I do not think it is required to return this, it is included in the sce itself (the counts assay)
-      integrated = integrated,   # TODOELI: I do not think it is required to return this, it is included in the sce itself (the corresponding slot)
+      counts = counts, # TODOELI: I do not think it is required to return this, it is included in the sce itself (the counts assay)
+      integrated = integrated, # TODOELI: I do not think it is required to return this, it is included in the sce itself (the corresponding slot)
       annotation_label = annotation, # TODOELI: I do not think it is required to return this, it is included in the sce itself (the colData)
       dataset_label = dataset,
       genes = genes # TODOELI: I do not think it is required to return this - could this be simply the list of all genes included in the final object anyway
