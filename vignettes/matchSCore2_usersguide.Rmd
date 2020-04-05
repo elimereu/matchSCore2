@@ -105,7 +105,11 @@ library("SingleCellExperiment")
 
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?raw=true"
-download.file(url = url, destfile = "~/Downloads/sce.all_classified.technologies.RData", mode = "wb")
+download.file(
+  url = url,
+  destfile = "~/Downloads/sce.all_classified.technologies.RData",
+  mode = "wb"
+)
 ```
 
 ```{r, message=FALSE, warning=FALSE, eval=run_code}
@@ -170,7 +174,7 @@ download.file(
 ##### ref <- data.list$Chromium
 ##### nnet2 <- ref$nnet2
 ##### smartseq2 <- data.list$`Smart-Seq2`
-##### 
+#####
 ##### rm(data.list) # to avoid having too large object loaded!
 
 ref <- readRDS("datalist_chromium.rds")
@@ -219,7 +223,7 @@ scaled <- ref@assays$RNA@scale.data
 
 ```{r eval=run_code}
 mod <- ms_train_model(
-  scale.data = scaled, 
+  scale.data = scaled,
   clus = nnet2,
   gene_cl.ref = gene_cl.ref,
   prop = 0.5
@@ -264,7 +268,10 @@ smseq.clus <- smartseq2$ident
 col <- c("aquamarine", "orange", "green4", "blueviolet", "black", "maroon", "coral2", "deepskyblue3", "lightgray")
 
 library("ggplot2")
-ms_summary_barplot(class.fac = out$ids, obs.fac = smseq.clus) +
+ms_summary_barplot(
+  class.fac = out$ids,
+  obs.fac = smseq.clus
+) +
   scale_fill_manual(values = col)
 ```
 
@@ -285,16 +292,21 @@ For example, you could use the top 100 ranked markers per cluster from the Chrom
 ## And the MARS-Seq as test
 test.markers <- markers$`Smart-Seq2`
 
-gene_cl.test <- ms_top_markers(levels(test.markers$cluster), markers = test.markers, ntop = 100)
+gene_cl.test <- ms_top_markers(levels(test.markers$cluster),
+  markers = test.markers,
+  ntop = 100
+)
 
 head(gene_cl.test)
 
 ## The matchSCore2 function computes the clustering comparison and produce the heatmap table with Jaccard Indexes for each group combination
 
-ms_res <- matchSCore2(gene_cl.ref = gene_cl.ref, 
-                      gene_cl.obs = gene_cl.test, 
-                      xlab = "Smart-seq2",
-                      ylab = "Chromium")
+ms_res <- matchSCore2(
+  gene_cl.ref = gene_cl.ref,
+  gene_cl.obs = gene_cl.test,
+  xlab = "Smart-seq2",
+  ylab = "Chromium"
+)
 names(ms_res)
 ```
 
@@ -320,7 +332,11 @@ The method requires the clusters (more than 1 cell), they will be used to comput
 
 ```{r, eval=FALSE}
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?dl=0"
-download.file(url = url, destfile = "sce.all_classified.technologies.RData", mode = "wb")
+download.file(
+  url = url,
+  destfile = "sce.all_classified.technologies.RData",
+  mode = "wb"
+)
 ```
 
 
@@ -338,14 +354,18 @@ sce_ddseq$cluster <- factor(sce_ddseq$nnet2)
 list_data <- list(Chromium = sce_chromium, Smartseq2 = sce_smartseq2, ddseq = sce_ddseq)
 
 markers.dds <- markers$ddSEQ
-gene_cl.dds <- ms_top_markers(levels(markers.dds$cluster), 
-                              markers = markers.dds, 
-                              ntop = 100)
+gene_cl.dds <- ms_top_markers(levels(markers.dds$cluster),
+  markers = markers.dds,
+  ntop = 100
+)
 
 markers_list <- unique(c(unlist(gene_cl.ref), unlist(gene_cl.test), unlist(gene_cl.dds)))
 
-out_align <- ms_integrate(dataset_list = list_data, marker_list = markers_list, ref = "Chromium")
-# TODOELI: this one up here returns an error - can you double check this by running the vignette as a whole till here?
+out_align <- ms_integrate(
+  dataset_list = list_data,
+  marker_list = markers_list,
+  ref = "Chromium"
+)
 ```
 
 The output contains a `SingleCellExperiment` object with the joint raw counts and the integrated matrix from the 3 datasets. 
@@ -384,11 +404,14 @@ We can explore some of the markers we used for the integration with the Seurat `
 <!-- TODOELI: We should stick to sce outputs and inputs + use for example here plotExpression from scater, which does the same de facto -->
 
 ```{r, eval=run_code}
-FeaturePlot(out_seurat, features = c(
-  "CD79B", "MS4A1", "IL7R", 
-  "CD3D", "NKG7", "GNLY", 
-  "CD14", "FCGR3A", "CTTN"
-))
+FeaturePlot(
+  out_seurat,
+  features = c(
+    "CD79B", "MS4A1", "IL7R",
+    "CD3D", "NKG7", "GNLY",
+    "CD14", "FCGR3A", "CTTN"
+  )
+)
 ```
 
 ```{r ss-umapmarkers, echo=FALSE, eval=TRUE, fig.wide = TRUE}
