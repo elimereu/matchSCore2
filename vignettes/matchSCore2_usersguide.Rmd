@@ -292,10 +292,12 @@ url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologie
 download.file(url = url, destfile = "~/Downloads/sce.all_classified.technologies.RData", mode = "wb")
 load(file = "~/Downloads/sce.all_classified.technologies.RData") ## load the data
 
-chromium <- scater::filter(sce, batch == "Chromium")
-smartseq2 <- scater::filter(sce, batch == "Smart-Seq2")
+chromium <- scater::filter(sce, batch == "Chromium") 
+#chromium <- sce[,sce$batch=="Chromium"]
+smartseq2 <- scater::filter(sce, batch == "Smart-Seq2") 
+#smartseq2 <- sce[,sce$batch=="Smart-Seq2"]
 ddseq <- scater::filter(sce, batch == "ddSEQ")
-
+#
 chromium$cluster <- factor(chromium$nnet2)
 smartseq2$cluster <- factor(smartseq2$nnet2)
 ddseq$cluster <- factor(ddseq$nnet2)
