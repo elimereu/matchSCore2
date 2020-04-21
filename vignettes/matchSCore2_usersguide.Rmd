@@ -60,8 +60,8 @@ By using a reference dataset in which the cellular type of individual cells is d
 
 The method consists of the following steps:
 
-1. The reference dataset is subset in two parts, train and test data, in order to estimate the accuracy of the model. []TODOELI: did you ever investigate whether e.g. k fold cross-validation could help?
-2. For each cell type in the reference, a signature score is assigned to each cell by using the top 100 gene markers. []TODOELI: could this be adjusted? if so, we can say "top N (default N = 100)"
+1. The reference dataset is subset in two parts, train and test data, in order to estimate the accuracy of the model. 
+2. For each cell type in the reference, a signature score is assigned to each cell by using the top 100 gene markers.
 3. The signature scores are the predictors of the multinomial logistic model.
 4. Once the model is trained, a probability value is assigned to each cell per cell type. 
    The highest likelihood can then be used to annotate that cell if it reaches the minimum value provided by the user (default = 0.5).    
@@ -94,7 +94,6 @@ library("matchSCore2")
 In this vignette, we showcase the functionality of `r BiocStyle::Biocpkg("matchSCore2")` using the PBMC+HEK293T data from our benchmarking of 13 protocols [@Mereu2019]. 
 The list of all seurat objects, including UMAPs and tSNEs are provided here: https://www.dropbox.com/sh/wgu6kcioqkkva4g/AABHJaFsiqYZeYc-xv6qtg3ba?dl=0. 
 
-[]TODOELI: this is quite huge. IMHO it makes much much sense to have this in EHub. Or even better, have it "componible" with the pieces found in EHub
 
 From the same link, you can also download the `SingleCellExperiment` object from which you can extract the counts from each protocol by following the instructions below.
 
@@ -150,7 +149,6 @@ logcounts_chromium <- logcounts(sce_chromium)
 
 In case you are interested in working with the seurat objects, all datasets are in the `data.list` list, whose elements represent the protocols. 
 
-[]TODOELI: I think again it would be super cool to have a- them on EHub, and b- while we are at it, my suggestion is that on EHub they would belong stored as SingleCellExperiment objects
 
 Let us suppose Chromium is the reference and Smart-seq2 the test data we want to annotate. 
 The cell type specific markers from each protocol are also provided.
@@ -169,7 +167,7 @@ download.file(
 ```
 
 ```{r eval=run_code}
-# NOTEELI: this looks like the perfect case to provide these objects via EHub
+
 ##### load(file = "data.list_seurat.obj_all_datasets.RData")
 ##### ref <- data.list$Chromium
 ##### nnet2 <- ref$nnet2
@@ -215,7 +213,7 @@ gene_cl.ref <- ms_top_markers(levels(ref.markers$cluster),
   ntop = 100
 )
 
-# TODO there's no accessor available in Seurat?!
+
 scaled <- ref@assays$RNA@scale.data
 ```
 
@@ -239,7 +237,7 @@ With the function `ms_identity_map`, we assign the cell identity in the test dat
 
 ```{r eval=run_code}
 scaled <- ScaleData(smartseq2, features = unlist(gene_cl.ref))
-scaled <- scaled@assays$RNA@scale.data # TODOELI: are there no accessors in Seurat to do so?
+scaled <- scaled@assays$RNA@scale.data 
 
 ## Cell projection
 out <- ms_identity_map(
@@ -248,7 +246,7 @@ out <- ms_identity_map(
   gene_cl.ref = gene_cl.ref
 )
 
-ms_identity_heatmap(out)
+#ms_identity_heatmap(out)
 ```
 
 ```{r ss-identityheat, echo=FALSE, eval=run_code, fig.wide = TRUE}
@@ -326,9 +324,9 @@ The method is based on the single value decomposition and allows a direct compar
 By using the function `ms_integrate`, two or more gene expression matrices are compared and aligned to the same reference dataset.  
 
 In this example, we want to align 3 of the PBMC+HEK293T experiments sequenced with different protocols: Chromium, Smart-Seq2 and ddSEQ. 
-In this case, the choice of the reference is not so important, we will choose the Chromium dataset.
-The method requires the clusters (more than 1 cell), they will be used to compute a centroid point at each dataset, useful for their comparison. 
-<!-- TODOELI: unclear sentence here above -->
+In this case, the choice of the reference is not so important, thus we will choose the Chromium dataset.
+
+
 
 ```{r, eval=FALSE}
 url <- "https://www.dropbox.com/s/lrfoux7uxundcy1/sce.all_classified.technologies.RData?dl=0"
@@ -400,8 +398,6 @@ knitr::include_graphics("UMAP_dataset_after_integration.png")
 ```
 
 We can explore some of the markers we used for the integration with the Seurat `FeaturePlot` function:
-
-<!-- TODOELI: We should stick to sce outputs and inputs + use for example here plotExpression from scater, which does the same de facto -->
 
 ```{r, eval=run_code}
 FeaturePlot(
