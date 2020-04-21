@@ -179,7 +179,7 @@ download.file(
 
 ref <- readRDS("datalist_chromium.rds")
 nnet2 <- ref$nnet2
-smartseq2 <- readRDS("datalist_chromium.rds")
+smartseq2 <- readRDS("datalist_smartseq2.rds")
 ```
 
 # Training the model
