@@ -121,7 +121,9 @@ ms_train_model <- function(scale.data,
 
   if (verbose) message("\n", paste("The accuracy of the model is:", round(acc, digits = 2), sep = " "), "\n")
 
-  if (verbose) message(table(id_test = fit_res$out.test, class = fit_res$fit)) # TODOELI: if we need fit_res, we should return this as well, otherwise there is not so much to do with it here IMHO
+  table(id_test = fit_res$out.test, class = fit_res$fit)
+
+  #if (verbose) message(table(id_test = fit_res$out.test, class = fit_res$fit)) # TODOELI: if we need fit_res, we should return this as well, otherwise there is not so much to do with it here IMHO
 
   progress <- 10
   Sys.sleep(0.1)
