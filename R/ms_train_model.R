@@ -121,11 +121,11 @@ ms_train_model <- function(scale.data,
 
   if (verbose) message("\n", paste("The accuracy of the model is:", round(acc, digits = 2), sep = " "), "\n")
 
-<<<<<<< HEAD
+
   print(table(id_test = fit_res$out.test, class = fit_res$fit))
-=======
+
   table(id_test = fit_res$out.test, class = fit_res$fit)
->>>>>>> d92f1613d169bb43f5436b57d3058a263283c46e
+
 
   #if (verbose) message(table(id_test = fit_res$out.test, class = fit_res$fit)) # TODOELI: if we need fit_res, we should return this as well, otherwise there is not so much to do with it here IMHO
 
