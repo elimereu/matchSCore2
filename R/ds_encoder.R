@@ -29,12 +29,10 @@ ds_encoder <- function(data,genes,dims,hnodes,verbose=T,activation="tanh",...){
     layer_dense(units = hnodes[1], activation = activation, input_shape = nrow(data))
 
   nleyers <- length(hnodes)
-  N <- nleyers -1
-  if(nleyers>1){
-    for(i in c(2:N)){
+    for(i in c(1:nleyers)){
       enc1 <- enc1 %>%
         layer_dense(units = hnodes[i], activation = activation)
-    }}
+    }
 
   enc <- enc1 %>%
     layer_dense(units = dims, activation = "tanh")

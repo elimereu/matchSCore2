@@ -25,7 +25,7 @@
 
 
 ds_dnn_model <- function(out,hnodes,epochs = 30,batch_size = 32,activation="relu",add_dropout=T,
-                      pct_dropout=0.2,name_mod="mod",verbose=T, ...){
+         pct_dropout=0.2,name_mod="mod",verbose=T, ...){
 
   library(keras)
 
@@ -44,26 +44,25 @@ ds_dnn_model <- function(out,hnodes,epochs = 30,batch_size = 32,activation="relu
       layer_dropout(rate = pct_dropout,name = paste(name_mod,"dropout_1",sep="_"))
   }
 
-  nleyers <- length(hnodes)
-  N <- nleyers-1
-  if(nleyers>1){
-    for(i in c(2:N)){
+
+  N <- length(hnodes)
+  for(i in c(1:N)){
+    model <- model %>%
+      layer_dense(units = hnodes[i], activation = activation,name = paste(name_mod,"dense",i+1,sep="_"))
+    if(add_dropout==TRUE){
       model <- model %>%
-      layer_dense(units = hnodes[i], activation = activation,name = paste(name_mod,"dense",i,sep="_"))
-      if(add_dropout==TRUE){
-        model <- model %>%
-          layer_dropout(rate = pct_dropout,name = paste(name_mod,"dropout",i,sep="_"))
-      }
-    }}
+        layer_dropout(rate = pct_dropout,name = paste(name_mod,"dropout",i+1,sep="_"))
+    }
+  }
 
   model <- model %>% layer_dense(units = Nclass,activation = "softmax",name = paste(name_mod,"out",sep="_")) %>%
 
-  # backpropagation
-  compile(
-    optimizer = "adam",
-    loss = "categorical_crossentropy",
-    metrics = c("accuracy")
-  )
+    # backpropagation
+    compile(
+      optimizer = "adam",
+      loss = "categorical_crossentropy",
+      metrics = c("accuracy")
+    )
 
   learn <- model %>% fit(
     x = train_x,
