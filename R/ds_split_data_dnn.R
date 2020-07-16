@@ -80,5 +80,6 @@ ds_split_data_dnn <- function (scale.data, clus, genes, prop = NULL,
 
 
 
+
   return(list(train_x=train_x,train_y=train_y,test_x =test_x,test_y=test_y,classes=classes))
 }
