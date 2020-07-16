@@ -68,16 +68,14 @@ ds_split_data_dnn <- function (scale.data, clus, genes, prop = NULL,
   n <- nrow(model.train)
   model.train <- model.train[sample(x=seq(1:n),size = n),]
 
-  model.test <- data.frame(out.test, var.test,check.names = F)
-  n <- nrow(model.test)
-  model.test <- model.test[sample(x=seq(1:n),size = n),]
+  # model.test <- data.frame(out.test, var.test,check.names = F)
+  # n <- nrow(model.test)
+  # model.test <- model.test[sample(x=seq(1:n),size = n),]
   library(keras)
   train_x <- as.matrix(model.train[,-1])
   train_y <- to_categorical(model.train[,1])
-  test_x <- as.matrix(model.test[,-1])
-  test_y <- to_categorical(model.test[,1])
-
-
+  test_x <- var.test
+  test_y <- to_categorical(out.test)
 
 
 
