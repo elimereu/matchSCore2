@@ -1,6 +1,5 @@
-#' This function trains, fits and evaluates a deep neural network (DNN) model.
+#' This function gives the prediction of the deep neural network (DNN) model.
 #'
-#' This function creates a DNN model from the reference dataset (scRNA-seq) by using the keras package.
 #' @param dnn_model The DNN model output of the ds_dnn_model function.
 #' @param model_data The output of the ds_split_data_dnn function.
 #' @param query_data The scaled/normalized gene expression data you want to annotate.
@@ -12,14 +11,14 @@
 #' features <- ds_get_features(enc = enc,data = scaled,genes=gg)
 #' out <- ds_split_data_encoder(features = features,clus = cluster,prop = 0.8,verbose = T)
 #' model <- ds_dnn_model(out = out,hnodes = c(1000),verbose = T,epochs = 10,batch_size = 32)
-#  ids <- ds_dnn_classify(dnn_model = model,model.data = out,test.data = test.data) #### test.data is a normalized/scaled.data
+#  ids <- ds_dnn_classify(dnn_model = model,model.data = out,query.data = query.data) #### query.data is a normalized/scaled.data
 
 ds_dnn_classify <- function(dnn_model,model.data,query.data){
 
   library(keras)
   train_x <- model.data$train_x
   features <- colnames(train_x)
-  test_x <- t(as.matrix(test.data))
+  test_x <- t(as.matrix(query.data))
   do.genes <- setdiff(features,colnames(test_x))
 
 
