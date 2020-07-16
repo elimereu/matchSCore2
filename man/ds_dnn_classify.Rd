@@ -2,22 +2,22 @@
 % Please edit documentation in R/ds_dnn_classify.R
 \name{ds_dnn_classify}
 \alias{ds_dnn_classify}
-\title{This function trains, fits and evaluates a deep neural network (DNN) model.}
+\title{This function gives the prediction of the deep neural network (DNN) model.}
 \usage{
 ds_dnn_classify(dnn_model, model.data, query.data)
 }
 \arguments{
 \item{dnn_model}{The DNN model output of the ds_dnn_model function.}
 
-\item{model_data}{The output of the ds_split_data_dnn function.}
+\item{query.data}{The scaled/normalized gene expression data you want to annotate.}
 
-\item{query_data}{The scaled/normalized gene expression data you want to annotate.}
+\item{model_data}{The output of the ds_split_data_dnn function.}
 }
 \value{
 The classification output of the DNN model.
 }
 \description{
-This function creates a DNN model from the reference dataset (scRNA-seq) by using the keras package.
+This function gives the prediction of the deep neural network (DNN) model.
 }
 \examples{
 #not run
