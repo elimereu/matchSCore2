@@ -73,6 +73,7 @@ ds_dnn_model <- function(out,hnodes,epochs = 30,batch_size = 32,activation="relu
     verbose = verbose
   )
 
+
   if(verbose==TRUE){
     eval <- model %>% evaluate(test_x, test_y)
     print("The accuracy of the model is: ")

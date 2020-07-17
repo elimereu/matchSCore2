@@ -2,13 +2,16 @@
 % Please edit documentation in R/ds_fit_stacking_model.R
 \name{ds_fit_stacking_model}
 \alias{ds_fit_stacking_model}
-\title{This function fits the stacking ensemble of 2 or more DNN models.}
+\title{This function fits the stacking ensemble model of two or more DNN models.}
 \usage{
 ds_fit_stacking_model(
   model,
   list.models,
+  cluster,
   train_x,
   train_y,
+  test_x,
+  test_y,
   epochs = 10,
   batch_size = 32,
   validation_split = 0.2,
@@ -21,7 +24,13 @@ ds_fit_stacking_model(
 
 \item{list.models}{A named list with the different models. The names of the models must be different and correspond to the name given to the name_mod in the ds_dnn_model function.}
 
-\item{train_x}{A new_train dataset to fit the parameter of the model. Usually part of the test_set can be used.}
+\item{cluster}{The cluster from the reference.}
+
+\item{train_x}{A new_train dataset to fit the parameter of the model. It can be the val_x output of the function ds_split_data_stack.mod.}
+
+\item{train_y}{The Known classes of the new_train dataset. It can be the val_y output of the function ds_split_data_stack.mod.}
+
+\item{test_x}{The Known classes of the new_test dataset. It can be the test_y output of the function ds_split_data_stack.mod.}
 
 \item{verbose}{Logical, controls the displaying of additional messages while
 running the function. Defaults to \code{TRUE}.}
@@ -35,7 +44,7 @@ running the function. Defaults to \code{TRUE}.}
 \item{pct_dropout}{Keras parameter for the layer_dense function (Default= 0.2).}
 }
 \description{
-This function fits the stacking ensemble of 2 or more DNN models.
+This function fits the stacking ensemble model of two or more DNN models.
 }
 \examples{
 #not run
