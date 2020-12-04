@@ -25,6 +25,7 @@
 #' logcounts
 #' @importFrom SummarizedExperiment `assay<-` `colData<-`
 #' @importFrom corpcor fast.svd
+#' @import keras
 #'
 #' @name matchSCore2-pkg
 #' @docType package
