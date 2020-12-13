@@ -93,7 +93,7 @@ ms_train_model <- function(scale.data,
 
   if (verbose) message("\n Learning the model from the training dataset...\n")
 
-  mod <- multinom(out.train ~ ., data = model.train, decay = 0.0001, maxit = 500)
+  mod <- multinom(out.train ~ ., data = model.train, decay = 0.0001, maxit = 500,MaxNWts=2000)
   # if (verbose) message(summary(mod)) # TODOELI: we do not need this here I guess
 
   progress <- 8
